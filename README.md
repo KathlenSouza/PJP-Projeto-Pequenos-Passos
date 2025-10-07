@@ -17,6 +17,6 @@ Vacinação: Calendário e lembretes de vacinação.
 Contribuição : Kathlen Caroline de Souza,
 Gabriel Sant'Anna,
 Maria Isabel Klein Delavy,
-Rafaela Helena Garbin Rudolf,
+Rafaela Helena Garbin Rudolf Nascimento,
 Thiago Emanoel.
 
