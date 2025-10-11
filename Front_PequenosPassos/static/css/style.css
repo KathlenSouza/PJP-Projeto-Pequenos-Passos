@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;700&display=swap');
+
+:root{
+  --bg1:#f6f8ff; --bg2:#ffffff; --ink:#2b3352; --muted:#6b77a1;
+  --primary:#7387ff; --primaryStrong:#5b6fe6; --lilac:#c9b6ff;
+  --mint:#b9f3e4; --peach:#ffd8bf; --danger:#ff9aa2;
+  --radius:16px; --shadow:0 10px 24px rgba(23,30,66,.10);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 60%);
+  color:var(--ink);
+  font-family:'Poppins','Nunito',system-ui,-apple-system,'Segoe UI',Roboto,Inter,Arial,sans-serif;
+}
+
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:#fff;border:1px solid #eef1ff;border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+.h1{margin:0;font-size:clamp(24px,3vw,38px);background:linear-gradient(90deg,var(--primary),var(--lilac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{color:var(--muted)}
+.grid{display:grid;gap:16px}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.input,select.input,textarea.input{width:100%;padding:12px 14px;border:1px solid #e6e9f8;border-radius:12px;background:#fff}
+.btn{border:0;border-radius:14px;padding:12px 16px;background:var(--primary);color:#fff;font-weight:600;box-shadow:var(--shadow);cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none}
+.btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn.secondary{background:var(--lilac);color:#3b2b66}
+.btn.ghost{background:#eef1ff;color:#4d60b5}
+.btn.danger{background:var(--danger);color:#5c2a30}
+
+.list{list-style:none;margin:0;padding:0}
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;border:1px solid #eaf0ff;padding:12px 14px;border-radius:12px;box-shadow:var(--shadow)}
+
+.badge{padding:4px 10px;border-radius:999px;font-size:12px;background:#eef1ff;color:#4d60b5}
+.badge.grosso{background:#e6fff7;color:#145a4a}
+.badge.fino{background:#fff3e3;color:#945a00}
+.badge.ling{background:#eaf3ff;color:#0e48a1}
+.badge.cog{background:#fdeaf3;color:#9b1b60}
+.badge.soc{background:#f0eaff;color:#432b9b}
+
+nav{background:#ffffffcc;backdrop-filter:blur(8px);border-bottom:1px solid #dbe6ff;position:sticky;top:0;z-index:50}
+.nav-wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.nav-list{display:flex;gap:10px;align-items:center;overflow:auto;padding:12px 0}
+.nav-link{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#2e3b83;text-decoration:none;white-space:nowrap}
+.nav-link:hover{background:#eef3ff}
+.nav-link.active{background:linear-gradient(90deg,#eef3ff,#f6f1ff);color:#2e3b83;font-weight:600}
+.nav-link.btn-primary{background:var(--primary);color:#fff}
+
+.header-row{display:flex;align-items:center;gap:12px;margin:16px 0 10px}
+.logo-img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow)}
+
+.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}
+.center{display:flex;align-items:center;gap:12px}
+footer{margin:18px 0;color:var(--muted);font-size:12px;text-align:center}
+
+canvas{max-width:100%}
+
+/* ====== HERO + LAYOUT ====== */
+.hero{
+  display:grid; grid-template-columns:160px 1fr; gap:20px; align-items:center; margin:16px 0 8px;
+}
+.hero-actions{ display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; }
+.layout-two{ display:grid; grid-template-columns:300px 1fr; gap:16px; margin-top:12px; }
+@media (max-width: 900px){ .layout-two{ grid-template-columns:1fr; } .hero{ grid-template-columns:1fr; } }
+
+
+/* ====== Sidebar Vacinas ====== */
+.sidebar h3{ margin-bottom:10px; }
+.vax-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid #eaf0ff; border-radius:12px; background:#fff; }
+.vax-title{ display:flex; align-items:center; gap:8px; }
+.vax-tag{ font-size:12px; padding:4px 8px; border-radius:999px; background:#eef3ff; color:#4d60b5; }
+.vax-status{ font-size:12px; padding:6px 10px; border-radius:999px; cursor:pointer; }
+.vax-pendente{ background:#fff3e3; color:#945a00; }
+.vax-aplicada{ background:#e6fff7; color:#145a4a; }
+
+
+/* ========= NAVBAR FINAL ========= */
+.navbar {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e7eaff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #2b3352;
+  font-size: 1.1rem;
+}
+
+.nav-logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #3245a3;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-links a:hover {
+  background: #eef3ff;
+  color: #1e2b8f;
+}
+
+.nav-links a.active {
+  background: #e9eeff;
+  font-weight: 600;
+}
+
+.nav-links i {
+  font-size: 1rem;
+  color: #3245a3;
+}
+
+.btn-nav {
+  background: #5e6aff;
+  color: #fff !important;
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+.btn-nav:hover {
+  background: #4b58e6;
+}
+
+/* Botão hamburguer (mobile) */
+.nav-toggle {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: none;
+  color: #2b3352;
+}
+
+/* ======= Responsivo ======= */
+@media (max-width: 850px) {
+  .nav-toggle { display: block; }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #e5e9ff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding: 16px;
+    display: none;
+    animation: fadeIn 0.25s ease forwards;
+  }
+
+  .nav-links.show { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ======== LAYOUT GERAL CENTRALIZADO ======== */
+.container {
+  max-width: 1100px;         /* limita largura */
+  margin: 100px auto 60px;   /* centraliza e afasta do topo */
+  padding: 0 24px;           /* margem lateral */
+  box-sizing: border-box;
+}
+
+/* Hero Section (nome, idade e botões) */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  gap: 24px;
+}
+
+/* Colunas principais (Vacinas + Livros etc) */
+.layout-two {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .layout-two {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Cards e seções internas */
+.card,
+.sidebar,
+.content {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* Ajuste no título principal */
+.h1 {
+  text-align: left;
+  font-size: clamp(24px, 3vw, 38px);
+  margin-bottom: 12px;
+}
+
+/* Rodapé mais afastado */
+footer {
+  margin-top: 60px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
