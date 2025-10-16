@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pequenos Passos | Atividades</title>
+    <link rel="stylesheet" href="/SRC/STATIC/CSS/styleatividades.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+</head>
+
+<body class="pag-atividades">
+
+    <div id="carregando">
+        <div class="feet">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="/SRC/STATIC/IMG/logo.png" alt="Logo" class="nav-logo-img">
+                <span>Pequenos Passos</span>
+            </div>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
+                <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
+                <li><a href="/SRC/TEMPLATE/atividades.html" class="active"><i class="fa-solid fa-bullseye"></i>
+                        Atividades</a></li>
+                <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
+                <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+                <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
+                <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-nav"><i class="fa-solid fa-file-lines"></i>
+                        Relatório</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+
+        <div class="card">
+            <div class="grid cols-2">
+                <div>
+                    <div class="label">Descrição</div>
+                    <input id="activityDesc" class="input" placeholder="Ex.: Pular corda 10x">
+                </div>
+                <div>
+                    <div class="label">Categoria</div>
+                    <select id="activityCategory" class="input">
+                        <option>Motor Grosso</option>
+                        <option>Motor Fino</option>
+                        <option>Linguagem</option>
+                        <option>Cognitivo</option>
+                        <option>Socioemocional</option>
+                    </select>
+                </div>
+            </div>
+            <div class="hero-actions" style="margin-top:12px;">
+                <button id="btnAdd" class="btn">➕ Adicionar</button>
+                <button id="btnSuggest" class="btn ghost">✨ Sugerir</button>
+                <button id="btnClearActivities" class="btn danger">🗑️ Limpar todas</button>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0">Lista de atividades</h3>
+            <ul id="activitiesList" class="list"></ul>
+        </div>
+
+        <footer>Desenvolvido Por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago) 💜</footer>
+    </div>
+    <script src="/SRC/STATIC/JS/nav.js"></script>
+    <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+    <script src="/SRC/STATIC/JS/atividades.js"></script>
+</body>
+
+</html>

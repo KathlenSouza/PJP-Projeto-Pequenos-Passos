@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;700&display=swap');
+
+/* NAVBAR */
+.navbar {
+    background: rgba(151, 219, 240, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e7eaff;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #2b3352;
+    font-size: 1.1rem;
+}
+
+.nav-logo-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: #3245a3;
+    text-decoration: none;
+    font-size: .95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background .2s, color .2s;
+}
+
+.nav-links a:hover {
+    background: #eef3ff;
+    color: #1e2b8f;
+}
+
+.nav-links a.active {
+    background: #e9eeff;
+    font-weight: 600;
+}
+
+.nav-links i {
+    font-size: 1rem;
+    color: #3245a3;
+}
+
+.btn-nav {
+    background: #5e6aff;
+    color: #fff !important;
+    border-radius: 999px;
+    padding: 8px 14px;
+}
+
+.btn-nav:hover {
+    background: #4b58e6;
+}
+
+.nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: none;
+    color: #2b3352;
+}
+
+:root {
+    --bg1: #fde8ac;
+    --bg2: #ffffff;
+    --ink: #2b3352;
+    --muted: #6b77a1;
+    --primary: #cc9328;
+    --primaryStrong: #f7a344;
+    --lilac: #ffe2b6;
+    --mint: #f3dfb9;
+    --peach: #f3dfb9;
+    --danger: #f3dfb9;
+    --radius: 16px;
+    --shadow: 0 10px 24px rgba(23, 30, 66, .10);
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    color: var(--ink);
+    font-family: 'Poppins', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, Inter, Arial, sans-serif;
+    background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 70%);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: pageFade 1s ease forwards;
+}
+
+
+@keyframes pageFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.pag-atividades {
+    background: linear-gradient(180deg, #eef6ff 0%, #ffffff 70%);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 100px auto 60px;
+    padding: 0 24px;
+}
+
+/* Estilizando as informações em blocos, botões titulos e imput */
+.card {
+    background: #fff;
+    border: 1px solid #fff9ee;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: pageFade 1s ease forwards;
+}
+
+.btn {
+    border: 0;
+    border-radius: 14px;
+    padding: 12px 16px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: pageFade 1s ease forwards;
+}
+
+.btn.secondary {
+    background: var(--lilac);
+    color: #3b2b66
+}
+
+.btn.ghost {
+    background: #eef1ff;
+    color: #4d60b5
+}
+
+.btn.danger {
+    background: var(--danger);
+    color: #5c2a30
+}
+
+.h1 {
+    margin: 0 0 8px;
+    font-size: clamp(24px, 3vw, 38px);
+    background: linear-gradient(90deg, var(--primary), var(--lilac));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent
+}
+
+.subtitle {
+    color: var(--muted)
+}
+
+.grid {
+    display: grid;
+    gap: 16px
+}
+
+.grid.cols-2 {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))
+}
+
+.label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px
+}
+
+.input,
+select.input,
+textarea.input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e6e9f8;
+    border-radius: 12px;
+    background: #fff
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #eaf0ff;
+    padding: 12px 14px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+
+/* Loader com pezinhos no rodapé */
+#carregando {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: transparent;
+    z-index: 1000;
+    pointer-events: none;
+    animation: loaderOut 1s ease 0.6s forwards;
+}
+
+@keyframes loaderOut {
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+.feet {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    opacity: 0.95;
+    filter: drop-shadow(0 6px 12px rgba(115, 135, 255, 0.25));
+    animation: feetRise 1s ease-in-out infinite alternate;
+}
+
+@keyframes feetRise {
+    from {
+        transform: translateY(10px);
+    }
+
+    to {
+        transform: translateY(-4px);
+    }
+}
+
+.feet img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.85;
+}
+
+.feet img:nth-child(1) {
+    animation: step 1s ease-in-out infinite;
+}
+
+.feet img:nth-child(2) {
+    animation: step 1s ease-in-out .2s infinite;
+}
+
+.feet img:nth-child(3) {
+    animation: step 1s ease-in-out .4s infinite;
+}
+
+@keyframes step {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-6px) rotate(6deg);
+    }
+}
+
+footer {
+    margin-top: 60px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center
+}
+
+/* ajustando telas*/
+@media (max-width: 850px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        background: #fff;
+        border: 1px solid #e5e9ff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+        padding: 16px;
+        display: none;
+        animation: fadeIn .25s ease forwards;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
