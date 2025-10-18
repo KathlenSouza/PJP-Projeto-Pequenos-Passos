@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pequenos Passos | Cadastro</title>
+
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+</head>
+
+<body class="pagina-cadastro">
+
+  <!-- Tela de carregamento -->
+  <div id="carregando">
+    <div class="pes">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="principal">
+      <div class="cartao" style="max-width:640px; margin:auto;">
+        <h2 class="titulo-principal">Criar Conta</h2>
+
+        <div class="grade duas-colunas">
+          <label class="item">Nome completo
+            <input type="text" id="nome" placeholder="Nome e sobrenome" required>
+          </label>
+
+          <label class="item">E-mail
+            <input type="email" id="email" placeholder="seu@email.com" required>
+          </label>
+
+          <label class="item">Senha
+            <input type="password" id="senha" placeholder="Mínimo 8 caracteres" required>
+          </label>
+
+          <label class="item">Confirmar senha
+            <input type="password" id="confirmarSenha" placeholder="Repita a senha" required>
+          </label>
+        </div>
+
+        <div class="acoes-principais">
+          <button class="botao" id="botaoCadastrar">Criar Conta</button>
+          <a class="botao neutro" href="/SRC/TEMPLATE/login.html">Já tenho conta</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
+  </footer>
+
+  <script src="/SRC/STATIC/JS/nav.js"></script>
+  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/home.js"></script>
+</body>
+</html>

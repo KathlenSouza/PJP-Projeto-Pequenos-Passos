@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pequenos Passos | Histórico de Atividades</title>
+
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png"/>
+</head>
+
+<body class="pagina-historico">
+
+  <!-- Tela de carregamento -->
+  <div id="carregando">
+    <div class="pes">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+    </div>
+  </div>
+
+  <!-- Barra de navegação -->
+  <nav class="barra-navegacao">
+    <div class="container-navegacao">
+      <div class="logo-navegacao">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="imagem-logo">
+        <span>Pequenos Passos</span>
+      </div>
+
+      <button class="botao-menu" id="alternarMenu">☰</button>
+
+      <ul class="links-navegacao" id="linksNavegacao">
+        <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
+        <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
+        <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
+        <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
+        <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+        <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="botao-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- Histórico de atividades -->
+    <section class="principal">
+      <div class="cartao">
+        <div class="cabecalho-principal">
+          <h2 style="margin: 0;">Atividades Concluídas</h2>
+
+          <!-- Filtros por período -->
+          <div class="acoes-principais">
+            <input type="date" id="dataInicial" class="campo"/>
+            <input type="date" id="dataFinal" class="campo"/>
+            <button class="botao" id="botaoFiltrar">Filtrar</button>
+          </div>
+        </div>
+
+        <div id="gradeHistorico" class="grade">
+          <!-- Os cartões de atividades serão inseridos aqui via JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+<!-- Rodapé -->
+  <footer>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
+  </footer>
+
+  <script src="/SRC/STATIC/JS/nav.js"></script>
+  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/atividades.js"></script>
+</body>
+</html>

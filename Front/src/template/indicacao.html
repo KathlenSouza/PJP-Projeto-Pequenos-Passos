@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pequenos Passos | Atividades</title>
+  <title>Pequenos Passos | Indicações</title>
 
   <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
 
-<body class="pagina-atividades">
+<body class="pagina-indicacao">
 
   <!-- Tela de carregamento -->
   <div id="carregando">
@@ -38,9 +38,9 @@
       <ul class="links-navegacao" id="linksNavegacao">
         <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
         <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
-        <li><a href="/SRC/TEMPLATE/atividades.html" class="ativo"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
+        <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
         <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
-        <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+        <li><a href="/SRC/TEMPLATE/indicacao.html" class="ativo"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
         <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
         <li><a href="/SRC/TEMPLATE/relatorio.html" class="botao-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
       </ul>
@@ -49,52 +49,67 @@
 
   <main class="container">
 
-    <!-- Formulário de atividades -->
+    <!-- Formulário de indicação -->
     <section class="cartao">
+      <h1 class="titulo-principal">Indicações de Profissionais</h1>
+      <p class="subtitulo">Indique profissionais para outros pais — informe nome, área, cidade, contato e um breve comentário.</p>
+
       <div class="grade duas-colunas">
         <div>
-          <label class="rotulo">Descrição</label>
-          <input id="descricaoAtividade" class="campo" placeholder="Ex.: Pular corda 10x">
+          <label class="rotulo">Nome</label>
+          <input id="nomeProfissional" class="campo" type="text" placeholder="Nome do profissional">
         </div>
 
         <div>
-          <label class="rotulo">Categoria</label>
-          <select id="categoriaAtividade" class="campo">
-            <option>Motor Grosso</option>
-            <option>Motor Fino</option>
-            <option>Linguagem</option>
-            <option>Cognitivo</option>
-            <option>Socioemocional</option>
+          <label class="rotulo">Área</label>
+          <input id="areaProfissional" class="campo" type="text" placeholder="Psicologia, Fonoaudiologia, Pediatria...">
+        </div>
+
+        <div>
+          <label class="rotulo">Cidade</label>
+          <input id="cidadeProfissional" class="campo" type="text" placeholder="Cidade">
+        </div>
+
+        <div>
+          <label class="rotulo">Contato</label>
+          <input id="contatoProfissional" class="campo" type="text" placeholder="(11) 99999-0000">
+        </div>
+
+        <div>
+          <label class="rotulo">Comentário</label>
+          <input id="comentarioProfissional" class="campo" type="text" placeholder="Comentário sobre o profissional">
+        </div>
+
+        <div>
+          <label class="rotulo">Avaliação</label>
+          <select id="avaliacaoProfissional" class="campo">
+            <option value="">Sem avaliação</option>
+            <option>1 estrela</option>
+            <option>2 estrelas</option>
+            <option>3 estrelas</option>
+            <option>4 estrelas</option>
+            <option>5 estrelas</option>
           </select>
         </div>
       </div>
 
-      <div class="acoes-principais" style="margin-top:12px;">
-        <button id="botaoAdicionar" class="botao">Adicionar</button>
-        <button id="botaoSugerir" class="botao neutro">Sugerir</button>
-        <button id="botaoLimparAtividades" class="botao perigo">Limpar todas</button>
+      <div class="acoes-principais" style="margin-top: 12px;">
+        <button class="botao" id="botaoAdicionarProfissional">Adicionar Indicação</button>
       </div>
     </section>
 
-    <div class="acoes-principais" style="justify-content:flex-end;">
-      <a href="/SRC/TEMPLATE/historico.html" class="botao neutro">Ver atividades concluídas</a>
-    </div>
-
-    <!-- Lista de atividades -->
+    <!-- Lista de indicações -->
     <section class="cartao">
-      <h3 style="margin-top:0">Lista de Atividades</h3>
-      <ul id="listaAtividades" class="lista"></ul>
+      <h3>Indicações Enviadas</h3>
+      <ul id="listaProfissionais" class="lista"></ul>
     </section>
-
   </main>
-
-  <!-- Rodapé -->
+<!-- Rodapé -->
   <footer>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
   </footer>
 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
-  <script src="/SRC/STATIC/JS/atividades.js"></script>
 </body>
 </html>
