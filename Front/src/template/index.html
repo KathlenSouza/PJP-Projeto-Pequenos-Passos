@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pequenos Passos | Início</title>
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+</head>
+
+<body class="pag-index">
+
+  <div id="carregando">
+    <div class="feet">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logo" class="nav-logo-img">
+        <span>Pequenos Passos</span>
+      </div>
+      <button class="nav-toggle" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/SRC/TEMPLATE/index.html" class="active"><i class="fa-solid fa-house"></i> Início</a></li>
+        <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
+        <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
+        <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
+        <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+        <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-nav"><i class="fa-solid fa-file-lines"></i> Relatório</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+
+    <section class="hero">
+      <div class="hero-right">
+        <h1 class="h1" id="childName">Pequenos Passos</h1>
+        <p class="subtitle" id="childSubtitle">Defina o nome e a data de nascimento em Configurações.</p>
+        <div class="hero-actions">
+          <a class="btn" href="/SRC/TEMPLATE/atividades.html">Começar atividades</a>
+          <a class="btn secondary" href="/SRC/TEMPLATE/radar.html">Ver radar</a>
+        </div>
+      </div>
+    </section>
+    <section class="cards-grid">
+      <section class="card">
+        <h2>Agenda do Dia</h2>
+        <ul id="listaAgenda" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Progresso da Semana</h2>
+        <div id="barrasProgresso" class="progress-bars"></div>
+      </section>
+
+      <section class="card">
+        <h2>Avisos</h2>
+        <ul id="listaAvisos" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Sugestões de Atividades</h2>
+        <ul id="listaSugestoes" class="list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Resumo Emocional da Semana</h2>
+        <div id="diarioResumo" class="emotional-summary"></div>
+      </section>
+    </section>
+
+    <section class="layout-two">
+      <aside class="sidebar card">
+        <h3>💉 Vacinas (4–6 anos)</h3>
+        <ul id="vaxList" class="list"></ul>
+        <div class="mt-2">
+          <button id="resetVax" class="btn ghost">Reiniciar status</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="card">
+          <h3>📘 Livros recomendados</h3>
+          <ul class="list" id="booksList"></ul>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>🎥 Vídeos educativos</h3>
+          <ul class="list" id="videosList"></ul>
+        </div>
+        <section class="layout-two">
+          <aside class="sidebar card">
+            <h2> Profissionais Recomendados</h2>
+            <div id="listaProfissionais" class="grid three"></div>
+          </aside>
+
+          <div class="card" style="margin-top:12px">
+            <h3>💡 Dicas práticas</h3>
+            <ul class="list" id="tipsList"></ul>
+          </div>
+      </main>
+    </section>
+
+
+    <footer>Desenvolvido Por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago) 💜</footer>
+  </div>
+
+  <script src="/SRC/STATIC/JS/nav.js"></script>
+  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/home.js"></script>
+</body>
+
+</html>
