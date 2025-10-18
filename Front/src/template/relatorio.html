@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pequenos Passos | Relatório</title>
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+    integrity="sha512-8na5Uacp4Hj1TPbQ0QleTn3ZJ5mXP7A5n8bG4Z+Q4L2o6VZk8+2bI0q6EZl9I7bzS0PpOeGm4Qk9t1Zr6lo7NQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="pag-relatorio">
+
+  <div id="carregando">
+    <div class="feet">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="pé">
+
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logo" class="nav-logo-img">
+        <span>Pequenos Passos</span>
+      </div>
+      <button class="nav-toggle" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
+        <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
+        <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
+        <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
+        <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+        <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-nav"><i class="fa-solid fa-file-lines"></i> Relatório</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="card">
+      <h1 class="h1"> Relatórios</h1>
+      <p class="subtitle">Selecione o que deseja incluir (em breve exportação para PDF).</p>
+      <label class="item"><input type="checkbox" id="rDone" checked> Atividades concluídas</label>
+      <label class="item"><input type="checkbox" id="rTodo"> Atividades pendentes</label>
+      <label class="item"><input type="checkbox" id="rDiary"> Diário emocional</label>
+      <label class="item"><input type="checkbox" id="rVax"> Calendário de vacinas</label>
+      <div class="hero-actions">
+        <button class="btn" id="btnReport">Gerar PDF</button>
+      </div>
+    </div>
+
+    <footer>Desenvolvido Por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago) 💜</footer>
+  </div>
+  <script src="/SRC/STATIC/JS/nav.js"></script>
+  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/relatorio.js"></script>
+</body>
+
+</html>
