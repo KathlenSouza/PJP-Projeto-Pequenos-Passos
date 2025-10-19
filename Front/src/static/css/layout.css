@@ -1,0 +1,9 @@
+.container{max-width:1100px;margin:100px auto 60px;padding:0 24px}
+.card{
+  background:#fff;border:1px solid #fff9ee;
+  border-radius:20px;padding:24px;
+  box-shadow:var(--shadow)
+}
+.grid{display:grid;gap:16px}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+footer{margin-top:60px;color:var(--muted);font-size:13px;text-align:center}

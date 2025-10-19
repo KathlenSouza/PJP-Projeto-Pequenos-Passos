@@ -1,0 +1,59 @@
+@import url("base.css");
+@import url("layout.css");
+
+body.pagina-login,
+body.pagina-cadastro {
+  background: linear-gradient(180deg, #f2f3ff 0%, #ffffff 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+}
+
+.h1 {
+  margin-bottom: 18px;
+}
+
+.item {
+  display: block;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e9f8;
+  margin-top: 6px;
+}
+
+.acoes-principais {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mensagem-erro {
+  color: #c0392b;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mensagem-erro.visivel {
+  opacity: 1;
+}

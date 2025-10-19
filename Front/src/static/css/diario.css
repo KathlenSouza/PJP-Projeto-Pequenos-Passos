@@ -1,0 +1,66 @@
+body.pagina-diario {
+  background: linear-gradient(180deg, #ffeef3 0%, #ffffff 70%);
+}
+
+/* Emoções */
+.emocoes-container {
+  margin: 24px 0 32px;
+  text-align: center;
+}
+
+.emocoes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.emocoes input {
+  display: none;
+}
+
+.emocoes label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.emocoes img {
+  width: clamp(80px, 8vw, 110px);
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emocoes img:hover {
+  transform: scale(1.08);
+}
+
+.emocoes input:checked + label img {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+.emocoes label span {
+  margin-top: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+.photo-preview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.foto-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,46 @@
+body.pagina-historico {
+  background: linear-gradient(180deg, #fff7ec 0%, #ffffff 70%);
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 20px;
+}
+
+.historico-item {
+  position: relative;
+  border: 1px solid #f1e7c7;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.historico-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.status-tag {
+  display: inline-block;
+  background: #d4edda;
+  color: #27632a;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.acoes-principais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.item {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+  padding: 20px 0;
+}
