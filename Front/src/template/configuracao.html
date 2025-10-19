@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pequenos Passos | Configurações</title>
 
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/configuracao.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
@@ -26,64 +30,65 @@
   </div>
 
   <!-- Navegação -->
-  <nav class="barra-navegacao">
-    <div class="container-navegacao">
-      <div class="logo-navegacao">
-        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="imagem-logo">
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img">
         <span>Pequenos Passos</span>
       </div>
 
-      <button class="botao-menu" id="alternarMenu">☰</button>
+      <button class="nav-toggle" id="alternarMenu">☰</button>
 
-      <ul class="links-navegacao" id="linksNavegacao">
+      <ul class="nav-links" id="navLinks">
         <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
         <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
         <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
         <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
         <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
-        <li><a href="/SRC/TEMPLATE/configuracao.html" class="ativo"><i class="fa-solid fa-gear"></i> Configurações</a></li>
-        <li><a href="/SRC/TEMPLATE/relatorio.html" class="botao-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
+        <li><a href="/SRC/TEMPLATE/configuracao.html" class="active"><i class="fa-solid fa-gear"></i> Configurações</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
       </ul>
     </div>
   </nav>
 
   <main class="container">
 
-    <section class="cartao">
-      <h1 class="titulo-principal">Configurações</h1>
-      <p class="subtitulo">Gerencie as informações dos responsáveis, da criança e do plano de acesso.</p>
+    <!-- Configurações -->
+    <section class="card">
+      <h1 class="h1">Configurações</h1>
+      <p class="subtitle">Gerencie as informações dos responsáveis, da criança e do plano de acesso.</p>
 
       <!-- Dados dos responsáveis -->
       <h3>Responsáveis</h3>
-      <div class="grade duas-colunas">
+      <div class="grid cols-2">
         <div>
-          <label class="rotulo">Nome</label>
-          <input id="nomeResponsavel" class="campo" type="text">
+          <label class="label">Nome</label>
+          <input id="nomePais" class="input" type="text" placeholder="Nome do responsável">
         </div>
         <div>
-          <label class="rotulo">E-mail</label>
-          <input id="emailResponsavel" class="campo" type="email">
+          <label class="label">E-mail</label>
+          <input id="emailPais" class="input" type="email" placeholder="email@exemplo.com">
         </div>
         <div>
-          <label class="rotulo">Senha</label>
-          <input id="senhaResponsavel" class="campo" type="password">
+          <label class="label">Senha</label>
+          <input id="senhaPais" class="input" type="password" placeholder="********">
         </div>
       </div>
 
       <!-- Dados da criança -->
-      <h3 style="margin-top: 16px;">Criança</h3>
-      <div class="grade duas-colunas">
+      <h3 style="margin-top: 24px;">Criança</h3>
+      <div class="grid cols-2">
         <div>
-          <label class="rotulo">Nome</label>
-          <input id="nomeCrianca" class="campo" type="text">
+          <label class="label">Nome</label>
+          <input id="childName" class="input" type="text" placeholder="Nome da criança">
         </div>
         <div>
-          <label class="rotulo">Data de nascimento</label>
-          <input id="nascimentoCrianca" class="campo" type="date">
+          <label class="label">Data de nascimento</label>
+          <input id="nascimentoCrianca" class="input" type="date">
         </div>
         <div>
-          <label class="rotulo">Sexo</label>
-          <select id="sexoCrianca" class="campo">
+          <label class="label">Sexo</label>
+          <select id="sexoCrianca" class="input">
             <option value="">Selecione</option>
             <option value="F">Feminino</option>
             <option value="M">Masculino</option>
@@ -91,33 +96,31 @@
           </select>
         </div>
         <div>
-          <label class="rotulo">Idade</label>
-          <input id="idadeCrianca" class="campo" type="number" min="4" max="6" placeholder="Ex.: 4">
+          <label class="label">Idade</label>
+          <input id="idadeCrianca" class="input" type="number" min="4" max="6" placeholder="Ex.: 4">
         </div>
       </div>
     </section>
 
     <!-- Plano -->
-    <section class="cartao" style="margin-top:16px;">
+    <section class="card" style="margin-top: 20px;">
       <h3>Plano</h3>
-      <div class="grade duas-colunas">
-        <label class="item" style="cursor: pointer;">
+      <div class="grid cols-2">
+        <label class="item" style="cursor:pointer;">
           <input type="radio" name="plano" value="gratuito" checked> Plano Gratuito
         </label>
-        <label class="item" style="cursor: pointer;">
+        <label class="item" style="cursor:pointer;">
           <input type="radio" name="plano" value="premium"> Plano Premium
         </label>
       </div>
 
-      <div class="acoes-principais" style="justify-content: flex-end; margin-top: 16px;">
-        <button id="botaoSalvarConfiguracoes" class="botao">Salvar</button>
-        <button id="botaoLimparConfiguracoes" class="botao perigo">Limpar</button>
+      <div class="hero-actions" style="margin-top: 20px;">
+        <button id="botaoSalvarCfg" class="btn">Salvar</button>
+        <button id="botaoLimparCfg" class="btn danger">Limpar</button>
       </div>
     </section>
-
   </main>
 
-  <!-- Rodapé -->
   <footer>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
   </footer>

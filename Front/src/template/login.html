@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pequenos Passos | Login</title>
 
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/login.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
@@ -22,39 +27,36 @@
     </div>
   </div>
 
-  <!-- Conteúdo principal -->
   <main class="container">
     <section class="principal">
-      <div class="cartao" style="max-width:520px; margin:auto;">
-        <h2 class="titulo-principal">Entrar</h2>
+      <div class="card">
+        <h2 class="h1">Entrar</h2>
 
         <!-- Campos de login -->
-        <label class="item">E-mail
-          <input type="email" id="email" placeholder="seu@email.com" required>
+        <label class="item">
+          E-mail
+          <input type="email" id="email" class="input" placeholder="seu@email.com" required>
         </label>
 
-        <label class="item">Senha
-          <input type="password" id="senha" placeholder="••••••••" required>
+        <label class="item">
+          Senha
+          <input type="password" id="senha" class="input" placeholder="••••••••" required>
         </label>
 
         <div class="acoes-principais">
-          <button class="botao" id="botaoLogin">Entrar</button>
-          <a class="botao neutro" href="/SRC/TEMPLATE/cadastro.html">Cadastrar-se</a>
+          <button class="btn" id="botaoLogin">Entrar</button>
+          <a class="btn neutro" href="/SRC/TEMPLATE/cadastro.html">Cadastrar-se</a>
         </div>
 
-        <!-- Integração futura com o back-end:
-             Enviar POST /auth/login retornando token de sessão -->
+        <p id="mensagemErro" class="mensagem-erro"></p>
       </div>
     </section>
   </main>
 
-  <!-- Rodapé -->
-  <footer>
-    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
-  </footer>
+
 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
-  <script src="/SRC/STATIC/JS/home.js"></script>
+  <script src="/SRC/STATIC/JS/login.js"></script>
 </body>
 </html>

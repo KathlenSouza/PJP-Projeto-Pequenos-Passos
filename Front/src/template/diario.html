@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pequenos Passos | Diário</title>
 
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/diario.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
 
 <body class="pagina-diario">
-
-  <!-- Tela de carregamento -->
+  <!-- Loader -->
   <div id="carregando">
     <div class="pes">
       <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
@@ -26,103 +28,77 @@
   </div>
 
   <!-- Navegação -->
-  <nav class="barra-navegacao">
-    <div class="container-navegacao">
-      <div class="logo-navegacao">
-        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="imagem-logo">
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img">
         <span>Pequenos Passos</span>
       </div>
 
-      <button class="botao-menu" id="alternarMenu">☰</button>
-
-      <ul class="links-navegacao" id="linksNavegacao">
+      <button class="nav-toggle" id="alternarMenu">☰</button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
         <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
         <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
-        <li><a href="/SRC/TEMPLATE/diario.html" class="ativo"><i class="fa-solid fa-book"></i> Diário</a></li>
+        <li><a href="/SRC/TEMPLATE/diario.html" class="active"><i class="fa-solid fa-book"></i> Diário</a></li>
         <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
         <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
-        <li><a href="/SRC/TEMPLATE/relatorio.html" class="botao-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
       </ul>
     </div>
   </nav>
 
   <main class="container">
+    <!-- Novo registro -->
+    <section class="card">
+      <h1 class="h1">Diário Emocional</h1>
+      <p class="subtitle">Registre momentos importantes e adicione fotos das suas memórias especiais.</p>
 
-    <!-- Registro do diário -->
-    <section class="cartao">
-      <h1 class="titulo-principal">Diário Emocional</h1>
-      <p class="subtitulo">Registre momentos importantes e anexe fotos das suas memórias especiais.</p>
-
-      <form id="formularioDiario" class="grade">
-        
-        <!-- Seletor de emoções -->
-        <div class="container-emocoes">
-          <label for="emocao">Emoção:</label>
+      <form id="diaryForm" class="grid" novalidate>
+        <div class="emocoes-container">
+          <label class="label">Como você se sente hoje?</label>
           <div class="emocoes">
-            <input type="radio" id="feliz" name="emocao" value="feliz" checked>
-            <label for="feliz">
-              <img src="/SRC/STATIC/IMG/feliz.png" alt="Feliz">
-              <span>Feliz</span>
-            </label>
+            <input type="radio" id="feliz" name="emocao" value="Feliz" checked>
+            <label for="feliz"><img src="/SRC/STATIC/IMG/feliz.png" alt="Feliz"><span>Feliz</span></label>
 
-            <input type="radio" id="calmo" name="emocao" value="calmo">
-            <label for="calmo">
-              <img src="/SRC/STATIC/IMG/calmo.png" alt="Calmo">
-              <span>Calmo</span>
-            </label>
+            <input type="radio" id="calmo" name="emocao" value="Calmo">
+            <label for="calmo"><img src="/SRC/STATIC/IMG/calmo.png" alt="Calmo"><span>Calmo</span></label>
 
-            <input type="radio" id="triste" name="emocao" value="triste">
-            <label for="triste">
-              <img src="/SRC/STATIC/IMG/triste.png" alt="Triste">
-              <span>Triste</span>
-            </label>
+            <input type="radio" id="triste" name="emocao" value="Triste">
+            <label for="triste"><img src="/SRC/STATIC/IMG/triste.png" alt="Triste"><span>Triste</span></label>
 
-            <input type="radio" id="animado" name="emocao" value="animado">
-            <label for="animado">
-              <img src="/SRC/STATIC/IMG/animado.png" alt="Animado">
-              <span>Animado</span>
-            </label>
+            <input type="radio" id="animado" name="emocao" value="Animado">
+            <label for="animado"><img src="/SRC/STATIC/IMG/animado.png" alt="Animado"><span>Animado</span></label>
 
-            <input type="radio" id="bravo" name="emocao" value="bravo">
-            <label for="bravo">
-              <img src="/SRC/STATIC/IMG/bravo.png" alt="Bravo">
-              <span>Bravo</span>
-            </label>
+            <input type="radio" id="bravo" name="emocao" value="Bravo">
+            <label for="bravo"><img src="/SRC/STATIC/IMG/bravo.png" alt="Bravo"><span>Bravo</span></label>
 
-            <input type="radio" id="ansioso" name="emocao" value="ansioso">
-            <label for="ansioso">
-              <img src="/SRC/STATIC/IMG/ansioso.png" alt="Ansioso">
-              <span>Ansioso</span>
-            </label>
+            <input type="radio" id="ansioso" name="emocao" value="Ansioso">
+            <label for="ansioso"><img src="/SRC/STATIC/IMG/ansioso.png" alt="Ansioso"><span>Ansioso</span></label>
           </div>
         </div>
 
-        <!-- Campo de texto -->
         <div>
-          <label class="rotulo">Como foi o dia?</label>
-          <textarea id="textoDiario" class="campo" rows="3" placeholder="Escreva aqui..."></textarea>
+          <label class="label">Como foi o dia?</label>
+          <textarea id="diaryText" class="input" rows="3" placeholder="Escreva aqui..."></textarea>
         </div>
 
-        <!-- Upload de fotos -->
         <div>
-          <label class="rotulo">Adicionar fotos</label>
-          <input type="file" id="entradaFotos" class="campo" multiple accept="image/*">
+          <label class="label">Adicionar fotos</label>
+          <input type="file" id="entradaFotos" class="input" multiple accept="image/*">
         </div>
 
-        <button class="botao" type="submit">Salvar Registro</button>
+        <button class="btn" type="submit">Salvar Registro</button>
       </form>
     </section>
 
-    <!-- Registros anteriores -->
-    <section class="cartao" style="margin-top:12px;">
-      <h2 class="titulo-principal" style="font-size:22px;">Registros Anteriores</h2>
-      <ul id="listaDiario" class="lista"></ul>
+    <!-- Registros -->
+    <section class="card" style="margin-top:16px;">
+      <h2 class="h1" style="font-size:22px;">Registros Anteriores</h2>
+      <ul id="diaryList" class="list"></ul>
     </section>
-
   </main>
 
-  <!-- Rodapé -->
   <footer>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
   </footer>

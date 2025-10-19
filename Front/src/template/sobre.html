@@ -1,87 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pequenos Passos | Sobre</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pequenos Passos | Início</title>
 
-    <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/sobre.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
 
-<body class="pagina-sobre">
+<body class="pag-sobre">
 
-    <!-- Animação de carregamento com pezinhos -->
-    <div id="carregando">
-        <div class="pes">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-            <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-        </div>
+  <!-- Loader -->
+  <div id="carregando">
+    <div class="pes">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
     </div>
+  </div>
 
-    <!-- Barra de navegação simplificada -->
-    <nav class="barra-navegacao-sobre">
-        <div class="container-navegacao">
-            <div class="logo-navegacao">
-                <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="imagem-logo">
-                <span>Pequenos Passos</span>
-            </div>
-        </div>
-    </nav>
+  <!-- Navegação -->
+  <nav class="navbarsobre">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img">
+        <span>Pequenos Passos</span>
+      </div>
+      <button class="nav-toggle" id="alternarMenu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="active"><i class="fa-solid fa-circle-info"></i> Sobre</a></li>
+        <li><a href="/SRC/TEMPLATE/cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastre-se</a></li>
+        <li><a href="/SRC/TEMPLATE/login.html" class="btn-nav"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <!-- Conteúdo principal -->
-    <main class="container">
+  <!-- Conteúdo principal -->
+  <main class="container">
+    <section class="card">
+      <img src="/SRC/STATIC/IMG/logo.png" alt="Logo Pequenos Passos" style="max-width:160px; margin: 0 auto 20px; display:block;">
+      <h1 class="h1">Bem-vindo ao Pequenos Passos 🦶</h1>
+      <p class="subtitle">
+        Um espaço criado com carinho para acompanhar o desenvolvimento infantil de forma leve, divertida e educativa.
+      </p>
 
-        <section class="cartao">
-            <h1 class="titulo-principal">Sobre o Projeto</h1>
-            <p class="subtitulo">
-                O Pequenos Passos é um aplicativo criado para apoiar famílias no acompanhamento do desenvolvimento
-                infantil de forma leve, educativa e divertida.
-            </p>
-            <p>
-                Recursos principais: atividades organizadas por faixa etária (4 a 6 anos), diário emocional com fotos,
-                radar de progresso, indicações de conteúdos e relatórios personalizados.
-            </p>
-        </section>
+      <p style="margin:20px 0; line-height:1.6;">
+        O <strong>Pequenos Passos</strong> é uma plataforma voltada para pais, responsáveis e educadores acompanharem
+        o progresso das crianças de 4 a 6 anos, com atividades, diário emocional e relatórios de evolução.
+      </p>
 
-        <section class="cartao">
-            <h1 class="titulo-principal">Benefícios</h1>
-            <p class="subtitulo">
-                Criado com base em práticas pedagógicas, o Pequenos Passos estimula o aprendizado, a expressão emocional
-                e o vínculo entre família e criança.
-            </p>
-            <p>
-                Além de registrar marcos importantes, o app orienta atividades adequadas para cada fase, promovendo um
-                acompanhamento mais consciente e afetuoso.
-            </p>
-        </section>
+      <p>
+        Cadastre-se gratuitamente e comece a trilhar o caminho dos primeiros aprendizados com o seu pequeno!
+      </p>
 
-        <section class="cartao">
-            <h1 class="titulo-principal">Cadastre-se</h1>
-            <p class="subtitulo">
-                Comece agora sua jornada com o Pequenos Passos e acompanhe o crescimento da sua criança com leveza.
-            </p>
-            <p>
-                O cadastro é simples e gratuito — em poucos minutos, você terá acesso a todas as funcionalidades do
-                aplicativo.
-            </p>
-        </section>
+      <div class="acoes-principais" style="margin-top: 24px;">
+        <a href="/SRC/TEMPLATE/cadastro.html" class="btn"><i class="fa-solid fa-user-plus"></i> Cadastre-se</a>
+        <a href="/SRC/TEMPLATE/login.html" class="btn secondary"><i class="fa-solid fa-right-to-bracket"></i> Fazer Login</a>
+      </div>
+    </section>
+  </main>
 
-    </main>
+  <footer>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
+  </footer>
 
-    <!-- Rodapé -->
-    <footer>
-        Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
-    </footer>
-
-    <script src="/SRC/STATIC/JS/nav.js"></script>
-    <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/nav.js"></script>
+  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
 </body>
-
 </html>

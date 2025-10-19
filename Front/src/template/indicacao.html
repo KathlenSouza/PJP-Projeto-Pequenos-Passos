@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pequenos Passos | Indicações</title>
 
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/style.css" />
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/indicacao.css">
+  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
@@ -26,90 +31,93 @@
   </div>
 
   <!-- Navegação -->
-  <nav class="barra-navegacao">
-    <div class="container-navegacao">
-      <div class="logo-navegacao">
-        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="imagem-logo">
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img">
         <span>Pequenos Passos</span>
       </div>
 
-      <button class="botao-menu" id="alternarMenu">☰</button>
+      <button class="nav-toggle" id="alternarMenu">☰</button>
 
-      <ul class="links-navegacao" id="linksNavegacao">
+      <ul class="nav-links" id="navLinks">
         <li><a href="/SRC/TEMPLATE/index.html"><i class="fa-solid fa-house"></i> Início</a></li>
         <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
         <li><a href="/SRC/TEMPLATE/atividades.html"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
         <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
-        <li><a href="/SRC/TEMPLATE/indicacao.html" class="ativo"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
+        <li><a href="/SRC/TEMPLATE/indicacao.html" class="active"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
         <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
-        <li><a href="/SRC/TEMPLATE/relatorio.html" class="botao-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
       </ul>
     </div>
   </nav>
 
   <main class="container">
-
     <!-- Formulário de indicação -->
-    <section class="cartao">
-      <h1 class="titulo-principal">Indicações de Profissionais</h1>
-      <p class="subtitulo">Indique profissionais para outros pais — informe nome, área, cidade, contato e um breve comentário.</p>
+    <section class="card">
+      <h1 class="h1">Indicações de Profissionais</h1>
+      <p class="subtitle">
+        Indique profissionais para outros pais — informe nome, área, cidade, contato e um breve comentário.
+      </p>
 
-      <div class="grade duas-colunas">
+      <div class="grid cols-2">
         <div>
-          <label class="rotulo">Nome</label>
-          <input id="nomeProfissional" class="campo" type="text" placeholder="Nome do profissional">
+          <label class="label">Nome</label>
+          <input id="nomeProfissional" class="input" type="text" placeholder="Nome do profissional">
         </div>
 
         <div>
-          <label class="rotulo">Área</label>
-          <input id="areaProfissional" class="campo" type="text" placeholder="Psicologia, Fonoaudiologia, Pediatria...">
+          <label class="label">Área</label>
+          <input id="areaProfissional" class="input" type="text" placeholder="Psicologia, Fonoaudiologia, Pediatria...">
         </div>
 
         <div>
-          <label class="rotulo">Cidade</label>
-          <input id="cidadeProfissional" class="campo" type="text" placeholder="Cidade">
+          <label class="label">Cidade</label>
+          <input id="cidadeProfissional" class="input" type="text" placeholder="Cidade">
         </div>
 
         <div>
-          <label class="rotulo">Contato</label>
-          <input id="contatoProfissional" class="campo" type="text" placeholder="(11) 99999-0000">
+          <label class="label">Contato</label>
+          <input id="contatoProfissional" class="input" type="text" placeholder="(11) 99999-0000">
+        </div>
+
+        <div class="col-span-2">
+          <label class="label">Comentário</label>
+          <textarea id="comentarioProfissional" class="input" rows="2" placeholder="Comentário sobre o profissional"></textarea>
         </div>
 
         <div>
-          <label class="rotulo">Comentário</label>
-          <input id="comentarioProfissional" class="campo" type="text" placeholder="Comentário sobre o profissional">
-        </div>
-
-        <div>
-          <label class="rotulo">Avaliação</label>
-          <select id="avaliacaoProfissional" class="campo">
+          <label class="label">Avaliação</label>
+          <select id="avaliacaoProfissional" class="input">
             <option value="">Sem avaliação</option>
-            <option>1 estrela</option>
-            <option>2 estrelas</option>
-            <option>3 estrelas</option>
-            <option>4 estrelas</option>
-            <option>5 estrelas</option>
+            <option>⭐ 1 estrela</option>
+            <option>⭐⭐ 2 estrelas</option>
+            <option>⭐⭐⭐ 3 estrelas</option>
+            <option>⭐⭐⭐⭐ 4 estrelas</option>
+            <option>⭐⭐⭐⭐⭐ 5 estrelas</option>
           </select>
         </div>
       </div>
 
-      <div class="acoes-principais" style="margin-top: 12px;">
-        <button class="botao" id="botaoAdicionarProfissional">Adicionar Indicação</button>
+      <div class="acoes-principais" style="margin-top:12px;">
+        <button class="btn" id="botaoAdicionarProfissional">Adicionar Indicação</button>
+        <button class="btn danger" id="botaoLimparIndicacoes">Limpar Tudo</button>
       </div>
     </section>
 
-    <!-- Lista de indicações -->
-    <section class="cartao">
+    <!-- Lista -->
+    <section class="card">
       <h3>Indicações Enviadas</h3>
-      <ul id="listaProfissionais" class="lista"></ul>
+      <ul id="listaProfissionais" class="list"></ul>
     </section>
   </main>
-<!-- Rodapé -->
+
   <footer>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
   </footer>
 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
+  <script src="/SRC/STATIC/JS/indicacao.js"></script>
 </body>
 </html>
