@@ -1,71 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt-br">
 
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pequenos Passos | Cadastro</title>
-
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">   
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/cadastro.css">
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pequenos Passos — Cadastro</title>
+  <link rel="stylesheet" href="/static/css/cadastro.css" />
 </head>
-
-<body class="pagina-cadastro">
-
-  <!-- Tela de carregamento -->
-  <div id="carregando">
-    <div class="pes">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+<body>
+  <div class="page-wrapper">
+    <div class="left-side">
+      <img src="/img/imgfundo2.jpg" alt="Pequenos Passos" class="left-image" id="leftImage" />
     </div>
+
+```
+<div class="right-side">
+  <div class="login-box">
+    <h3 class="title">Crie sua Conta</h3>
+
+    <form id="cadastroForm" novalidate>
+      <!-- Etapa 1 -->
+      <div class="step step-1 active">
+        <div class="inputs-row">
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+        </div>
+        <div class="inputs-row">
+          <input type="email" id="email" name="email" placeholder="Email" required />
+        </div>
+        <div class="inputs-row">
+          <input type="password" id="senha" name="senha" placeholder="Senha (mínimo 8 caracteres)" required />
+        </div>
+        <div class="inputs-row">
+          <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirmar senha" required />
+        </div>
+        <button type="button" class="btn-signin next">Próximo</button>
+      </div>
+
+      <!-- Etapa 2 -->
+      <div class="step step-2">
+        <div class="inputs-row">
+          <input type="text" id="nomeCrianca" name="nomeCrianca" placeholder="Nome da criança" required />
+        </div>
+        <div class="inputs-row">
+          <input type="number" id="idadeCrianca" name="idadeCrianca" placeholder="Idade (4 a 6)" min="4" max="6" required />
+        </div>
+        <div class="inputs-row">
+          <button type="button" class="btn-back">Voltar</button>
+          <button type="submit" class="btn-signin">Cadastrar</button>
+        </div>
+      </div>
+
+      <div id="error" class="error">Por favor, preencha todos os campos corretamente.</div>
+    </form>
+  </div>
+</div>
+```
+
   </div>
 
-  <main class="container">
-    <section class="principal">
-      <div class="card" style="max-width:640px; margin:auto;">
-        <h2 class="h1">Criar Conta</h2>
-        <p class="subtitle">Preencha seus dados abaixo para começar.</p>
+  <script src="/static/js/cadastro.js"></script>
 
-        <form id="formCadastro" class="grid cols-2" novalidate>
-          <label class="item">
-            <span class="label">Nome completo</span>
-            <input type="text" id="nome" class="input" placeholder="Nome e sobrenome" required>
-          </label>
-
-          <label class="item">
-            <span class="label">E-mail</span>
-            <input type="email" id="email" class="input" placeholder="seu@email.com" required>
-          </label>
-
-          <label class="item">
-            <span class="label">Senha</span>
-            <input type="password" id="senha" class="input" placeholder="Mínimo 8 caracteres" required minlength="8">
-          </label>
-
-          <label class="item">
-            <span class="label">Confirmar senha</span>
-            <input type="password" id="confirmarSenha" class="input" placeholder="Repita a senha" required>
-          </label>
-
-          <div class="acoes hero-actions" style="grid-column: 1 / -1;">
-            <button type="submit" class="btn" id="botaoCadastrar">Criar Conta</button>
-            <a href="/SRC/TEMPLATE/login.html" class="btn ghost">Já tenho conta</a>
-          </div>
-        </form>
-
-        <p id="mensagemErro" class="erro"></p>
-      </div>
-    </section>
-  </main>
-
-
-  <script src="/SRC/STATIC/JS/nav.js"></script>
-  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
-  <script src="/SRC/STATIC/JS/cadastro.js"></script>
 </body>
 </html>

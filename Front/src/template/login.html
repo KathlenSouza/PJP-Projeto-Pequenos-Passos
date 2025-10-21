@@ -1,62 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
+<!DOCT<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pequenos Passos | Login</title>
-
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/login.css">
-  <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pequenos Passos — Login</title>
+  <link rel="stylesheet" href="/static/css/login.css" />
 </head>
+<body>
+  <div class="page-wrapper">
+    <div class="left-side">
+      <!-- Substitua 'left-image.jpg' pelo nome do seu arquivo de imagem -->
+      <img src="/img/imgfundo.jpg" alt="Pequenos Passos" class="left-image" />
+    </div>
 
-<body class="pagina-login">
+    <div class="right-side">
+      <div class="login-box">
+        <h3 class="title">Acesse sua Conta</h3>
 
-  <!-- Tela de carregamento -->
-  <div id="carregando">
-    <div class="pes">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <form id="loginForm" novalidate>
+          <div class="inputs-row">
+            <input type="text" id="username" name="username" placeholder="Email" autocomplete="username" />
+            <input type="password" id="password" name="password" placeholder="Senha" autocomplete="current-password" />
+          </div>
+
+          <button type="submit" class="btn-signin">Entrar</button>
+
+          <div class="links">
+            <a href="#" class="forgot">Esqueceu ? <span>Email / senha?</span></a>
+          </div>
+
+          <div class="signup">
+            <a href="#">
+             <span>Cadastre-se</span>
+            </a>
+          </div>
+
+          <div id="error" class="error">Por favor, preencha todos os campos.</div>
+        </form>
+      </div>
     </div>
   </div>
-
-  <main class="container">
-    <section class="principal">
-      <div class="card">
-        <h2 class="h1">Entrar</h2>
-
-        <!-- Campos de login -->
-        <label class="item">
-          E-mail
-          <input type="email" id="email" class="input" placeholder="seu@email.com" required>
-        </label>
-
-        <label class="item">
-          Senha
-          <input type="password" id="senha" class="input" placeholder="••••••••" required>
-        </label>
-
-        <div class="acoes-principais">
-          <button class="btn" id="botaoLogin">Entrar</button>
-          <a class="btn neutro" href="/SRC/TEMPLATE/cadastro.html">Cadastrar-se</a>
-        </div>
-
-        <p id="mensagemErro" class="mensagem-erro"></p>
-      </div>
-    </section>
-  </main>
-
-
-
-  <script src="/SRC/STATIC/JS/nav.js"></script>
-  <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
-  <script src="/SRC/STATIC/JS/login.js"></script>
 </body>
+<script src="/static/js/login.js"></script>
 </html>
