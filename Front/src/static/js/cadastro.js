@@ -1,4 +1,4 @@
-// cadastro.js — validação básica do formulário de criação de conta
+//  validação  criação de conta
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formCadastro");
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Simula criação de conta (poderia ser um POST futuramente)
+    // Simula criação de conta, será integrado com back
     const usuario = { nome, email, senha };
     localStorage.setItem("pp_usuario", JSON.stringify(usuario));
 

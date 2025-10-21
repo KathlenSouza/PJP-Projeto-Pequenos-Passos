@@ -1,4 +1,6 @@
-// calendario.js — Controle de calendário funcional (adição, edição e exclusão de eventos)
+
+//precisa ser colocado na tela inicial
+// Controle de calendário funcional (adição, edição e exclusão de eventos)
 
 const calendario = document.getElementById("calendar");
 const janelaEvento = document.getElementById("eventModal");
@@ -12,9 +14,7 @@ const botaoAdicionar = document.getElementById("addEventBtn");
 let dataSelecionada = null;
 let eventos = JSON.parse(localStorage.getItem("pp_eventos")) || {};
 
-// ==============================
-// 🔄 Renderiza o calendário
-// ==============================
+//  Renderiza o calendário
 function exibirCalendario() {
   const hoje = new Date();
   const ano = hoje.getFullYear();
@@ -41,10 +41,7 @@ function exibirCalendario() {
     calendario.appendChild(elementoDia);
   }
 }
-
-// ==============================
-// 📋 Abre o modal de evento
-// ==============================
+//  Abre o modal de evento
 function abrirJanela(data) {
   dataSelecionada = data;
   const eventoExistente = eventos[data];
@@ -56,17 +53,15 @@ function abrirJanela(data) {
   janelaEvento.classList.add("mostrar");
 }
 
-// ==============================
-// ❌ Fecha o modal de evento
-// ==============================
+//  Fecha o modal de evento
+
 function fecharJanela() {
   janelaEvento.classList.remove("mostrar");
   entradaTituloEvento.value = "";
 }
 
-// ==============================
-// 💾 Salvar evento
-// ==============================
+//  Salvar evento
+
 botaoSalvar.onclick = () => {
   if (!dataSelecionada) return;
 
@@ -81,9 +76,9 @@ botaoSalvar.onclick = () => {
   mostrarAviso("Evento salvo com sucesso!");
 };
 
-// ==============================
-// 🗑️ Excluir evento
-// ==============================
+
+//  Excluir evento
+
 botaoExcluir.onclick = () => {
   if (dataSelecionada && eventos[dataSelecionada]) {
     delete eventos[dataSelecionada];
@@ -94,9 +89,9 @@ botaoExcluir.onclick = () => {
   }
 };
 
-// ==============================
-// ➕ Adicionar evento rápido
-// ==============================
+
+//  Adicionar evento rápido
+
 botaoAdicionar.onclick = () => {
   const dataAtual = new Date().toISOString().split("T")[0];
   abrirJanela(dataAtual);
@@ -105,9 +100,9 @@ botaoAdicionar.onclick = () => {
 // Fecha modal ao clicar fora
 janelaEvento.onclick = (e) => e.target === janelaEvento && fecharJanela();
 
-// ==============================
-// 🔔 Exibir mensagem temporária
-// ==============================
+
+//  Exibir mensagem temporária
+
 function mostrarAviso(mensagem) {
   const aviso = document.createElement("div");
   aviso.className = "aviso-toast";

@@ -1,4 +1,4 @@
-// nav.js — Controla o menu de navegação responsivo (mobile e desktop)
+//  menu de navegação responsivo (mobile e desktop) menu hambuguer 
 
 document.addEventListener('DOMContentLoaded', () => {
   const botaoMenu = document.getElementById('alternarMenu'); // igual ao HTML

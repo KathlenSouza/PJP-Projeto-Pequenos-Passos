@@ -1,4 +1,4 @@
-// radar.js — Gera o gráfico de radar e exibe blocos de progresso.
+// Gera o gráfico de radar e exibe blocos de progresso, melhor visualização em teia.
 
 function lerRadar() {
   const dados = localStorage.getItem('pp_radar');

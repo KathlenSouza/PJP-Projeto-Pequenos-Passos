@@ -1,4 +1,4 @@
-// indicacao.js — gerenciamento de indicações de profissionais
+// gerenciamento de indicações de profissionais
 
 const CHAVE_INDICACOES = 'pp_indicacoes';
 

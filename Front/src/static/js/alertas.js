@@ -11,3 +11,4 @@ function mostrarAviso(mensagem) {
     setTimeout(() => aviso.remove(), 400);
   }, 2500);
 }
+// falta ajustar na tela inicial ..............

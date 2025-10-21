@@ -1,4 +1,4 @@
-// login.js — valida credenciais e simula autenticação local
+//  validação e credenciais e simula autenticação local lembrando que será feito  no back aqui é teste
 
 document.addEventListener('DOMContentLoaded', () => {
   const btnLogin = document.getElementById('botaoLogin');

@@ -1,4 +1,4 @@
-// diario.js — Gerencia o Diário Emocional (texto + fotos) com localStorage
+//  Gerencia o Diário Emocional (texto + fotos) 
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('diaryForm');
@@ -13,9 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     registros = [];
   }
 
-  // -----------------------------
   // Exibir registros
-  // -----------------------------
+  
   function exibirRegistros() {
     list.innerHTML = '';
 
@@ -52,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // -----------------------------
+  
   // Adicionar novo registro
-  // -----------------------------
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
 

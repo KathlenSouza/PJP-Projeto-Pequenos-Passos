@@ -1,9 +1,9 @@
-// home.js — Página inicial do Pequenos Passos
+// Página inicial do Pequenos Passos
 // Exibe informações da criança, vacinas, livros, vídeos, dicas e painel de progresso.
 
-// =========================
+
 //  INFORMAÇÕES DA CRIANÇA
-// =========================
+
 
 function obterCrianca() {
   const dados = localStorage.getItem('pp_crianca');
@@ -43,9 +43,9 @@ function exibirCabecalho() {
     : 'Defina o nome e a data de nascimento em Configurações.';
 }
 
-// =========================
+
 //  VACINAS
-// =========================
+
 
 const CHAVE_VACINAS = 'pp_vacinas_4_6';
 const LISTA_VACINAS = [
@@ -111,9 +111,9 @@ function exibirVacinas() {
   if (botaoResetar) botaoResetar.onclick = limparVacinas;
 }
 
-// =========================
+
 //  CONTEÚDO EDUCATIVO
-// =========================
+
 
 const LIVROS = [
   { titulo: 'A Lagarta Comilona', autor: 'Eric Carle', link: 'https://www.google.com/search?q=A+Lagarta+Comilona' },
@@ -153,9 +153,9 @@ function criarItemTexto(texto) {
   return item;
 }
 
-// =========================
-//  PAINEL PRINCIPAL (MOCK)
-// =========================
+
+//  PAINEL PRINCIPAL 
+
 
 function formatarDataAtual() {
   const opcoes = { weekday: 'long', day: '2-digit', month: 'long' };
@@ -190,9 +190,9 @@ const dadosProfissionais = [
   { nome: 'Dra. Juliana Costa', area: 'Fonoaudióloga', avaliacao: 4 }
 ];
 
-// =========================
+
 //  RENDERIZAÇÃO GERAL
-// =========================
+
 
 document.addEventListener('DOMContentLoaded', () => {
   exibirCabecalho();

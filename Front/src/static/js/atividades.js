@@ -1,4 +1,4 @@
-// atividades.js — Gerencia as atividades e sincroniza o radar
+// Gerencia as atividades e sincroniza o radar
 
 const CHAVE_ATIVIDADES = 'pp_atividades';
 const AREAS = ["Motor Grosso", "Motor Fino", "Linguagem", "Cognitivo", "Socioemocional"];
@@ -11,9 +11,8 @@ const SUGESTOES_PADRAO = [
   { descricao: "Participar de um jogo cooperativo simples", categoria: "Socioemocional" }
 ];
 
-// ==============================
-// 🔄 Leitura e escrita
-// ==============================
+// Leitura e escrita
+
 function lerAtividades() {
   try {
     return JSON.parse(localStorage.getItem(CHAVE_ATIVIDADES) || '[]');
@@ -26,9 +25,9 @@ function salvarAtividades(lista) {
   localStorage.setItem(CHAVE_ATIVIDADES, JSON.stringify(lista));
 }
 
-// ==============================
-// 📋 Renderizar lista
-// ==============================
+
+//  Renderizar lista
+
 function exibirAtividades() {
   const listaHtml = document.getElementById('activitiesList');
   const atividades = lerAtividades();
@@ -72,9 +71,7 @@ function exibirAtividades() {
   });
 }
 
-// ==============================
-// ➕ Adicionar atividade manualmente
-// ==============================
+//  Adicionar atividade manualmente
 function adicionarAtividade() {
   const descricao = document.getElementById('activityDesc').value.trim();
   const categoria = document.getElementById('activityCategory').value;
@@ -93,9 +90,7 @@ function adicionarAtividade() {
   exibirAtividades();
 }
 
-// ==============================
-// 💡 Sugerir atividades
-// ==============================
+// Sugerir atividades
 function sugerirAtividades() {
   const lista = lerAtividades();
   SUGESTOES_PADRAO.forEach((sugestao, i) =>

@@ -1,12 +1,12 @@
-// configuracao.js — Gerencia e salva as configurações locais do app
+// Gerencia e salva as configurações 
 
 const CHAVE_PAIS = 'pp_pais';
 const CHAVE_CRIANCA = 'pp_crianca';
 const CHAVE_PLANO = 'pp_plano';
 
-// ==========================
+
 // Salvar as configurações
-// ==========================
+
 function salvarConfiguracoes() {
   const pais = {
     nome: document.getElementById('nomePais').value.trim(),
@@ -30,9 +30,9 @@ function salvarConfiguracoes() {
   alert('✅ Configurações salvas com sucesso!');
 }
 
-// ==========================
+
 // Carregar as configurações
-// ==========================
+
 function carregarConfiguracoes() {
   const pais = JSON.parse(localStorage.getItem(CHAVE_PAIS) || '{}');
   document.getElementById('nomePais').value = pais.nome || '';
@@ -50,9 +50,9 @@ function carregarConfiguracoes() {
   if (radioSelecionado) radioSelecionado.checked = true;
 }
 
-// ==========================
+
 // Limpar as configurações
-// ==========================
+
 function limparConfiguracoes() {
   if (confirm('Tem certeza que deseja limpar todas as configurações?')) {
     localStorage.removeItem(CHAVE_PAIS);
@@ -63,9 +63,9 @@ function limparConfiguracoes() {
   }
 }
 
-// ==========================
+
 // Inicialização
-// ==========================
+
 document.addEventListener('DOMContentLoaded', () => {
   carregarConfiguracoes();
   document.getElementById('botaoSalvarCfg').addEventListener('click', salvarConfiguracoes);

@@ -1,4 +1,4 @@
-// relatorio.js — gera ou imprime o relatório de progresso do Pequenos Passos
+//  gera ou imprime o relatório de progresso do Pequenos Passos (precisa puxar os id)
 
 function lerArmazenamento(chave, padrao = []) {
   try {

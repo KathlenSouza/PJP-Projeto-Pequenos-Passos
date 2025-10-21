@@ -1,4 +1,4 @@
-// historico.js — exibe e filtra atividades concluídas
+//  exibe e filtra atividades concluídas
 
 const CHAVE_HISTORICO = 'pp_historico';
 
