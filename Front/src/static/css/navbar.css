@@ -12,9 +12,10 @@
   padding:10px 16px;display:flex;
   align-items:center;justify-content:space-between
 }
+.nav-logo span {font-family: "Montserrat", sans-serif;font-size:24px;}
 .nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#1d2a5e}
 .nav-logo-img{width:120px;height:120px;border-radius:50%;object-fit:cover}
-.nav-links{display:flex;align-items:center;gap:18px;list-style:none}
+.nav-links{display:flex;align-items:center;gap:8px;list-style:none}
 .nav-links a{
   color:#3245a3;text-decoration:none;
   padding:6px 10px;border-radius:8px;
