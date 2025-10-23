@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pequenos Passos — Recuperar Senha</title>
+  <link rel="stylesheet" href="/src/static/css/recuperarsenha.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="left-side">
+      <img src="/src/static/img/imgfundo.jpg" alt="Pequenos Passos" class="img-fundo" />
+    </div>
+
+    <div class="right-side">
+      <div class="login-box">
+        <h3 class="title">Recuperar Senha</h3>
+
+        <form id="recuperarForm" novalidate>
+          <p class="texto">Digite o e-mail cadastrado. Enviaremos um link para redefinir sua senha.</p>
+          
+          <div class="inputs-row">
+            <input type="email" id="email" name="email" placeholder="Seu e-mail" required />
+          </div>
+
+          <button type="submit" class="btn-signin">Enviar Link</button>
+
+          <div class="links">
+            <a href="/src/template/login.html" class="forgot">Voltar para o <span>Login</span></a>
+          </div>
+
+          <div id="msg" class="msg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <script src="/src/static/js/recuperarsenha.js"></script>
+</body>
+</html>

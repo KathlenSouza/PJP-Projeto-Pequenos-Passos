@@ -1,0 +1,31 @@
+@import url('login.css');
+
+.title {
+  color: #666;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.texto {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.msg {
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.msg.sucesso {
+  color: #21b573;
+}
+
+.msg.erro {
+  color: #c0392b;
+}
+
+.btn-signin {
+  margin-top: 10px;
+}
