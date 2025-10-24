@@ -4,7 +4,9 @@
   border-bottom:1px solid rgba(0, 0, 0, 0.1);
   box-shadow:0 4px 8px rgba(0,0,0,0.05);
 }
-.navbarsobre{background:#D6F5D6}
+.navbar{background:rgba(151,219,240,0.9)}
+.navbar.scrolled{background:rgba(151,219,240,0.7)}
+.navbarsobre{background:rgba(214, 245, 214, 0.9)}
 .navbarsobre.scrolled{background:rgba(214, 245, 214, 0.7)}
 
 .nav-container{
@@ -12,9 +14,10 @@
   padding:10px 16px;display:flex;
   align-items:center;justify-content:space-between
 }
-.nav-logo span {font-family: "Baloo 2", cursive;font-size:30px;}
+.nav-logo span {font-family: "Montserrat", sans-serif;font-size:24px;}
+.navbarsobre .nav-logo span {font-family: "Baloo 2", cursive;font-size:30px;}
 .nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#333}
-.nav-logo-img{width:120px;height:120px;border-radius:50%;object-fit:cover}
+.nav-logo-img{width:80px;height:80px;border-radius:50%;object-fit:cover}
 .nav-links{display:flex;align-items:center;gap:8px;list-style:none}
 .nav-links a{
   color:#3245a3;text-decoration:none;
@@ -22,7 +25,8 @@
   display:flex;align-items:center;gap:6px;
   transition:background .2s,color .2s
 }
-.nav-links a:hover{color:#1e2b8f; font-weight:600} /*azul = cor do texto que aparece , branco = cor que aparece*/
+.nav-links a:hover{color:#1e2b8f; font-weight:600; background: #fff;}
+.nav-links a.active{background: #fff;}
 .nav-links i{color:#3245a3} /*cor dos ícones*/
 .btn-nav{background:#C8E6C9;color:#3245a3!important;border-radius:999px;padding:8px 14px} /*laranja cor do fundo do ENTRAR, azul cor do texto ENTRAR*/
 .navbarsobre .nav-links a:hover {
