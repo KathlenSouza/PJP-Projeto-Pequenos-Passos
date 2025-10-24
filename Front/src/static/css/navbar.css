@@ -14,7 +14,7 @@
   padding:10px 16px;display:flex;
   align-items:center;justify-content:space-between
 }
-.nav-logo span {font-family: "Montserrat", sans-serif;font-size:24px;}
+.nav-logo span {font-family: "Baloo 2", cursive;font-size:24px;}
 .navbarsobre .nav-logo span {font-family: "Baloo 2", cursive;font-size:30px;}
 .nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#333}
 .nav-logo-img{width:80px;height:80px;border-radius:50%;object-fit:cover}
