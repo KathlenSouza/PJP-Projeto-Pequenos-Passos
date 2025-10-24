@@ -26,7 +26,7 @@
   transition:background .2s,color .2s
 }
 .nav-links a:hover{color:#1e2b8f; font-weight:600; background: #fff;}
-.nav-links a.active{background: #fff;}
+.nav-links a.active{background: #fff; font-weight:600;}
 .nav-links i{color:#3245a3} /*cor dos ícones*/
 .btn-nav{background:#C8E6C9;color:#3245a3!important;border-radius:999px;padding:8px 14px} /*laranja cor do fundo do ENTRAR, azul cor do texto ENTRAR*/
 .navbarsobre .nav-links a:hover {
@@ -34,6 +34,7 @@
 }
 .navbarsobre .nav-links a.active {
   background: #C8E6C9;
+  font-weight:600;
 }
 
 
