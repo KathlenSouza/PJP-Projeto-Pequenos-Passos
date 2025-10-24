@@ -75,9 +75,9 @@ body{
   align-items:center;justify-content:space-between
 }
 .nav-logo{display:flex;align-items:center;gap:8px;font-weight:600;color:#2b3352}
-.nav-logo span{font-family:"Baloo 2", cursive;}
+.nav-logo span{font-family:"Baloo 2", cursive; font-size:24px;}
 .nav-logo-img{width:80px;height:80px;border-radius:50%;object-fit:cover}
-.nav-links{display:flex;align-items:center;gap:18px;list-style:none}
+.nav-links{display:flex;align-items:center;gap:8px;list-style:none}
 .nav-links a{
   color:#3245a3;text-decoration:none;
   padding:6px 10px;border-radius:8px;

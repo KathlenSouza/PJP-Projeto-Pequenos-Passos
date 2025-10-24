@@ -34,7 +34,12 @@
 }
 .navbarsobre .nav-links a.active {
   background: #C8E6C9;
-  font-weight:600;
+  font-weight: normal; /* não negrito no Sobre */
+}
+
+/* Exceção: Configurações ativo sem negrito */
+.nav-links a[href$="configuracao.html"].active{
+  font-weight: normal;
 }
 
 
@@ -49,6 +54,9 @@
     display:none
   }
   .nav-links.show{display:flex}
+  /* Estado selecionado no menu mobile: azul acinzentado */
+  .nav-links a.active{background:#e6eff7;}
+  .navbarsobre .nav-links a.active{background:#e6eff7;}
 }
 @media (max-width:850px) {
   .nav-links {

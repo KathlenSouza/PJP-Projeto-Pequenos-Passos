@@ -17,4 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Efeito de transparência na navbar ao rolar
+  const navbar = document.querySelector('nav');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 0) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  }
 });
