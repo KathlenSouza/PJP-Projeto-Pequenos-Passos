@@ -1,19 +1,19 @@
 .navbar,.navbarsobre{
   position:sticky;top:0;z-index:999;
   backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(86, 143, 86, 0.9);
+  border-bottom:1px solid rgba(0, 0, 0, 0.1);
   box-shadow:0 4px 8px rgba(0,0,0,0.05);
 }
-.navbar{background:rgba(151,219,240,0.9)}
-.navbarsobre{background:rgba(177, 240, 177, 0.9)}
+.navbarsobre{background:#D6F5D6}
+.navbarsobre.scrolled{background:rgba(214, 245, 214, 0.7)}
 
 .nav-container{
   max-width:1200px;margin:0 auto;
   padding:10px 16px;display:flex;
   align-items:center;justify-content:space-between
 }
-.nav-logo span {font-family: "Montserrat", sans-serif;font-size:24px;}
-.nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#1d2a5e}
+.nav-logo span {font-family: "Baloo 2", cursive;font-size:30px;}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#333}
 .nav-logo-img{width:120px;height:120px;border-radius:50%;object-fit:cover}
 .nav-links{display:flex;align-items:center;gap:8px;list-style:none}
 .nav-links a{
@@ -22,14 +22,14 @@
   display:flex;align-items:center;gap:6px;
   transition:background .2s,color .2s
 }
-.nav-links a:hover{background:#eef3ff;color:#1e2b8f; font-weight:600} /*azul = cor do texto que aparece , branco = cor que aparece*/
-.nav-links a.active{background:rgba(156, 212, 156, 0.9);} /*cor do fundo SOBRE e ENTRAR*/
+.nav-links a:hover{color:#1e2b8f; font-weight:600} /*azul = cor do texto que aparece , branco = cor que aparece*/
 .nav-links i{color:#3245a3} /*cor dos ícones*/
-.btn-nav{background:rgba(156, 212, 156, 0.9);color:#3245a3!important;border-radius:999px;padding:8px 14px} /*laranja cor do fundo do ENTRAR, azul cor do texto ENTRAR*/
-.nav-links a:hover,
-.nav-links a.active:hover {
-  background: #fff; /* fundo branco no SOBRE */
-  color: #1e2b8f; 
+.btn-nav{background:#C8E6C9;color:#3245a3!important;border-radius:999px;padding:8px 14px} /*laranja cor do fundo do ENTRAR, azul cor do texto ENTRAR*/
+.navbarsobre .nav-links a:hover {
+  background: #fff;
+}
+.navbarsobre .nav-links a.active {
+  background: #C8E6C9;
 }
 
 
