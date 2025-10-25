@@ -115,9 +115,7 @@ body{
 .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 footer{margin-top:60px;color:var(--muted);font-size:13px;text-align:center}
 
-/* ===========================
-   CSS da página Início (index)
-=========================== */
+/* Inicio*/
 
 /* Gradiente da home ameno */
 body.pagina-inicio{
@@ -137,10 +135,7 @@ body.pagina-inicio{
   background:#fff;
 }
 
-/* Agenda do dia */
-#listaAgenda li input[type="checkbox"]{
-  width:16px; height:16px;
-}
+
 
 /* Barras de progresso da semana */
 .progress-bars{ display:grid; gap:12px; }
@@ -154,8 +149,7 @@ body.pagina-inicio{
   border-radius:999px; transition: width .4s ease;
 }
 
-/* Avisos */
-#listaAvisos li i{ color:#4d60b5; }
+
 
 /* Sugestões (texto simples) */
 #listaSugestoes li{ color:#2b3352; }
@@ -190,3 +184,105 @@ body.pagina-inicio{
 @media (max-width: 900px){
   .layout-duplo{ display:grid; grid-template-columns:1fr; gap:20px; }
 }
+/* ====== CALENDÁRIO ====== */
+    .calendario-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .dia-calendario {
+      padding: 10px;
+      background: #f8f9ff;
+      border: 1px solid #d0d4f5;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dia-calendario:hover {
+      background: #e5e8ff;
+    }
+
+    .evento-existe {
+      background: #ffe7b8;
+      font-weight: bold;
+    }
+
+    /* ====== MODAL ====== */
+    .modal-evento {
+      position: fixed;
+      top: 250px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content:flex-end;
+      align-items:baseline;
+      z-index: 9998;
+    }
+
+    .modal-evento.mostrar {
+      display: flex;
+    }
+
+    .modal-conteudo {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .modal-conteudo h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .modal-conteudo input,
+    .modal-conteudo select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .modal-botoes {
+      display: flex;
+      justify-content: space-between;
+    }
+
+/* ====== CONTAINER DE TOASTS ====== */
+.toast-container {
+  position: fixed;
+  top: 250px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 9999;
+}
+
+/* ====== ALERTAS / TOASTS ====== */
+.aviso-toast {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  opacity: 1;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  min-width: 220px;
+}
+
+.aviso-toast.erro { background-color: #e74c3c; }
+.aviso-toast.aviso { background-color: #f39c12; }
+.aviso-toast.sucesso { background-color: #4CAF50; }
+
