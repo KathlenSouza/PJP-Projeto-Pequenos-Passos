@@ -10,4 +10,4 @@ Objetivo para os pais acompanharem o desenvolvimento dos filhos de forma lúdica
 
 Categorias: Psicomotricidade: Atividades que estimulam coordenação motora e habilidades físicas. Psicoeducação: Exercícios para ensinar emoções, empatia e habilidades sociais. Cuidados com a Saúde: Higiene, alimentação saudável, hábitos de sono. Vacinação: Calendário e lembretes de vacinação.
 
-Contribuição : Kathlen Caroline de Souza, Gabriel Sant'Anna, Maria Isabel Klein Delavy, Rafaela Helena Garbin Rudolf Nascimento, Thiago Emanoel.
+Contribuição : Kathlen Caroline de Souza, Gabriel Sant'Anna, Maria Isabel Klein Delavy, Rafaela Helena Garbin Rudolf Nascimento.
