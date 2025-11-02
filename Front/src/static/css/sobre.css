@@ -15,7 +15,7 @@ body.pag-sobre {
 .hero-video{
   position:relative;
   width:100%;
-  height:70vh; /* altura reduzida do vídeo */
+  height:100vh; /* altura aumentada para cobrir toda a tela visível */
   margin-top:0;
   overflow:hidden;
   background:#000; /* fallback */
@@ -115,13 +115,27 @@ body.pag-sobre {
 .hero-cta:active{ transform:translateY(-1px); }
 
 .hero-space{
-  height:200px;
   background:#fff;
   display:flex;
-  justify-content:center;
+  flex-direction:column;
   align-items:center;
+  padding:40px 20px; /* padding aumentado */
+  min-height:400px; /* altura mínima aumentada para expandir a parte branca */
+}
+
+.hero-title{
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  font-size:2rem;
+  font-weight:700; /* negrito */
+  color:#2b3352;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.hero-cards{
+  display:flex;
+  justify-content:center;
   gap:20px;
-  padding:20px;
 }
 
 .hero-card{
@@ -129,16 +143,24 @@ body.pag-sobre {
   border-radius:20px;
   padding:20px;
   box-shadow:0 10px 50px rgba(0,0,0,0.15);
-  width:300px;
-  text-align:center;
+  width:350px; /* largura aumentada */
+  text-align:left; /* alinhamento à esquerda */
+}
+
+.hero-card h3{
+  text-align:center; /* título centralizado */
 }
 
 @media (max-width: 600px){
   .hero-space{
+    padding:60px 20px; /* padding aumentado */
+  }
+  .hero-title{
+    font-size:1.5rem;
+  }
+  .hero-cards{
     flex-direction:column;
     align-items:center;
-    height:auto;
-    padding:40px 20px;
   }
   .hero-card{
     width:90%;
