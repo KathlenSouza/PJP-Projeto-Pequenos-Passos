@@ -1,0 +1,40 @@
+package com.api.pjpPequenosPassos.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+@Table(name = "tb_profissional_indicacao")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Profissional implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    private String nome;
+
+    private String especialidade;
+
+    private String contato;
+
+    // se o seu AvaliacaoProfissional tiver:
+    // @ManyToOne @JsonBackReference("profissional-avaliacao")
+    // então este lado precisa ser Managed:
+    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    @JsonManagedReference("profissional-avaliacao")
+    private List<AvaliacaoProfissional> avaliacoes = new ArrayList<>();
+}

@@ -1,0 +1,31 @@
+package com.api.pjpPequenosPassos.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.io.Serializable;
+import java.util.*;
+
+@Entity
+@Table(name = "tb_profissional_indicacao")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Profissional implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    private String nome;
+
+    private String especialidade;
+
+    private String contato;
+
+    
+    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<AvaliacaoProfissional> avaliacoes = new ArrayList<>();
+}

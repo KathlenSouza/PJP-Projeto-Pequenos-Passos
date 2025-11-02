@@ -1,0 +1,67 @@
+package com.api.pjpPequenosPassos.model;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "avaliacoes_profissionais")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class AvaliacaoProfissional {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // usei Integer porque @Min/@Max funcionam melhor com inteiros
+    @NotNull(message = "Nota é obrigatória")
+    @Min(value = 1, message = "Nota mínima é 1")
+    @Max(value = 5, message = "Nota máxima é 5")
+    @Column(nullable = false)
+    private Integer nota;
+
+    @Column(columnDefinition = "TEXT")
+    private String comentario;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean recomenda = true;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataAvaliacao;
+
+    // ===== RELACIONAMENTOS =====
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profissional_id", nullable = false)
+    @JsonBackReference("profissional-avaliacoes")
+    private Profissional profissional;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonBackReference("usuario-avaliacoes")
+    private Usuario usuario;
+
+    // ===== MÉTODO AUXILIAR =====
+    public String getClassificacao() {
+        if (nota == null) return "Sem nota";
+        if (nota >= 5) return "Excelente";
+        if (nota >= 4) return "Muito Bom";
+        if (nota >= 3) return "Bom";
+        if (nota >= 2) return "Regular";
+        return "Ruim";
+    }
+}

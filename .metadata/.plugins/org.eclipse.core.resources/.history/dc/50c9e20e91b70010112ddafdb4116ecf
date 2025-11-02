@@ -1,0 +1,65 @@
+package com.api.pjpPequenosPassos.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "avaliacoes_profissionais")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AvaliacaoProfissional {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Nota é obrigatória")
+    @Min(value = 1, message = "Nota mínima é 1")
+    @Max(value = 5, message = "Nota máxima é 5")
+    @Column(nullable = false)
+    private Double nota;
+
+    @Column(columnDefinition = "TEXT")
+    private String comentario;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean recomenda = true;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataAvaliacao;
+
+    // Relacionamentos
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profissional_id", nullable = false)
+    private Profissional profissional;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    // Métodos auxiliares
+    public String getClassificacao() {
+        if (nota >= 4.5) {
+            return "Excelente";
+        } else if (nota >= 3.5) {
+            return "Muito Bom";
+        } else if (nota >= 2.5) {
+            return "Bom";
+        } else if (nota >= 1.5) {
+            return "Regular";
+        } else {
+            return "Ruim";
+        }
+    }
+}

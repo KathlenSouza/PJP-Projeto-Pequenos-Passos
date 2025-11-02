@@ -1,0 +1,94 @@
+package com.api.pjpPequenosPassos.model;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "usuarios")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 120)
+    private String nome;
+
+    @Column(nullable = false, unique = true, length = 120)
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
+
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
+
+    @Column(length = 20)
+    private String telefone;
+
+    @Column(length = 100)
+    private String cidade;
+
+    @Column(length = 2)
+    private String estado;
+
+    // ==== RELACIONAMENTO COM CRIANÇA ====
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    @JsonManagedReference("usuario-crianca")
+    private List<Crianca> criancas = new ArrayList<>();
+
+    // ==== RELACIONAMENTO COM AVALIAÇÕES (usuario que avaliou) ====
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    @JsonManagedReference("usuario-avaliacoes")
+    private List<AvaliacaoProfissional> avaliacoesFeitas = new ArrayList<>();
+
+    // ------------ helpers p/ manter os 2 lados ------------
+
+    public void addCrianca(Crianca c) {
+        if (c == null) return;
+        criancas.add(c);
+        c.setUsuario(this);
+    }
+
+    public void removeCrianca(Crianca c) {
+        if (c == null) return;
+        criancas.remove(c);
+        c.setUsuario(null);
+    }
+
+    public void addAvaliacao(AvaliacaoProfissional a) {
+        if (a == null) return;
+        avaliacoesFeitas.add(a);
+        a.setUsuario(this);
+    }
+
+    public void removeAvaliacao(AvaliacaoProfissional a) {
+        if (a == null) return;
+        avaliacoesFeitas.remove(a);
+        a.setUsuario(null);
+    }
+}

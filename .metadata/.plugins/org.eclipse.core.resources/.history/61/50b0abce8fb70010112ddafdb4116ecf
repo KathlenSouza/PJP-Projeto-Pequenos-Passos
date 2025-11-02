@@ -1,0 +1,96 @@
+package com.api.pjpPequenosPassos.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+
+@Entity
+@Table(name = "tb_usuario")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Usuario implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @NotBlank(message = "Nome completo é obrigatório")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
+    @Column(nullable = false, length = 100)
+    private String nomeCompleto;
+
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido")
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
+    @Column(nullable = false)
+    private String senha;
+
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
+
+    @Column(length = 20)
+    private String telefone;
+
+    @Column(length = 100)
+    private String cidade;
+
+    @Column(length = 2)
+    private String estado;
+
+    @Column(length = 20)
+    private String plano; // gratuito ou premium
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean ativo = true;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    // Relacionamentos OneToMany (Lado não proprietário)
+    // O 'mappedBy' aponta para o campo 'usuario' dentro da classe Crianca.
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Crianca> criancas = new ArrayList<>();
+
+    // O 'mappedBy' aponta para o campo 'usuario' dentro da classe Notificacao.
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Notificacao> notificacoes = new ArrayList<>();
+
+    // O 'mappedBy' aponta para o campo 'usuario' dentro da classe Relatorio.
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Relatorio> relatorios = new ArrayList<>();
+
+    // Métodos auxiliares
+    public void adicionarCrianca(Crianca crianca) {
+        criancas.add(crianca);
+        crianca.setUsuario(this);
+    }
+
+    public void removerCrianca(Crianca crianca) {
+        criancas.remove(crianca);
+        crianca.setUsuario(null);
+    }
+}

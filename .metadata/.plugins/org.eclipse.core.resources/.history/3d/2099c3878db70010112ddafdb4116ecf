@@ -1,0 +1,47 @@
+package com.api.pjpPequenosPassos.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.*;
+
+@Entity
+@Table(name = "tb_crianca")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Crianca implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @NotBlank(message = "Nome da criança é obrigatório")
+    @Column(nullable = false, length = 80)
+    private String nome;
+
+    private Integer idade;
+
+    @Column(length = 20)
+    private String sexo;
+
+    @Column(length = 200)
+    private String observacoes;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "crianca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "crianca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diario> diarios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "crianca", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AvaliacaoRisco> avaliacoesRisco = new ArrayList<>();
+}
