@@ -115,12 +115,12 @@ body.pag-sobre {
 .hero-cta:active{ transform:translateY(-1px); }
 
 .hero-space{
-  background:#fff;
+  background:#fff; /* faixa branca atrás de "Nossos serviços" */
   display:flex;
   flex-direction:column;
   align-items:center;
   padding:40px 20px; /* padding aumentado */
-  min-height:400px; /* altura mínima aumentada para expandir a parte branca */
+  height:400px; /* altura fixa igual à azul */
 }
 
 .hero-title{
@@ -165,6 +165,95 @@ body.pag-sobre {
   .hero-card{
     width:90%;
   }
+}
+
+.hero-space-white{
+  background:#d4f5d4; /* faixa verde atrás da logo e caixa de texto */
+  height:400px; /* altura diminuída */
+  position:relative;
+}
+
+.hero-space-blue{
+  background:#eaf4ff; /* faixa azul */
+  height:400px;
+  position:relative;
+}
+
+.blue-title{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  font-size:2rem; /* mesmo tamanho de "Nossos serviços" */
+  font-weight:700; /* negrito igual */
+  color:#2b3352;
+  margin:0;
+}
+
+.blue-cards{
+  position:absolute;
+  top:90px; /* mesma distância que os cards de cima */
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.blue-card{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 50px rgba(0,0,0,0.15);
+  width:350px; /* largura igual aos cards de cima */
+  text-align:left;
+}
+
+.blue-card h3{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.footer-logo{
+  position:absolute;
+  left:500px;
+  top:45%;
+  transform:translateY(-50%);
+  width:80px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.footer-text{
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#2b3352;
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  font-size:1rem;
+  font-weight:400;
+  max-width:300px;
+  text-align:right;
+}
+
+.footer-textarea{
+  position:absolute;
+  right:330px;
+  top:50%;
+  transform:translateY(-50%);
+  width:300px;
+  height:50px;
+  padding:10px;
+  border:1px solid #999; /* borda fina e cinza */
+  border-radius:12px;
+  background:#fff;
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  font-size:1rem;
+  color:#2b3352;
+  resize:none;
 }
 
 .container .card {
