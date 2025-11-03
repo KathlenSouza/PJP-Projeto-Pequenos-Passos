@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planos — Pequenos Passos</title>
+  <link rel="stylesheet" href="/src/static/css/planos.css" />
+   <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img">
+        <span>Pequenos Passos</span>
+      </div>
+      </div>
+  </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Escolha o plano certo para você</h1>
+          <p>Do básico grátis ao Premium com recursos avançados — simples e com preços claros.</p>
+        </div>
+
+        <div class="billing-toggle" aria-hidden="false">
+          <span class="label">Cobrança</span>
+          <div class="toggle" id="billingToggle" role="switch" tabindex="0" aria-checked="false" aria-label="Alternar mensal/anual">
+            <span class="toggle-knob"></span>
+          </div>
+          <div class="toggle-labels">
+            <small class="monthly active">Mensal</small>
+            <small class="yearly">Anual (2 meses grátis)</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing">
+      <div class="container pricing-grid" id="pricingGrid">
+        <!-- Plano Gratuito -->
+        <article class="plan plan-free" aria-labelledby="free-title">
+          <div class="plan-header">
+            <h2 id="free-title">Gratuito</h2>
+            <p class="plan-tag">Perfeito para começar</p>
+          </div>
+
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="amount" data-monthly="0" data-yearly="0">0</span>
+            <span class="duration">/mês</span>
+          </div>
+
+          <ul class="features">
+            <li>Conversas básicas</li>
+            <li>Histórico de 7 dias</li>
+            <li>Limites mensais</li>
+          </ul>
+
+              <div class="auth">
+        <a class="btn btn-primary" href="#">Começar grátis</a>
+      </div>
+        </article>
+
+        <!-- Plano Premium -->
+        <article class="plan plan-premium featured" aria-labelledby="premium-title">
+          <div class="plan-header">
+            <h2 id="premium-title">Premium</h2>
+            <p class="plan-tag">Mais rápido. Mais recursos.</p>
+          </div>
+
+          <div class="price">
+            <span class="currency">R$</span>
+            <span class="amount" data-monthly="39" data-yearly="360">39</span>
+            <span class="duration">/mês</span>
+          </div>
+
+          <ul class="features">
+            <li>Acesso a todos os recursos</li>
+            <li>Prioridade de resposta</li>
+            <li>Histórico ilimitado</li>
+            <li>Exportar e integração</li>
+          </ul>
+
+          <div class="plan-actions">
+            <button class="btn btn-primary" aria-label="Assinar plano premium">Assinar Premium</button>
+          </div>
+        </article>
+      </div>
+
+      <p class="disclaimer container">Sem taxas escondidas. Você pode cancelar a qualquer momento.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
+      <nav class="footer-nav">
+        <a href="#">Termos</a>
+        <a href="#">Privacidade</a>
+        <a href="#">Contato</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/src/static/js/planos.js"></script>
+</body>
+</html>
