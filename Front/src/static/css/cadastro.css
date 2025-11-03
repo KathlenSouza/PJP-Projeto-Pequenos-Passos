@@ -1,4 +1,5 @@
 @import url('/src/static/css/login.css');
+@import url('/src/static/css/loader.css');
 
 /* Reutiliza o estilo base */
 .step { display: none; }

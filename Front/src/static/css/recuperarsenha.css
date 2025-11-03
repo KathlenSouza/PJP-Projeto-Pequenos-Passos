@@ -1,4 +1,5 @@
 @import url('login.css');
+@import url('/src/static/css/loader.css');
 
 .title {
   color: #666;
