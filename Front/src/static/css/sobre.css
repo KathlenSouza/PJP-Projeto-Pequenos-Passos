@@ -280,11 +280,11 @@ body.pag-sobre {
   right:330px;
   top:50%;
   transform:translateY(-50%);
-  width:300px;
+  width:200px;
   height:50px;
   padding:10px;
   border:0.3px solid #999; /* borda fina e cinza */
-  border-radius:12px;
+  border-radius:15px;
   background:#fff;
   font-family:'Poppins','Nunito',system-ui,sans-serif;
   font-size:1rem;
