@@ -103,14 +103,18 @@
 
     <div class="hero-space-white">
       <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="footer-logo">
-      <textarea class="footer-textarea" placeholder="Escreva algo..."></textarea>
+    <p class="contact-title">Entre em contato</p>
+    <textarea class="footer-textarea" placeholder="Escreva algo..."></textarea>
     </div>
 
   <footer>
+    <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
   </footer>
-  
-
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
 </body>
