@@ -14,7 +14,7 @@
 html,body{height:100%}
 body{
   margin:0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
   background: linear-gradient(180deg, #f6f8fb 0%, var(--bg) 100%);
   color:#0f172a;
   -webkit-font-smoothing:antialiased;
@@ -108,7 +108,7 @@ body{
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  min-height:320px;
+  min-height:360px;
   border:1px solid rgba(7,16,33,0.03);
 }
 .plan-header{display:flex;flex-direction:column;gap:6px}
@@ -137,10 +137,23 @@ body{
   margin-right:6px;
 }
 
-/* actions */
-.plan-actions{display:flex;gap:10px;align-items:center}
-.btn-outline{background:transparent;border:1px solid rgba(2,6,23,0.06);padding:10px 12px;border-radius:10px}
-.btn-primary{padding:10px 16px;border-radius:10px}
+/* Padronizar botões dentro dos cards de plano (anchor e button) */
+.plan .btn{
+  width:100%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 16px;
+  box-sizing:border-box;
+  font-size:16px;
+  font-weight:600;
+}
+
+.plan .btn-primary{
+  font-size:16px;
+  padding:10px 16px;
+}
+
 
 /* disclaimers */
 .disclaimer{color:var(--muted);font-size:13px;margin-top:14px}
