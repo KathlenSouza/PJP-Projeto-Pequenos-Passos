@@ -55,7 +55,36 @@ body {
 .form-pagamento input:focus {
   border-color: var(--primary);
 }
+/* ==== Inputs com ícones ==== */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.input-group .icon {
+  position: absolute;
+  left: 12px;
+  font-size: 18px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 38px; /* espaço pro ícone */
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(204,147,40,0.15);
+  
+}
 .linha-dupla {
   display: flex;
   gap: 10px;
