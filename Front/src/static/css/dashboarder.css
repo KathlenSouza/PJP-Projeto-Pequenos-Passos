@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;700&family=Baloo+2:wght@400;700&display=swap');
+
+:root {
+  --bg1:#fde8ac;
+  --bg2:#ffffff;
+  --ink:#2b3352;
+  --muted:#6b77a1;
+  --primary:#cc9328;
+  --primaryStrong:#f7a344;
+  --lilac:#ffe2b6;
+  --mint:#f3dfb9;
+  --peach:#f3dfb9;
+  --danger:#f3dfb9;
+  --radius:16px;
+  --shadow:0 10px 24px rgba(23,30,66,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  color:var(--ink);
+  /* O fundo agora é feito por vídeo; mantenha um gradiente como fallback */
+  background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 70%);
+  opacity:0;
+  transform:translateY(10px);
+  animation:pageFade 1s ease forwards;
+}
+
+@keyframes pageFade{to{opacity:1;transform:translateY(0)}}
+
+.h1{
+  margin:0 0 8px;
+  font-size:clamp(24px,3vw,38px);
+  background:linear-gradient(90deg,var(--primary),var(--lilac));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent
+}
+.subtitle{color:var(--muted)}
+
+.btn{
+  border:0;border-radius:14px;
+  padding:12px 16px;
+  background:var(--primary);
+  color:#fff;font-weight:600;
+  box-shadow:var(--shadow);
+  cursor:pointer;display:inline-flex;
+  gap:8px;align-items:center;
+  text-decoration:none;transition:transform .2s ease
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.secondary{background:var(--lilac);color:#3b2b66}
+.btn.ghost{background:#eef1ff;color:#4d60b5}
+.btn.danger{background:var(--danger);color:#5c2a30}
+
+.input,select.input,textarea.input{
+  width:100%;padding:12px 14px;
+  border:1px solid #e6e9f8;
+  border-radius:12px;background:#fff
+}
+.label{font-size:12px;color:var(--muted);margin-bottom:6px}
+
+/* NAVBAR */
+.navbar,.navbarsobre{
+  position:sticky;top:0;z-index:999;
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid #e7eaff;
+  box-shadow:0 4px 8px rgba(0,0,0,0.05);
+}
+.navbar{background:rgba(151,219,240,0.9)}
+.navbarsobre{background:rgba(172,240,151,0.9)}
+
+.nav-container{
+  max-width:1200px;margin:0 auto;
+  padding:10px 16px;display:flex;
+  align-items:center;justify-content:space-between
+}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:600;color:#2b3352}
+.nav-logo span{font-family:"Baloo 2", cursive; font-size:24px;}
+.nav-logo-img{width:80px;height:80px;border-radius:50%;object-fit:cover}
+.nav-links{display:flex;align-items:center;gap:8px;list-style:none}
+.nav-links a{
+  color:#3245a3;text-decoration:none;
+  padding:6px 10px;border-radius:8px;
+  display:flex;align-items:center;gap:6px;
+  transition:background .2s,color .2s
+}
+.nav-links a:hover{background:#eef3ff;color:#1e2b8f}
+.nav-links a.active{background:#fff;font-weight:600}
+.nav-links i{color:#3245a3}
+.btn-nav{background:#5e6aff;color:#fff!important;border-radius:999px;padding:8px 14px}
+.btn-nav:hover{background:#4b58e6}
+
+.nav-toggle{display:none}
+@media(max-width:850px){
+  .nav-toggle{display:block;font-size:1.6rem;background:none;border:none}
+  .nav-links{
+    position:absolute;top:60px;right:16px;
+    flex-direction:column;background:#fff;
+    border-radius:12px;padding:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+    display:none
+  }
+  .nav-links.show{display:flex}
+}
+
+/* LAYOUT BASE */
+.container{max-width:1100px;margin:100px auto 60px;padding:0 24px}
+.card{
+  background:#fff;border:1px solid #fff9ee;
+  border-radius:20px;padding:24px;
+  box-shadow:var(--shadow)
+}
+.grid{display:grid;gap:16px}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+footer{margin-top:60px;color:var(--muted);font-size:13px;text-align:center}
+
+/* Inicio*/
+
+/* Gradiente da home ameno */
+body.pagina-inicio{
+  background: linear-gradient(180deg,#f2f3ff 0%, #ffffff 70%);
+}
+
+/* Hero (título e ações) */
+.hero{
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:24px; margin-bottom:40px;
+}
+
+/* Lista padrão */
+.list li{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border:1px solid #eaf0ff; border-radius:12px;
+  background:#fff;
+}
+
+
+
+/* Barras de progresso da semana */
+.progress-bars{ display:grid; gap:12px; }
+.progress-item label{ font-weight:600; font-size:.92rem; color:#2b3352; display:block; margin-bottom:6px; }
+.progress-bar{
+  width:100%; height:12px; background:#eef1ff; border-radius:999px; overflow:hidden; border:1px solid #e6e9f8;
+}
+.progress-fill{
+  height:100%; width:0%;
+  background: linear-gradient(90deg,#6ea8ff,#4b58e6);
+  border-radius:999px; transition: width .4s ease;
+}
+
+
+
+/* Sugestões (texto simples) */
+#listaSugestoes li{ color:#2b3352; }
+
+/* Resumo emocional */
+.emotional-summary{
+  display:flex; align-items:center; gap:10px;
+  padding:14px; border-radius:12px; background:#f6f8ff; border:1px solid #e6e9f8;
+  font-weight:600;
+}
+
+/* Profissionais */
+#listaProfissionais .card{
+  background:#fff; border:1px solid #eef1ff; text-align:center;
+}
+#listaProfissionais .card h3{ margin:6px 0 4px; font-size:1rem; }
+#listaProfissionais .card p{ margin:4px 0; color:#4b4f67; }
+
+/* Sidebar de vacinas */
+.sidebar h3{ margin-top:0; }
+.vacina-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid #eaf0ff; border-radius:12px; background:#fff; }
+.vacina-titulo{ display:flex; align-items:center; gap:8px; }
+.vacina-etiqueta{ font-size:12px; padding:4px 8px; border-radius:999px; background:#eef3ff; color:#4d60b5; }
+.vacina-status{ font-size:12px; padding:6px 10px; border-radius:999px; cursor:pointer; border:0; box-shadow:var(--shadow); }
+.vacina-pendente{ background:#fff3e3; color:#945a00; }
+.vacina-aplicada{ background:#e6fff7; color:#145a4a; }
+
+/* Ações do hero */
+.hero-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Responsividade */
+@media (max-width: 900px){
+  .layout-duplo{ display:grid; grid-template-columns:1fr; gap:20px; }
+}
+/* ====== CALENDÁRIO ====== */
+    .calendario-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .dia-calendario {
+      padding: 10px;
+      background: #f8f9ff;
+      border: 1px solid #d0d4f5;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dia-calendario:hover {
+      background: #e5e8ff;
+    }
+
+    .evento-existe {
+      background: #ffe7b8;
+      font-weight: bold;
+    }
+
+    /* ====== MODAL ====== */
+    .modal-evento {
+      position: fixed;
+      top: 250px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content:flex-end;
+      align-items:baseline;
+      z-index: 9998;
+    }
+
+    .modal-evento.mostrar {
+      display: flex;
+    }
+
+    .modal-conteudo {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .modal-conteudo h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .modal-conteudo input,
+    .modal-conteudo select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .modal-botoes {
+      display: flex;
+      justify-content: space-between;
+    }
+
+/* ====== CONTAINER DE TOASTS ====== */
+.toast-container {
+  position: fixed;
+  top: 250px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 9999;
+}
+
+/* ====== ALERTAS / TOASTS ====== */
+.aviso-toast {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  opacity: 1;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  min-width: 220px;
+}
+
+.aviso-toast.erro { background-color: #e74c3c; }
+.aviso-toast.aviso { background-color: #f39c12; }
+.aviso-toast.sucesso { background-color: #4CAF50; }
+
