@@ -1,101 +1,69 @@
-//  Gerencia o Diário Emocional (texto + fotos) 
+import { get, post } from "./conectaApi.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('diaryForm');
-  const list = document.getElementById('diaryList');
-  const inputFotos = document.getElementById('entradaFotos');
-  const CHAVE = 'pp_diario';
+const list = document.getElementById("diaryList");
+const form = document.getElementById("diaryForm");
+const inputDescricao = document.getElementById("diaryText");
 
-  let registros = [];
+async function exibirRegistros() {
+  list.innerHTML = '<li>Carregando...</li>';
   try {
-    registros = JSON.parse(localStorage.getItem(CHAVE) || '[]');
-  } catch {
-    registros = [];
-  }
-
-  // Exibir registros
-  
-  function exibirRegistros() {
-    list.innerHTML = '';
+    const registros = await get("/diario");
 
     if (!registros.length) {
-      list.innerHTML = '<li class="item">Sem registros ainda.</li>';
+      list.innerHTML = '<li>Sem registros ainda.</li>';
       return;
     }
 
-    registros.forEach((r, i) => {
-      const fotosHTML = (r.fotos || [])
-        .map(f => `<img src="${f}" class="foto-thumb" alt="Foto">`)
-        .join('');
-
-      const li = document.createElement('li');
-      li.className = 'item';
-      li.innerHTML = `
-        <div>
-          <strong>${r.data}</strong> — <b>${r.emocao}</b>
-          <p>${r.texto || ''}</p>
-          <div class="photo-preview">${fotosHTML}</div>
-        </div>
-        <div style="margin-top:8px;">
-          <button class="btn danger" data-indice="${i}">Excluir</button>
-        </div>
-      `;
-
-      li.querySelector('button').addEventListener('click', () => {
-        registros.splice(i, 1);
-        localStorage.setItem(CHAVE, JSON.stringify(registros));
-        exibirRegistros();
-      });
-
-      list.appendChild(li);
-    });
+    list.innerHTML = registros
+      .map(
+        (r) => `
+        <li class="item">
+          <strong>${r.emocao}</strong> - ${r.descricao}
+          <br>
+          ${
+            r.fotos && r.fotos.length
+              ? r.fotos.map((f) => `<img src="${f}" width="80" style="margin:4px;border-radius:8px;">`).join('')
+              : ''
+          }
+        </li>
+      `
+      )
+      .join("");
+  } catch (err) {
+    list.innerHTML = `<li>Erro ao carregar: ${err.message}</li>`;
   }
+}
 
-  
-  // Adicionar novo registro
+async function salvarRegistro(e) {
+  e.preventDefault();
+  const emocao = document.querySelector('input[name="emocao"]:checked').value;
+  const descricao = inputDescricao.value.trim();
+  const arquivos = document.getElementById("entradaFotos").files;
 
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
+  // Converter imagens em base64
+  const fotos = await Promise.all(
+    Array.from(arquivos).map(file => toBase64(file))
+  );
 
-    const emocao = document.querySelector('input[name="emocao"]:checked')?.value;
-    const texto = document.getElementById('diaryText').value.trim();
-
-    if (!emocao) {
-      alert('Selecione uma emoção antes de salvar.');
-      return;
-    }
-
-    const arquivos = Array.from(inputFotos.files || []);
-    if (arquivos.length > 5) {
-      alert('Limite de 5 fotos por registro.');
-      return;
-    }
-
-    const fotos = [];
-    for (const arquivo of arquivos) {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(arquivo);
-      });
-      fotos.push(dataUrl);
-    }
-
-    const novo = {
-      emocao,
-      texto,
-      fotos,
-      data: new Date().toLocaleDateString('pt-BR'),
-      timestamp: Date.now()
-    };
-
-    registros.unshift(novo);
-    localStorage.setItem(CHAVE, JSON.stringify(registros));
-
-    form.reset();
+  try {
+    await post("/diario", { emocao, descricao, fotos });
+    alert("Registro salvo com sucesso!");
     exibirRegistros();
-  });
+  } catch (err) {
+    alert(`Erro ao salvar: ${err.message}`);
+  }
+}
 
-  exibirRegistros();
-});
+// Função auxiliar
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+}
+
+
+form.addEventListener("submit", salvarRegistro);
+document.addEventListener("DOMContentLoaded", exibirRegistros);

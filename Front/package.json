@@ -2,15 +2,18 @@
   "name": "pequenos-passos-front",
   "version": "1.0.0",
   "description": "Servidor Node.js para rodar o frontend localmente",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.19.0"
+    "express": "^4.19.0",
+    "http-proxy-middleware": "^3.0.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
