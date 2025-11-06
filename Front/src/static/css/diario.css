@@ -22,6 +22,7 @@ body.pagina-diario {
 }
 
 .emocoes label {
+  margin: 15px 0 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,10 +31,16 @@ body.pagina-diario {
 }
 
 .emocoes img {
-  width: clamp(80px, 8vw, 110px);
-  border-radius: 50%;
+  width: 110px;            /* tamanho FIXO */
+  height: 130px;           /* mantém padrão */
+  object-fit: contain;     /* impede distorção */
+  border-radius: 35%;      /* mantém o formato circular */
+  padding: 10px;            /* ajusta espaçamento interno */
+  background: #fff;        /* ajuda na uniformidade */
+  box-shadow: 0 0 4px rgba(0,0,0,0.1); 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .emocoes img:hover {
   transform: scale(1.08);
