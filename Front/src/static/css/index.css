@@ -173,6 +173,42 @@ body.pag-sobre {
   position:relative;
 }
 
+/* Título da área de contato */
+.contact-title{
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  /* tamanho responsivo: mínimo 1.25rem, máximo 2rem */
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight:700;
+  color:#2b3352;
+  margin:6px 0 10px 0;
+}
+
+/* Posicionar o título de contato à esquerda dentro da faixa verde */
+.hero-space-white .contact-title{
+  position: absolute;
+  left: 400px;
+  top: 30%;
+  transform: translateY(-50%);
+  margin: 0;
+  text-align: left;
+  z-index: 3;
+}
+
+/* Subtítulo abaixo de 'Entre em contato' */
+.hero-space-white .contact-subtitle{
+  position: absolute;
+  left: 400px;
+  top: 66%; /* abaixo do título */
+  transform: translateY(-50%);
+  margin: 0;
+  text-align: left;
+  font-family:'Poppins','Nunito',system-ui,sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  font-weight:400;
+  color:#2b3352;
+  z-index:3;
+}
+
 .hero-space-footer{
   background:#fff; /* faixa branca adicional */
   height:700px; /* mesma altura da azul */
@@ -248,12 +284,10 @@ body.pag-sobre {
 }
 
 .footer-logo{
-  position:absolute;
-  left:500px;
-  top:45%;
-  transform:translateY(-50%);
-  width:80px;
-  height:100px;
+  display:block;
+  margin: 0 auto 8px auto;
+  width:100px;
+  height:auto;
   border-radius:50%;
   object-fit:cover;
 }
@@ -265,7 +299,7 @@ body.pag-sobre {
   transform:translateY(-50%);
   color:#2b3352;
   font-family:'Poppins','Nunito',system-ui,sans-serif;
-  font-size:1rem;
+  font-size:2.5rem;
   font-weight:400;
   max-width:300px;
   text-align:right;
@@ -273,11 +307,11 @@ body.pag-sobre {
 
 .footer-textarea{
   position:absolute;
-  right:330px;
-  top:50%;
+  right:400px;
+  top:45%;
   transform:translateY(-50%);
   width:200px;
-  height:50px;
+  height:47px;
   padding:10px;
   border:0.3px solid #999; /* borda fina e cinza */
   border-radius:15px;
@@ -319,3 +353,4 @@ footer {
   font-size: 13px;
   margin: 25px 0;
 }
+
