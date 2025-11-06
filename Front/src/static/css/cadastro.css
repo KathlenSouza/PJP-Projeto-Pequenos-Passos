@@ -33,3 +33,22 @@ margin-top: 10px;
 text-align: center;
 }
 .error.show { display: block; color: #e74c3c; }
+
+footer {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  background: #f3f3f3;
+  color: #555;
+  font-size: 14px;
+  margin-top: 30px;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1;
+}

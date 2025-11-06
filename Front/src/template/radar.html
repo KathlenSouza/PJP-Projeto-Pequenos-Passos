@@ -99,10 +99,13 @@
 
   </main>
 
-  <footer>
+<footer>
+    <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
   </footer>
-
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script> 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
   <script src="/SRC/STATIC/JS/radar.js"></script>

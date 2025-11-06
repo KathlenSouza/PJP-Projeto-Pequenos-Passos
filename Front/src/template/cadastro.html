@@ -24,7 +24,6 @@
       <img src="/src/static/img/imgfundo2.webp" alt="Pequenos Passos" class="img-fundo" id="img-fundo" />
     </div>
  
-```
 <div class="right-side">
   <div class="login-box">
     <h3 class="title">Crie sua Conta</h3>
@@ -65,9 +64,14 @@
     </form>
   </div>
 </div>
-```
- 
   </div>
+  <footer>
+    <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script> 
  
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
   <script src="/src/static/js/cadastro.js"></script>

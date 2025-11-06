@@ -100,11 +100,13 @@
       <p class="disclaimer container">Sem taxas escondidas. Você pode cancelar a qualquer momento.</p>
     </section>
   </main>
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
-          Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
-    </div>
+ <footer>
+    <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script> 
   </footer>
 </body>
 </html>

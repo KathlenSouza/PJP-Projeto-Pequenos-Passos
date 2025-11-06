@@ -116,8 +116,10 @@
           <input type="radio" name="plano" value="gratuito" checked> Plano Gratuito
           <div> 
              <section class="card">
-            <label class="label"> Aqui fala sobre os planos
-               <br> o acesso permite 3 tarefas, acesso ao diario e relatorio.
+            <label class="label"> <li>Ajuda dentro do sistema</li>
+            <li>Sugestões básicas e limitadas de atividades</li>
+            <li>Diário digital sem anexos.</li>
+            <li>1 criança cadastrada.</li>
             </label></section>
             
           </div>
@@ -126,8 +128,10 @@
           <input type="radio" name="plano" value="premium"> Plano Premium
           <div> 
              <section class="card">
-            <label class="label"> Aqui fala sobre os planos. 
-              <br> o acesso total, diario, tarefas sugeridas conforme o usuario desejar, aviso, alertas.
+            <label class="label"> <li>Acesso a todos os recursos</li>
+            <li>Prioridade de resposta</li>
+            <li>Anexo de fotos ilimitado e acompanhamento completo do seu filho</li>
+            <li>Múltiplas crianças cadastradas.</li>
             </label></section>
           </div>
         </label>
@@ -139,9 +143,13 @@
           </div>
   </main>
 
-  <footer>
-    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria, Rafaela e Thiago)
+<footer>
+    <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
+    Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
   </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script> 
 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
