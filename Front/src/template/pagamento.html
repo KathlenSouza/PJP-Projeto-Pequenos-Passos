@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/pagamento.css">
+
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
 
-<body class="pagina-pagamento">
+<body>
   <div id="carregando">
     <div class="pes">
       <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
@@ -74,6 +75,9 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script> 
-    <script src="/src/static/js/pagamento.js"></script>
+    <script type="module" src="/src/static/js/conectaApi.js"></script>
+    <script type="module" src="/src/static/js/pagamento.js"></script>
+ 
+ 
 </body>
 </html>
