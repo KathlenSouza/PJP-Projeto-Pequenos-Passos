@@ -1,4 +1,23 @@
 /* ==============================
+   Personalização de posição do loader por página
+============================== */
+.pagina-login #carregando {
+  top: 505px;
+}
+.pagina-recuperarsenha #carregando {
+  top: 505px;
+}
+.pagina-planos #carregando {
+  top: 505px;
+}
+.pagina-cadastro #carregando {
+  top: 505px;
+}
+.pagina-pagamento #carregando {
+  top: 505px;
+}
+
+/* ==============================
    👣 Loader de Pezinhos Animados — versão com .pes
    ============================== */
 
