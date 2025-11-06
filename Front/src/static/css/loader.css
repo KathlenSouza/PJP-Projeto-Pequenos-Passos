@@ -6,10 +6,10 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   height: 80px; /* Altura menor */
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
   background: transparent;
   z-index: 1000;
@@ -28,7 +28,7 @@
 .pes {
   display: flex;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-top: 115px;
   opacity: 0.9;
   filter: drop-shadow(0 4px 8px rgba(115, 135, 255, 0.25));
   animation: feetRise 1.2s ease-in-out infinite alternate;
