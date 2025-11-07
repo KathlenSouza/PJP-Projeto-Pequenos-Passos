@@ -35,3 +35,4 @@ app.listen(PORT, () => {
   console.log(`✅ Front rodando em: http://localhost:${PORT}`);
   console.log(`🔁 Proxy ativo: /api → http://localhost:8080`);
 });
+

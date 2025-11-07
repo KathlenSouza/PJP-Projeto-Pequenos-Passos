@@ -1,45 +1,36 @@
-// login.js — valida credenciais e simula autenticação local
+import { post } from "./conectaApi.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btnLogin = document.getElementById('botaoLogin');
-  const campoEmail = document.getElementById('email');
-  const campoSenha = document.getElementById('senha');
-  const mensagemErro = document.getElementById('mensagemErro');
+const form = document.getElementById("formLogin");
+const errorDiv = document.getElementById("error");
 
-  // simulação simples: dados de usuário já "cadastrado"
-  const usuarioSalvo = JSON.parse(localStorage.getItem('pp_usuario')) || {
-    email: 'teste@exemplo.com',
-    senha: '12345678',
-  };
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  errorDiv.style.display = "none";
 
-  function validarLogin() {
-    const email = campoEmail.value.trim();
-    const senha = campoSenha.value.trim();
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
 
-    if (!email || !senha) {
-      mostrarErro('Preencha todos os campos.');
-      return;
-    }
-
-    if (email === usuarioSalvo.email && senha === usuarioSalvo.senha) {
-      localStorage.setItem('pp_logado', JSON.stringify({ email, dataLogin: new Date().toISOString() }));
-      mensagemErro.textContent = '';
-      window.location.href = '/SRC/TEMPLATE/index.html'; // redireciona para a home
-    } else {
-      mostrarErro('E-mail ou senha incorretos.');
-    }
+  // 🔹 Validação simples
+  if (!email || !senha) {
+    errorDiv.textContent = "Por favor, preencha todos os campos.";
+    errorDiv.style.display = "block";
+    return;
   }
 
-  function mostrarErro(texto) {
-    mensagemErro.textContent = texto;
-    mensagemErro.classList.add('visivel');
-    setTimeout(() => mensagemErro.classList.remove('visivel'), 4000);
+  try {
+    // 🔹 Faz POST para o backend via proxy (→ http://localhost:8080/api/usuarios/login)
+    const resposta = await post("/usuarios/login", { email, senha });
+
+    console.log("✅ Login bem-sucedido:", resposta);
+
+    // 🔹 Armazena o usuário logado no localStorage
+    localStorage.setItem("usuario", JSON.stringify(resposta.usuario));
+
+    // 🔹 Redireciona para o dashboard
+    window.location.href = "/SRC/TEMPLATE/dashboarder.html";
+  } catch (erro) {
+    console.error("❌ Erro no login:", erro);
+    errorDiv.textContent = "Erro ao realizar login. Verifique email e senha.";
+    errorDiv.style.display = "block";
   }
-
-  btnLogin.addEventListener('click', validarLogin);
-
-  // permite apertar Enter para enviar
-  campoSenha.addEventListener('keyup', e => {
-    if (e.key === 'Enter') validarLogin();
-  });
 });
