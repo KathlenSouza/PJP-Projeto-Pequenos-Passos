@@ -4,57 +4,95 @@ const list = document.getElementById("diaryList");
 const form = document.getElementById("diaryForm");
 const inputDescricao = document.getElementById("diaryText");
 
+// ===============================
+// Função para exibir registros
+// ===============================
 async function exibirRegistros() {
-  list.innerHTML = '<li>Carregando...</li>';
+  list.innerHTML = "<li>Carregando...</li>";
+
   try {
     const registros = await get("/diario");
 
     if (!registros.length) {
-      list.innerHTML = '<li>Sem registros ainda.</li>';
+      list.innerHTML = "<li>Sem registros ainda.</li>";
       return;
     }
 
     list.innerHTML = registros
-      .map(
-        (r) => `
-        <li class="item">
-          <strong>${r.emocao}</strong> - ${r.descricao}
-          <br>
-          ${
-            r.fotos && r.fotos.length
-              ? r.fotos.map((f) => `<img src="${f}" width="80" style="margin:4px;border-radius:8px;">`).join('')
-              : ''
-          }
-        </li>
-      `
-      )
+      .map((r) => {
+        // formata a data no padrão brasileiro
+        const dataFormatada = r.dataRegistro
+          ? new Date(r.dataRegistro).toLocaleDateString("pt-BR")
+          : "sem data";
+
+        return `
+          <li class="item">
+            <strong>${r.emocao}</strong> — ${r.descricao}<br>
+            <small style="color:#777;">Data: ${dataFormatada}</small><br>
+            ${
+              r.fotos && r.fotos.length
+                ? r.fotos
+                    .map(
+                      (f) =>
+                        `<img src="data:image/jpeg;base64,${f}" width="80" style="margin:4px;border-radius:8px;">`
+                    )
+                    .join("")
+                : ""
+            }
+          </li>
+        `;
+      })
       .join("");
   } catch (err) {
     list.innerHTML = `<li>Erro ao carregar: ${err.message}</li>`;
   }
 }
 
+// ===============================
+// Função para salvar um novo registro
+// ===============================
 async function salvarRegistro(e) {
   e.preventDefault();
-  const emocao = document.querySelector('input[name="emocao"]:checked').value;
+
+  const emocaoSelecionada = document.querySelector(
+    'input[name="emocao"]:checked'
+  );
+  if (!emocaoSelecionada) {
+    alert("Escolha uma emoção antes de salvar!");
+    return;
+  }
+
+  const emocao = emocaoSelecionada.value;
   const descricao = inputDescricao.value.trim();
   const arquivos = document.getElementById("entradaFotos").files;
 
-  // Converter imagens em base64
+  // converter imagens em base64 (sem prefixo)
   const fotos = await Promise.all(
-    Array.from(arquivos).map(file => toBase64(file))
+    Array.from(arquivos).map(async (file) => {
+      const base64 = await toBase64(file);
+      return base64.split(",")[1]; // remove o prefixo data:image/png;base64,
+    })
   );
 
+  const novoRegistro = {
+    emocao,
+    descricao,
+    fotos,
+  };
+
   try {
-    await post("/diario", { emocao, descricao, fotos });
+    await post("/diario", novoRegistro);
     alert("Registro salvo com sucesso!");
+    form.reset();
     exibirRegistros();
   } catch (err) {
     alert(`Erro ao salvar: ${err.message}`);
   }
 }
 
-// Função auxiliar
+// ===============================
+// Função auxiliar: converter imagem em base64
+// ===============================
 function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -64,6 +102,8 @@ function toBase64(file) {
   });
 }
 
-
+// ===============================
+// Inicialização
+// ===============================
 form.addEventListener("submit", salvarRegistro);
 document.addEventListener("DOMContentLoaded", exibirRegistros);
