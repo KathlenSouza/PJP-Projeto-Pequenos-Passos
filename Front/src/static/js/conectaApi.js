@@ -30,12 +30,14 @@ export async function post(endpoint, body) {
   try {
     return await resp.json();
   } catch {
-    return {}; // evita erro ao tentar ler json vazio
+    return {}; // evita erro ao tentar ler json vazios
   }
 }
+
+// 🔹 Mantém o cadastro de usuário (NÃO ALTERAR)
 export const conectaApi = {
   async cadastrarUsuario(usuario) {
-    const response = await fetch("http://localhost:8080/api/usuarios", {
+    const response = await fetch("http://localhost:8080/usuarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -49,5 +51,24 @@ export const conectaApi = {
     }
 
     return await response.json();
+  },
+
+  // 🔹 Adiciona endpoints de tarefas e sugestões (NOVOS)
+  async listarTarefas() {
+    return await get('/tarefas');
+  },
+
+  async criarTarefa(tarefa) {
+    return await post('/tarefas', tarefa);
+  },
+
+  async excluirTarefa(id) {
+    const resp = await fetch(`${API_BASE}/tarefas/${id}`, { method: 'DELETE' });
+    if (!resp.ok) throw new Error(`Erro ${resp.status}`);
+    return true;
+  },
+
+  async sugerirTarefas(descricao) {
+    return await post('/tarefas/sugerir', { descricao });
   }
 };
