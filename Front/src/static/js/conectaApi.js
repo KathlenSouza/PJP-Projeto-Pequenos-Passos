@@ -33,3 +33,21 @@ export async function post(endpoint, body) {
     return {}; // evita erro ao tentar ler json vazio
   }
 }
+export const conectaApi = {
+  async cadastrarUsuario(usuario) {
+    const response = await fetch("http://localhost:8080/api/usuarios", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(usuario)
+    });
+
+    if (!response.ok) {
+      const erro = await response.json();
+      throw new Error(erro.erro || "Erro ao criar usuário");
+    }
+
+    return await response.json();
+  }
+};
