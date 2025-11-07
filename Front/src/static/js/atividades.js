@@ -1,135 +1,135 @@
-import { conectaApi } from "./conectaApi.js";
+import { get, post } from "./conectaApi.js";
 
 const lista = document.getElementById("activitiesList");
-const descricaoInput = document.getElementById("activityDesc");
-const categoriaSelect = document.getElementById("activityCategory");
 const btnAdd = document.getElementById("btnAdd");
 const btnSuggest = document.getElementById("btnSuggest");
 const btnClear = document.getElementById("btnClearActivities");
+const descInput = document.getElementById("activityDesc");
+const catInput = document.getElementById("activityCategory");
 
-// ============================================================
-// 🔹 Função: carregar tarefas salvas no banco
-// ============================================================
+// ==================== CARREGAR ATIVIDADES ====================
 async function carregarAtividades() {
-  try {
-    const atividades = await conectaApi.listarTarefas();
+  lista.innerHTML = "<li>Carregando atividades...</li>";
 
-    if (!atividades || atividades.length === 0) {
+  try {
+    const tarefas = await get("/tarefas");
+    if (!tarefas || tarefas.length === 0) {
       lista.innerHTML = "<li>Nenhuma atividade cadastrada.</li>";
       return;
     }
 
-    lista.innerHTML = atividades
-      .map(
-        (a) => `
-        <li class="list-item">
-          <div>
-            <strong>${a.descricao}</strong> 
-            <span class="categoria">(${a.categoria || "Sem categoria"})</span>
-          </div>
-          <div class="acoes">
-            <button class="btn danger" onclick="excluirAtividade(${a.id})">🗑️</button>
-          </div>
-        </li>
-      `
-      )
-      .join("");
+    lista.innerHTML = "";
+    tarefas.forEach((t) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span>${t.descricao || t.titulo || "Sem título"} — ${t.categoria || "Sem categoria"}</span>
+        <button class="btn-concluir" data-id="${t.id}">Concluir</button>
+      `;
+      lista.appendChild(li);
+    });
   } catch (erro) {
     console.error("❌ Erro ao carregar atividades:", erro);
     lista.innerHTML = "<li>Erro ao carregar atividades.</li>";
   }
 }
 
-// ============================================================
-// 🔹 Função: adicionar nova atividade
-// ============================================================
+// ==================== ADICIONAR ATIVIDADE ====================
 btnAdd.addEventListener("click", async () => {
-  const descricao = descricaoInput.value.trim();
-  const categoria = categoriaSelect.value;
+  const descricao = descInput.value.trim();
+  const categoria = catInput.value.trim();
 
-  if (!descricao) {
-    alert("Por favor, digite a descrição da atividade!");
+  if (!descricao || !categoria) {
+    alert("Preencha a descrição e a categoria.");
     return;
   }
 
+  const tarefa = {
+    titulo: descricao,
+    descricao,
+    categoria,
+    areaDesenvolvimento: categoria.toUpperCase().replace(" ", "_"),
+    faixaEtariaMin: 4,
+    faixaEtariaMax: 6,
+    nivelDificuldade: "Fácil",
+    duracaoEstimadaMinutos: 10,
+    materiaisNecessarios: "Nenhum",
+    beneficios: "Desenvolvimento infantil",
+    ativo: true,
+  };
+
   try {
-    await conectaApi.criarTarefa({ descricao, categoria });
-    descricaoInput.value = "";
+    await post("/tarefas", tarefa);
+    alert("✅ Atividade adicionada com sucesso!");
+    descInput.value = "";
     carregarAtividades();
   } catch (erro) {
     console.error("❌ Erro ao criar atividade:", erro);
-    alert("Erro ao criar atividade.");
+    alert("Erro ao criar atividade. Verifique os dados.");
   }
 });
 
-// ============================================================
-// 🔹 Função: excluir atividade individual
-// ============================================================
-window.excluirAtividade = async (id) => {
-  if (!confirm("Deseja excluir esta atividade?")) return;
-
-  try {
-    await conectaApi.excluirTarefa(id);
-    carregarAtividades();
-  } catch (erro) {
-    console.error("❌ Erro ao excluir atividade:", erro);
-    alert("Erro ao excluir atividade.");
-  }
-};
-
-// ============================================================
-// 🔹 Função: limpar todas as atividades (opcional, backend pode não ter endpoint específico)
-// ============================================================
-btnClear.addEventListener("click", async () => {
-  if (!confirm("Deseja realmente limpar todas as atividades?")) return;
-
-  try {
-    const atividades = await conectaApi.listarTarefas();
-    for (const a of atividades) {
-      await conectaApi.excluirTarefa(a.id);
-    }
-    carregarAtividades();
-  } catch (erro) {
-    console.error("❌ Erro ao limpar atividades:", erro);
-  }
-});
-
-// ============================================================
-// 🔹 Função: pedir sugestões à IA (usa OpenAIService no backend)
-// ============================================================
+// ==================== SUGERIR ATIVIDADES ====================
 btnSuggest.addEventListener("click", async () => {
-  const descricao = descricaoInput.value.trim();
-
-  if (!descricao) {
-    alert("Descreva o contexto da atividade para sugerir!");
-    return;
-  }
-
-  btnSuggest.disabled = true;
   btnSuggest.textContent = "Gerando sugestões...";
+  btnSuggest.disabled = true;
+
+  const idade = 5; // Pode futuramente vir da criança logada
+  const area = catInput.value.trim();
 
   try {
-    const resposta = await conectaApi.sugerirTarefas(descricao);
+    // ✅ Usa GET (compatível com seu backend)
+    const sugestoes = await get(`/tarefas/sugerir?idade=${idade}&area=${encodeURIComponent(area)}`);
 
-    if (resposta && resposta.sugestoes) {
-      const sugestoes = Array.isArray(resposta.sugestoes)
-        ? resposta.sugestoes
-        : [resposta.sugestoes];
-
-      alert("💡 Sugestões da IA:\n\n" + sugestoes.join("\n"));
+    if (!sugestoes || sugestoes.length === 0) {
+      alert("Nenhuma sugestão encontrada.");
     } else {
-      alert("Nenhuma sugestão recebida.");
+      lista.innerHTML = "";
+      sugestoes.forEach((t) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${t.descricao || t.titulo || "Atividade sem título"} — ${t.categoria || "Sem categoria"}</span>
+          <button class="btn-concluir" data-id="${t.id}">Concluir</button>
+        `;
+        lista.appendChild(li);
+      });
     }
   } catch (erro) {
     console.error("❌ Erro ao gerar sugestões:", erro);
     alert("Erro ao gerar sugestões de tarefas.");
   } finally {
-    btnSuggest.disabled = false;
     btnSuggest.textContent = "Sugerir";
+    btnSuggest.disabled = false;
   }
 });
 
-// ============================================================
-// 🔹 Inicializar
-// ============================================================
+// ==================== LIMPAR TODAS AS ATIVIDADES ====================
+btnClear.addEventListener("click", () => {
+  if (confirm("Tem certeza que deseja limpar todas as atividades?")) {
+    lista.innerHTML = "<li>Nenhuma atividade cadastrada.</li>";
+  }
+});
+
+// ==================== CONCLUIR ATIVIDADE ====================
+async function concluirAtividade(id) {
+  if (!confirm("Marcar esta atividade como concluída?")) return;
+
+  try {
+    await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
+    alert("✅ Atividade concluída!");
+    carregarAtividades();
+  } catch (erro) {
+    console.error("❌ Erro ao concluir atividade:", erro);
+    alert("Erro ao concluir a atividade.");
+  }
+}
+
+// ==================== EVENTO DE CLIQUE GLOBAL ====================
+lista.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-concluir")) {
+    const id = e.target.getAttribute("data-id");
+    concluirAtividade(id);
+  }
+});
+
+// ==================== INICIALIZA ====================
 carregarAtividades();
