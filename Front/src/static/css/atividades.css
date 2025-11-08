@@ -73,3 +73,27 @@ body.pagina-atividades {
   color: #fff;
   transform: scale(1.03);
 }
+atividade-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+}
+
+.btn-success {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+  background-color: #45a049;
+}
