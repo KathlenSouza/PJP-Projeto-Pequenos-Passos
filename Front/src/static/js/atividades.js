@@ -165,7 +165,16 @@ btnAI.addEventListener("click", async () => {
     }
   } catch (erro) {
     console.error("❌ Erro ao gerar sugestões IA:", erro);
-    alert("Erro ao gerar sugestões via IA.");
+    if (window.Swal) {
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao gerar sugestões",
+        text: "Erro ao gerar sugestões via IA.",
+        confirmButtonColor: "#dc3545"
+      });
+    } else {
+      alert("Erro ao gerar sugestões via IA.");
+    }
   } finally {
     btnAI.textContent = "Gerar com IA 🤖";
     btnAI.disabled = false;
@@ -174,18 +183,48 @@ btnAI.addEventListener("click", async () => {
 
 // ==================== CONCLUIR ATIVIDADE ====================
 async function concluirAtividade(id) {
-  if (!confirm("Marcar esta atividade como concluída?")) return;
-
-  try {
-    await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
-    alert("✅ Atividade concluída!");
-    carregarAtividades();
-  } catch (erro) {
-    console.error("❌ Erro ao concluir atividade:", erro);
-    alert("Erro ao concluir a atividade.");
+  if (window.Swal) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Marcar esta atividade como concluída?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sim, concluir',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
+          Swal.fire({
+            icon: 'success',
+            title: 'Atividade concluída!',
+            confirmButtonColor: '#28a745'
+          });
+          carregarAtividades();
+        } catch (erro) {
+          console.error("❌ Erro ao concluir atividade:", erro);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro ao concluir a atividade',
+            confirmButtonColor: '#dc3545'
+          });
+        }
+      }
+    });
+  } else {
+    if (!confirm("Marcar esta atividade como concluída?")) return;
+    try {
+      await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
+      alert("✅ Atividade concluída!");
+      carregarAtividades();
+    } catch (erro) {
+      console.error("❌ Erro ao concluir atividade:", erro);
+      alert("Erro ao concluir a atividade.");
+    }
   }
 }
-
 // ==================== LIMPAR TODAS ====================
 btnClear.addEventListener("click", () => {
   if (confirm("Tem certeza que deseja limpar todas as atividades?")) {
