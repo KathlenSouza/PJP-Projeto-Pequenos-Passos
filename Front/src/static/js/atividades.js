@@ -43,7 +43,7 @@ function renderAtividade(t) {
 
   const btnConcluir = document.createElement("button");
   btnConcluir.textContent = "✔ Concluir";
-  btnConcluir.classList.add("btn", "btn-small", "btn-success");
+  btnConcluir.classList.add("btn", "btn-small", "btn-success", "btn-concluir");
   btnConcluir.addEventListener("click", () => concluirAtividade(t.id));
 
   li.appendChild(texto);
