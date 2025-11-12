@@ -27,7 +27,16 @@ function salvarConfiguracoes() {
   localStorage.setItem(CHAVE_CRIANCA, JSON.stringify(crianca));
   localStorage.setItem(CHAVE_PLANO, plano);
 
-  alert('✅ Configurações salvas com sucesso!');
+  // Modal de sucesso usando SweetAlert2 (mesma aparência do cadastro)
+  if (window.Swal) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Configurações salvas com sucesso!',
+      confirmButtonColor: '#28a745'
+    });
+  } else {
+    alert('✅ Configurações salvas com sucesso!');
+  }
 }
 
 
@@ -54,12 +63,38 @@ function carregarConfiguracoes() {
 // Limpar as configurações
 
 function limparConfiguracoes() {
-  if (confirm('Tem certeza que deseja limpar todas as configurações?')) {
-    localStorage.removeItem(CHAVE_PAIS);
-    localStorage.removeItem(CHAVE_CRIANCA);
-    localStorage.removeItem(CHAVE_PLANO);
-    carregarConfiguracoes();
-    alert('Configurações apagadas.');
+  if (window.Swal) {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Tem certeza que deseja limpar todas as configurações?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sim, limpar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem(CHAVE_PAIS);
+        localStorage.removeItem(CHAVE_CRIANCA);
+        localStorage.removeItem(CHAVE_PLANO);
+        carregarConfiguracoes();
+        Swal.fire({
+          icon: 'success',
+          title: 'Configurações apagadas',
+          timer: 1400,
+          showConfirmButton: false
+        });
+      }
+    });
+  } else {
+    if (confirm('Tem certeza que deseja limpar todas as configurações?')) {
+      localStorage.removeItem(CHAVE_PAIS);
+      localStorage.removeItem(CHAVE_CRIANCA);
+      localStorage.removeItem(CHAVE_PLANO);
+      carregarConfiguracoes();
+      alert('Configurações apagadas.');
+    }
   }
 }
 
