@@ -23,7 +23,16 @@ function adicionarProfissional() {
   const avaliacao = document.getElementById('avaliacaoProfissional').value.trim();
 
   if (!nome || !area || !cidade) {
-    alert('Preencha pelo menos nome, área e cidade.');
+    if (window.Swal) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campos obrigatórios",
+        text: "Preencha pelo menos nome, área e cidade.",
+        confirmButtonColor: "#ffc107"
+      });
+    } else {
+      alert('Preencha pelo menos nome, área e cidade.');
+    }
     return;
   }
 
@@ -96,3 +105,4 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('botaoLimparIndicacoes').addEventListener('click', limparTodas);
   renderizarIndicacoes();
 });
+

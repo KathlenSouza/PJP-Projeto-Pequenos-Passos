@@ -82,11 +82,28 @@ async function salvarRegistro(e) {
 
   try {
     await post("/diario", novoRegistro);
-    alert("Registro salvo com sucesso!");
+    if (window.Swal) {
+      Swal.fire({
+        icon: "success",
+        title: "Registro salvo com sucesso!",
+        confirmButtonColor: "#28a745"
+      });
+    } else {
+      alert("Registro salvo com sucesso!");
+    }
     form.reset();
     exibirRegistros();
   } catch (err) {
-    alert(`Erro ao salvar: ${err.message}`);
+    if (window.Swal) {
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao salvar",
+        text: err.message,
+        confirmButtonColor: "#dc3545"
+      });
+    } else {
+      alert(`Erro ao salvar: ${err.message}`);
+    }
   }
 }
 
