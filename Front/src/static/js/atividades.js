@@ -57,7 +57,16 @@ btnAdd.addEventListener("click", async () => {
   const categoria = catInput.value.trim();
 
   if (!descricao || !categoria) {
-    alert("Preencha a descrição e a categoria.");
+    if (window.Swal) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campos obrigatórios",
+        text: "Preencha a descrição e a categoria.",
+        confirmButtonColor: "#ffc107"
+      });
+    } else {
+      alert("Preencha a descrição e a categoria.");
+    }
     return;
   }
 
@@ -77,13 +86,32 @@ btnAdd.addEventListener("click", async () => {
 
   try {
     await post("/tarefas", tarefa);
-    alert("✅ Atividade adicionada com sucesso!");
+    // Modal de sucesso usando SweetAlert2 (mesmo padrão de configurações)
+    if (window.Swal) {
+      Swal.fire({
+        icon: "success",
+        title: "Atividade adicionada com sucesso!",
+        confirmButtonColor: "#28a745"
+      });
+    } else {
+      alert("✅ Atividade adicionada com sucesso!");
+    }
     descInput.value = "";
     carregarAtividades();
   } catch (erro) {
     console.error("❌ Erro ao criar atividade:", erro);
-    alert("Erro ao criar atividade. Verifique os dados.");
+    if (window.Swal) {
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao criar atividade",
+        text: "Verifique os dados e tente novamente.",
+        confirmButtonColor: "#dc3545"
+      });
+    } else {
+      alert("Erro ao criar atividade. Verifique os dados.");
+    }
   }
+ 
 });
 
 // ==================== SUGERIR (BANCO) ====================
