@@ -8,6 +8,41 @@ const form = document.getElementById("cadastroForm");
 const errorBox = document.getElementById("error");
 let currentStep = 0;
 
+// ========== CÁLCULO AUTOMÁTICO DA IDADE ==========
+const dataInput = document.getElementById("dataNascimento");
+const idadeInput = document.getElementById("idadeCrianca");
+
+// Função que calcula idade com base na data de nascimento
+function calcularIdade(dataNascimento) {
+  const hoje = new Date();
+  const nascimento = new Date(dataNascimento);
+
+  let idade = hoje.getFullYear() - nascimento.getFullYear();
+  const mes = hoje.getMonth() - nascimento.getMonth();
+
+  if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+    idade--;
+  }
+  return idade;
+}
+
+// Evento que calcula e valida idade automaticamente
+if (dataInput) {
+  dataInput.addEventListener("change", function () {
+    const idade = calcularIdade(this.value);
+    idadeInput.value = idade;
+
+    if (idade < 4 || idade > 6) {
+      Swal.fire({
+        icon: "warning",
+        title: "Idade fora do limite",
+        text: "A criança deve ter entre 4 e 6 anos para o cadastro.",
+        confirmButtonColor: "#ff5f6d"
+      });
+      idadeInput.value = "";
+    }
+  });
+}
 // ========== ETAPA 1 ==========
 nextBtn.addEventListener("click", () => {
   const nome = document.getElementById("nome").value.trim();
@@ -63,6 +98,7 @@ form.addEventListener("submit", async (e) => {
   } catch (erro) {
     showError(erro.message);
   }
+  
 });
 
 // ========== Funções auxiliares ==========
@@ -80,3 +116,4 @@ function showError(msg) {
 function hideError() {
   errorBox.style.display = "none";
 }
+

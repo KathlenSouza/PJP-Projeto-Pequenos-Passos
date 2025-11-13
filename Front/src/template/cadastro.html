@@ -54,15 +54,32 @@
         <div class="inputs-row">
           <input type="text" id="nomeCrianca" name="nomeCrianca" placeholder="Nome da criança" required />
         </div>
-        <div class="inputs-row">
-          <input type="number" id="idadeCrianca" name="idadeCrianca" placeholder="Idade (4 a 6)" min="4" max="6" required />
-        </div>
-        <div class="inputs-row">
-          <button type="button" class="btn-back">Voltar</button>
-          <button type="submit" class="btn-signin">Cadastrar</button>
-        </div>
-      </div>
- 
+         <!-- Campo de data de nascimento -->
+            <div class="inputs-row data-nascimento-row">
+              <input type="date" id="dataNascimento" name="dataNascimento" placeholder="Data de nascimento" required />
+            </div>
+
+            <!-- Campo de sexo da criança -->
+            <div class="inputs-row">
+              <select id="sexoCrianca" name="sexoCrianca" required>
+                <option value="" disabled selected>Sexo da criança</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="prefiro">Prefiro não informar</option>
+              </select>
+            </div>
+
+            <!-- Campo que mostra a idade automaticamente -->
+            <div class="inputs-row">
+              <input type="number" id="idadeCrianca" name="idadeCrianca" placeholder="Idade (4 a 6)" readonly required />
+            </div>
+
+            <div class="inputs-row">
+              <button type="button" class="btn-back">Voltar</button>
+              <button type="submit" class="btn-signin">Cadastrar</button>
+            </div>
+          </div>
+
       <div id="error" class="error">Por favor, preencha todos os campos corretamente.</div>
     </form>
   </div>
