@@ -1,60 +1,64 @@
 <!DOCTYPE html>
- 
+
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pequenos Passos | Cadastro</title>
   <link rel="stylesheet" href="/src/static/css/cadastro.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
+
 <body>
   <!-- Loader -->
-   <body class="pagina-cadastro">
-  <div id="carregando">
-    <div class="pes">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+
+  <body class="pagina-cadastro">
+    <div id="carregando">
+      <div class="pes">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+        <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé">
+      </div>
     </div>
-  </div>
   </body>
   <div class="page-wrapper">
     <div class="left-side">
       <img src="/src/static/img/imgfundo2.webp" alt="Pequenos Passos" class="img-fundo" id="img-fundo" />
     </div>
- 
-<div class="right-side">
-  <div class="login-box">
-    <h3 class="title">Crie sua Conta</h3>
- 
-    <form id="cadastroForm" novalidate>
-      <!-- Etapa 1 -->
-      <div class="step step-1 active">
-        <div class="inputs-row">
-          <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
-        </div>
-        <div class="inputs-row">
-          <input type="email" id="email" name="email" placeholder="Email" required />
-        </div>
-        <div class="inputs-row">
-          <input type="password" id="senha" name="senha" placeholder="Senha (mínimo 8 caracteres)" required />
-        </div>
-        <div class="inputs-row">
-          <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirmar senha" required />
-        </div>
-        <button type="button" class="btn-signin next">Próximo</button>
-      </div>
- 
-      <!-- Etapa 2 -->
-      <div class="step step-2">
-        <div class="inputs-row">
-          <input type="text" id="nomeCrianca" name="nomeCrianca" placeholder="Nome da criança" required />
-        </div>
-         <!-- Campo de data de nascimento -->
+
+    <div class="right-side">
+      <div class="login-box">
+        <h3 class="title">Crie sua Conta</h3>
+
+        <form id="cadastroForm" novalidate>
+          <!-- Etapa 1 -->
+          <div class="step step-1 active">
+            <div class="inputs-row">
+              <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+            </div>
+            <div class="inputs-row">
+              <input type="email" id="email" name="email" placeholder="Email" required />
+            </div>
+            <div class="inputs-row">
+              <input type="password" id="senha" name="senha" placeholder="Senha (mínimo 8 caracteres)" required />
+            </div>
+            <div class="inputs-row">
+              <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirmar senha" required />
+            </div>
+            <button type="button" class="btn-signin next">Próximo</button>
+          </div>
+
+          <!-- Etapa 2 -->
+          <div class="step step-2">
+            <div class="inputs-row">
+              <input type="text" id="nomeCrianca" name="nomeCrianca" placeholder="Nome da criança" required />
+            </div>
+            <!-- Campo de data de nascimento -->
             <div class="inputs-row data-nascimento-row">
               <input type="date" id="dataNascimento" name="dataNascimento" placeholder="Data de nascimento" required />
             </div>
@@ -71,7 +75,8 @@
 
             <!-- Campo que mostra a idade automaticamente -->
             <div class="inputs-row">
-              <input type="number" id="idadeCrianca" name="idadeCrianca" placeholder="Idade (4 a 6)" readonly required />
+              <input type="number" id="idadeCrianca" name="idadeCrianca" placeholder="Idade (4 a 6)" readonly
+                required />
             </div>
 
             <div class="inputs-row">
@@ -80,10 +85,10 @@
             </div>
           </div>
 
-      <div id="error" class="error">Por favor, preencha todos os campos corretamente.</div>
-    </form>
-  </div>
-</div>
+          <div id="error" class="error">Por favor, preencha todos os campos corretamente.</div>
+        </form>
+      </div>
+    </div>
   </div>
   <footer>
     <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
@@ -91,11 +96,12 @@
   </footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script> 
- 
+  </script>
+
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
   <script type="module" src="/src/static/js/conectaApi.js"></script>
   <script type="module" src="/src/static/js/cadastro.js"></script>
- 
+
 </body>
+
 </html>
