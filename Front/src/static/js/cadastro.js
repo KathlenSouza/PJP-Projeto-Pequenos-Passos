@@ -104,18 +104,22 @@ form.addEventListener("submit", async (e) => {
   }
 
   // Objeto exato esperado no backend
-  const usuario = {
-    nome,
-    email,
-    senha,
-    telefone,
+const usuario = {
+  nome,
+  email,
+  senha,
+  telefone,
 
-    crianca: {
+  criancas: [
+    {
       nome: nomeCrianca,
       dataNascimento,
       genero: generoCrianca
     }
-  };
+  ]
+};
+
+
 
   try {
     await conectaApi.cadastrarUsuario(usuario);
