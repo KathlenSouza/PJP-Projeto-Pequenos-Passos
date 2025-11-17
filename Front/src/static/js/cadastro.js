@@ -8,11 +8,13 @@ const form = document.getElementById("cadastroForm");
 const errorBox = document.getElementById("error");
 let currentStep = 0;
 
-// ========== CÁLCULO AUTOMÁTICO DA IDADE ==========
+// ===============================
+// 🔹 CÁLCULO AUTOMÁTICO DA IDADE
+// ===============================
 const dataInput = document.getElementById("dataNascimento");
 const idadeInput = document.getElementById("idadeCrianca");
 
-// Função que calcula idade com base na data de nascimento
+// Função para calcular idade
 function calcularIdade(dataNascimento) {
   const hoje = new Date();
   const nascimento = new Date(dataNascimento);
@@ -26,7 +28,6 @@ function calcularIdade(dataNascimento) {
   return idade;
 }
 
-// Evento que calcula e valida idade automaticamente
 if (dataInput) {
   dataInput.addEventListener("change", function () {
     const idade = calcularIdade(this.value);
@@ -43,7 +44,10 @@ if (dataInput) {
     }
   });
 }
-// ========== ETAPA 1 ==========
+
+// =====================
+// 🔹 ETAPA 1
+// =====================
 nextBtn.addEventListener("click", () => {
   const nome = document.getElementById("nome").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -54,10 +58,12 @@ nextBtn.addEventListener("click", () => {
     showError("Preencha todos os campos antes de continuar.");
     return;
   }
+
   if (senha.length < 8) {
     showError("A senha deve ter no mínimo 8 caracteres.");
     return;
   }
+
   if (senha !== confirmarSenha) {
     showError("As senhas não coincidem!");
     return;
@@ -67,27 +73,53 @@ nextBtn.addEventListener("click", () => {
   goToStep(1);
 });
 
-// ========== ETAPA 2 ==========
+// =====================
+// 🔹 ETAPA 2
+// =====================
 backBtn.addEventListener("click", () => goToStep(0));
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // Dados do usuário
   const nome = document.getElementById("nome").value.trim();
   const email = document.getElementById("email").value.trim().toLowerCase();
   const senha = document.getElementById("senha").value.trim();
-  const nomeCrianca = document.getElementById("nomeCrianca").value.trim();
-  const idadeCrianca = document.getElementById("idadeCrianca").value.trim();
+  const telefone = document.getElementById("telefone")?.value?.trim() || null;
 
-  if (!nomeCrianca || !idadeCrianca) {
-    showError("Preencha as informações da criança.");
+  // Dados da criança
+  const nomeCrianca = document.getElementById("nomeCrianca").value.trim();
+  const dataNascimento = document.getElementById("dataNascimento").value;
+  const generoCrianca = document.getElementById("sexoCrianca").value;
+  const idadeCrianca = document.getElementById("idadeCrianca").value;
+
+  if (!nomeCrianca || !dataNascimento || !generoCrianca) {
+    showError("Preencha todas as informações da criança.");
     return;
   }
 
-  const usuario = { nome, email, senha, nomeCrianca, idadeCrianca };
+  if (idadeCrianca < 4 || idadeCrianca > 6) {
+    showError("A criança deve ter entre 4 e 6 anos.");
+    return;
+  }
+
+  // Objeto exato esperado no backend
+  const usuario = {
+    nome,
+    email,
+    senha,
+    telefone,
+
+    crianca: {
+      nome: nomeCrianca,
+      dataNascimento,
+      genero: generoCrianca
+    }
+  };
 
   try {
     await conectaApi.cadastrarUsuario(usuario);
+
     Swal.fire({
       icon: "success",
       title: "Conta criada com sucesso!",
@@ -95,13 +127,16 @@ form.addEventListener("submit", async (e) => {
     }).then(() => {
       window.location.href = "/src/template/login.html";
     });
+
   } catch (erro) {
-    showError(erro.message);
+    console.error("❌ Erro no cadastro:", erro);
+    showError(erro.message || "Erro ao cadastrar. Tente novamente.");
   }
-  
 });
 
-// ========== Funções auxiliares ==========
+// =====================
+// 🔹 Funções auxiliares
+// =====================
 function goToStep(index) {
   steps[currentStep].classList.remove("active");
   steps[index].classList.add("active");
