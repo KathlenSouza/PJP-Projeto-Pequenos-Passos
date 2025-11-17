@@ -37,17 +37,28 @@ function renderAtividade(t) {
   const li = document.createElement("li");
   li.classList.add("atividade-item");
 
-  const texto = document.createElement("span");
-  texto.textContent = `${t.titulo || t.descricao} — ${t.categoria}`;
-  texto.classList.add("atividade-texto");
+  li.innerHTML = `
+    <div class="atividade-bloco">
+      <strong>${t.titulo}</strong>
+      <p>${t.descricao || ""}</p>
 
-  const btnConcluir = document.createElement("button");
-  btnConcluir.textContent = "✔ Concluir";
-  btnConcluir.classList.add("btn", "btn-small", "btn-success", "btn-concluir");
-  btnConcluir.addEventListener("click", () => concluirAtividade(t.id));
+      <div class="atividade-info">
+        <p><b>Área:</b> ${t.areaDesenvolvimento}</p>
+        <p><b>Categoria:</b> ${t.categoria}</p>
+        <p><b>Idade:</b> ${t.faixaEtariaMin} - ${t.faixaEtariaMax} anos</p>
+        <p><b>Nível:</b> ${t.nivelDificuldade}</p>
+        <p><b>Duração:</b> ${t.duracaoEstimadaMinutos} min</p>
+        <p><b>Materiais:</b> ${t.materiaisNecessarios}</p>
+        <p><b>Benefícios:</b> ${t.beneficios}</p>
+      </div>
 
-  li.appendChild(texto);
-  li.appendChild(btnConcluir);
+      <button class="btn btn-small btn-success btn-concluir"
+              onclick="concluirAtividade(${t.id})">
+        ✔ Concluir
+      </button>
+    </div>
+  `;
+
   lista.appendChild(li);
 }
 
