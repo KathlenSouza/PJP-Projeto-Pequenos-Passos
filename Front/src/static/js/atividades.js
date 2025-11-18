@@ -236,6 +236,30 @@ async function concluirAtividade(id) {
     }
   }
 }
+
+
+async function excluirAtividade(id) {
+  if (!confirm("Deseja realmente excluir esta tarefa?")) return;
+
+  try {
+    const resp = await fetch(`/api/tarefas/${id}`, { method: "DELETE" });
+
+    if (!resp.ok) {
+      alert("Erro ao excluir tarefa.");
+      return;
+    }
+
+    alert("🗑 Tarefa excluída com sucesso!");
+    carregarAtividades();
+
+  } catch (erro) {
+    console.error("❌ Erro ao excluir tarefa:", erro);
+    alert("Erro ao excluir tarefa.");
+  }
+}
+
+window.excluirAtividade = excluirAtividade;
+
 // ==================== LIMPAR TODAS ====================
 btnClear.addEventListener("click", () => {
   if (confirm("Tem certeza que deseja limpar todas as atividades?")) {
