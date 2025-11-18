@@ -51,11 +51,16 @@ function renderAtividade(t) {
         <p><b>Materiais:</b> ${t.materiaisNecessarios}</p>
         <p><b>Benefícios:</b> ${t.beneficios}</p>
       </div>
+<div class="atividade-acoes">
+  <button class="btn btn-small btn-success btn-concluir" onclick="concluirAtividade(${t.id})">
+    ✔ Concluir
+  </button>
 
-      <button class="btn btn-small btn-success btn-concluir"
-              onclick="concluirAtividade(${t.id})">
-        ✔ Concluir
-      </button>
+  <button class="btn btn-small btn-danger btn-excluir" onclick="excluirAtividade(${t.id})">
+    🗑 Excluir
+  </button>
+</div>
+
     </div>
   `;
 
@@ -108,6 +113,9 @@ btnAdd.addEventListener("click", async () => {
       alert("✅ Atividade adicionada com sucesso!");
     }
     descInput.value = "";
+
+  
+
     carregarAtividades();
   } catch (erro) {
     console.error("❌ Erro ao criar atividade:", erro);
@@ -269,3 +277,4 @@ btnClear.addEventListener("click", () => {
 
 // ==================== INICIALIZA ====================
 carregarAtividades();
+
