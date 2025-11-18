@@ -123,6 +123,13 @@ li.innerHTML = `
 
   ul.appendChild(li);
 });
+function limparCampos() {
+  document.querySelectorAll('#formIndicacao input, #formIndicacao textarea, #formIndicacao select')
+    .forEach(el => {
+      if (el.type === 'select-one') el.selectedIndex = 0;
+      else el.value = '';
+    });
+}
 
 
 //strong = negrito
