@@ -123,6 +123,11 @@ li.innerHTML = `
 
   ul.appendChild(li);
 });
+
+//strong = negrito
+//em = italico
+}
+
 function limparCampos() {
   document.querySelectorAll('#formIndicacao input, #formIndicacao textarea, #formIndicacao select')
     .forEach(el => {
@@ -131,7 +136,3 @@ function limparCampos() {
     });
 }
 
-
-//strong = negrito
-//em = italico
-}
