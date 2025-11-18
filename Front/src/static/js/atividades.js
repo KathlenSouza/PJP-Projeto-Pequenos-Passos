@@ -244,6 +244,7 @@ async function concluirAtividade(id) {
     }
   }
 }
+window.concluirAtividade = concluirAtividade;
 
 
 async function excluirAtividade(id) {
