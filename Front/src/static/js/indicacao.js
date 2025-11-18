@@ -1,20 +1,35 @@
-// gerenciamento de indicações de profissionais
+// // indicacao.js (versão integrada com backend)
+import { profissionaisApi } from './conectaApi.js'; 
 
-const CHAVE_INDICACOES = 'pp_indicacoes';
+// DOM IDs
+const ID_BOTAO_ADICIONAR = 'botaoAdicionarProfissional';
+const ID_LISTA = 'listaProfissionais';
+// carregamento inicial
+document.addEventListener('DOMContentLoaded', carregarIndicacoes);
+document.getElementById(ID_BOTAO_ADICIONAR)
+        .addEventListener('click', adicionarProfissional);
 
-function lerIndicacoes() {
+  function mostrarMensagemSucesso(msg) {
+  alert(msg);
+}
+
+function mostrarMensagemErro(msg) {
+  alert(msg);
+}
+
+// --- Funções de integração com API ---
+
+async function carregarIndicacoes() {
   try {
-    return JSON.parse(localStorage.getItem(CHAVE_INDICACOES) || '[]');
-  } catch {
-    return [];
+    const lista = await profissionaisApi.listar();
+    renderizarIndicacoes(lista || []);
+  } catch (err) {
+    console.error('Erro ao carregar indicações', err);
+    mostrarMensagemErro('Erro ao carregar indicações. Tente novamente.');
+    renderizarIndicacoes([]); // limpa a lista visual
   }
 }
-
-function salvarIndicacoes(lista) {
-  localStorage.setItem(CHAVE_INDICACOES, JSON.stringify(lista));
-}
-
-function adicionarProfissional() {
+async function adicionarProfissional() {
   const nome = document.getElementById('nomeProfissional').value.trim();
   const area = document.getElementById('areaProfissional').value.trim();
   const cidade = document.getElementById('cidadeProfissional').value.trim();
@@ -23,86 +38,93 @@ function adicionarProfissional() {
   const avaliacao = document.getElementById('avaliacaoProfissional').value.trim();
 
   if (!nome || !area || !cidade) {
-    if (window.Swal) {
-      Swal.fire({
-        icon: "warning",
-        title: "Campos obrigatórios",
-        text: "Preencha pelo menos nome, área e cidade.",
-        confirmButtonColor: "#ffc107"
-      });
-    } else {
-      alert('Preencha pelo menos nome, área e cidade.');
-    }
+    alert('Preencha pelo menos nome, área e cidade.');
     return;
   }
 
-  const lista = lerIndicacoes();
-  lista.unshift({
-    id: Date.now(),
+  // converte avaliação para número, padrão 5 se inválido
+  function parseAvaliacao(avaliacao) {
+    try {
+      return parseInt(avaliacao);
+    } catch (error) {
+      return 5;        
+    }
+  }
+
+  const payload = {
     nome,
     area,
     cidade,
     contato,
     comentario,
-    avaliacao,
-    data: new Date().toLocaleDateString('pt-BR')
-  });
+    avaliacao: parseAvaliacao(avaliacao),
+    indicadoPorPais: true
+  };
 
-  salvarIndicacoes(lista);
-  limparCampos();
-  renderizarIndicacoes();
-}
-
-function removerProfissional(id) {
-  if (!confirm('Deseja realmente excluir esta indicação?')) return;
-  salvarIndicacoes(lerIndicacoes().filter(p => p.id !== id));
-  renderizarIndicacoes();
-}
-
-function limparCampos() {
-  document.querySelectorAll('.input').forEach(i => (i.value = ''));
-}
-
-function limparTodas() {
-  if (confirm('Apagar todas as indicações?')) {
-    localStorage.removeItem(CHAVE_INDICACOES);
-    renderizarIndicacoes();
+ 
+  try {
+    await profissionaisApi.criar(payload);
+    mostrarMensagemSucesso('Indicação adicionada com sucesso!');
+    limparCampos();
+    // recarrega a lista (poderia também apenas dar unshift)
+    await carregarIndicacoes();
+  } catch (err) {
+    console.error('Erro ao adicionar profissional', err);
+    mostrarMensagemErro('Erro ao adicionar indicação. Tente novamente.');
+    
   }
 }
 
-function renderizarIndicacoes() {
-  const ul = document.getElementById('listaProfissionais');
-  const lista = lerIndicacoes();
+//TODO: implementar função de limpar campos
+async function removerProfissional(id) {
+  if (!confirm('Deseja realmente excluir esta indicação?')) return;
+
+  try {
+    await profissionaisApi.excluir(id);
+    // alguns endpoints retornam 204 sem body, então apenas recarregamos
+    mostrarMensagemSucesso('Indicação excluída.');
+    await carregarIndicacoes();
+  } catch (err) {
+    console.error('Erro ao excluir', err);
+    mostrarMensagemErro('Erro ao excluir indicação.');
+  }
+}
+
+// --- Renderização ---
+
+function renderizarIndicacoes(lista) {
+  const ul = document.getElementById(ID_LISTA);
 
   ul.innerHTML = '';
 
-  if (!lista.length) {
-    ul.innerHTML = '<li class="item">Nenhuma indicação cadastrada ainda.</li>';
+  if (!lista || !lista.length)
+  {
+    const li = document.createElement('li');
+    li.textContent = 'Nenhuma indicação cadastrada.';
+    ul.appendChild(li);
     return;
   }
+lista.forEach((item) => {
+  const li = document.createElement('li'); 
+  li.className = 'item';
+li.innerHTML = `
+  <div class="prof-card">
+    <strong>${item.nome}</strong>
+    <p><em>Área:</em> ${item.area}</p>
+    <p><em>Cidade:</em> ${item.cidade}</p>
+    <p><em>Contato:</em> ${item.contato || 'N/A'}</p>
+    <p><em>Comentário:</em> ${item.comentario || 'N/A'}</p>
+    <p><em>Avaliação:</em> ${'⭐'.repeat(item.avaliacao || 5)}</p>
+    <button class="btn small danger" data-id="${item.id}">🗑️ Excluir</button>
+  </div>
+`;
+  const btnExcluir = li.querySelector('button');
+  btnExcluir.addEventListener('click', () => removerProfissional(item.id));
 
-  lista.forEach(p => {
-    const li = document.createElement('li');
-    li.className = 'item';
-    li.innerHTML = `
-      <div>
-        <strong>${p.nome}</strong> — ${p.area}
-        <div class="subtitle">${p.cidade}</div>
-        ${p.contato ? `<div><i class="fa-solid fa-phone"></i> ${p.contato}</div>` : ''}
-        ${p.comentario ? `<div><em>"${p.comentario}"</em></div>` : ''}
-        ${p.avaliacao ? `<div class="avaliacao">${p.avaliacao}</div>` : ''}
-        <small class="data">Adicionado em: ${p.data}</small>
-      </div>
-      <button class="btn danger">Excluir</button>
-    `;
-    li.querySelector('button').onclick = () => removerProfissional(p.id);
-    ul.appendChild(li);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('botaoAdicionarProfissional').addEventListener('click', adicionarProfissional);
-  document.getElementById('botaoLimparIndicacoes').addEventListener('click', limparTodas);
-  renderizarIndicacoes();
+  ul.appendChild(li);
 });
 
+
+//strong = negrito
+//em = italico
+}

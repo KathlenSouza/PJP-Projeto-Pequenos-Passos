@@ -72,3 +72,9 @@ export const conectaApi = {
     return await post('/tarefas/sugerir', { descricao });
   }
 };
+
+export const profissionaisApi = {
+  listar: () => get('/profissionais/indicacoes'),
+  criar: (dados) => post('/profissionais/indicacao', dados),
+excluir: (id) => fetch(`${API_BASE}/profissionais/${id}`, { method: 'DELETE' }),
+};
