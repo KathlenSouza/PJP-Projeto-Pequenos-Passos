@@ -90,24 +90,25 @@
           <label class="label">Avaliação</label>
           <select id="avaliacaoProfissional" class="input">
             <option value="">Sem avaliação</option>
-            <option>⭐ 1 estrela</option>
-            <option>⭐⭐ 2 estrelas</option>
-            <option>⭐⭐⭐ 3 estrelas</option>
-            <option>⭐⭐⭐⭐ 4 estrelas</option>
-            <option>⭐⭐⭐⭐⭐ 5 estrelas</option>
+            <option value="1" >⭐ 1 estrela</option>
+            <option value="2">⭐⭐ 2 estrelas</option>
+            <option value="3">⭐⭐⭐ 3 estrelas</option>
+            <option value="4">⭐⭐⭐⭐ 4 estrelas</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5 estrelas</option>
           </select>
         </div>
       </div>
 
       <div class="acoes-principais" style="margin-top:12px;">
         <button class="btn" id="botaoAdicionarProfissional">Adicionar Indicação</button>
-        <button class="btn danger" id="botaoLimparIndicacoes">Limpar Tudo</button>
       </div>
     </section>
 
     <!-- Lista -->
     <section class="card">
       <h3>Indicações Enviadas</h3>
+      
+
       <ul id="listaProfissionais" class="list"></ul>
     </section>
   </main>

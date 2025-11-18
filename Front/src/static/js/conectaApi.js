@@ -1,6 +1,11 @@
-// ✅ Define o endereço base da API (via proxy configurado no server.js)
+// =============================
+// 📌 Configuração da base da API
+// =============================
 const API_BASE = '/api';
 
+// =============================
+// 📌 Funções padrões GET / POST
+// =============================
 export async function get(endpoint) {
   const resp = await fetch(`${API_BASE}${endpoint}`);
 
@@ -24,36 +29,29 @@ export async function post(endpoint, body) {
 
   // Aceita 200 e 201 como sucesso
   if (!resp.ok && resp.status !== 201) {
-    throw new Error(`Erro ${resp.status}`);
+    const errorBody = await resp.json().catch(() => ({}));
+    throw new Error(errorBody.erro || `Erro ${resp.status}`);
   }
 
   try {
     return await resp.json();
   } catch {
-    return {}; // evita erro ao tentar ler json vazios
+    return {}; // evita erro caso o backend não retorne JSON
   }
 }
 
-// 🔹 Mantém o cadastro de usuário (NÃO ALTERAR)
+// =============================
+// 📌 conectaApi PRINCIPAL
+// =============================
 export const conectaApi = {
+
+  // ---------- USUÁRIOS ----------
   async cadastrarUsuario(usuario) {
-    const response = await fetch("http://localhost:8080/usuarios", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(usuario)
-    });
-
-    if (!response.ok) {
-      const erro = await response.json();
-      throw new Error(erro.erro || "Erro ao criar usuário");
-    }
-
-    return await response.json();
+    // Agora usa o mesmo método post padronizado
+    return await post('/usuarios', usuario);
   },
 
-  // 🔹 Adiciona endpoints de tarefas e sugestões (NOVOS)
+  // ---------- TAREFAS ----------
   async listarTarefas() {
     return await get('/tarefas');
   },
@@ -73,8 +71,12 @@ export const conectaApi = {
   }
 };
 
+// =============================
+// 📌 Profissionais API
+// =============================
 export const profissionaisApi = {
   listar: () => get('/profissionais/indicacoes'),
   criar: (dados) => post('/profissionais/indicacao', dados),
-excluir: (id) => fetch(`${API_BASE}/profissionais/${id}`, { method: 'DELETE' }),
+  excluir: (id) =>
+    fetch(`${API_BASE}/profissionais/${id}`, { method: 'DELETE' }),
 };
