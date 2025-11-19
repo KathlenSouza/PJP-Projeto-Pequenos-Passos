@@ -7,33 +7,40 @@ const btnClear = document.getElementById("btnClearActivities");
 const descInput = document.getElementById("activityDesc");
 const catInput = document.getElementById("activityCategory");
 
-// Cria botão de IA dinamicamente
+// Lista global para armazenar sugestões da IA
+let atividadesIA = [];
+
+// Criar botão IA dinamicamente
 const btnAI = document.createElement("button");
 btnAI.textContent = "Gerar com IA 🤖";
 btnAI.classList.add("btn", "ghost");
 btnSuggest.insertAdjacentElement("afterend", btnAI);
 
-// ==================== CARREGAR ATIVIDADES ====================
+
+// ==================== CARREGAR ATIVIDADES DO BANCO ====================
 async function carregarAtividades() {
   lista.innerHTML = "<li>Carregando atividades...</li>";
 
   try {
     const tarefas = await get("/tarefas");
-    if (tarefas.length === 0) {
+
+    if (!tarefas || tarefas.length === 0) {
       lista.innerHTML = "<li>Nenhuma atividade cadastrada.</li>";
       return;
     }
 
     lista.innerHTML = "";
-    tarefas.forEach((t) => renderAtividade(t));
+    tarefas.forEach((t) => renderAtividade(t)); // render sem index → é do banco
+
   } catch (erro) {
     console.error("❌ Erro ao carregar atividades:", erro);
     lista.innerHTML = "<li>Erro ao carregar atividades.</li>";
   }
 }
 
-// ==================== RENDERIZAR ATIVIDADE ====================
-function renderAtividade(t) {
+
+// ==================== RENDERIZAR ATIVIDADE (da IA OU do banco) ====================
+function renderAtividade(t, index = null) {
   const li = document.createElement("li");
   li.classList.add("atividade-item");
 
@@ -51,15 +58,29 @@ function renderAtividade(t) {
         <p><b>Materiais:</b> ${t.materiaisNecessarios}</p>
         <p><b>Benefícios:</b> ${t.beneficios}</p>
       </div>
-<div class="atividade-acoes">
-  <button class="btn btn-small btn-success btn-concluir" onclick="concluirAtividade(${t.id})">
-    ✔ Concluir
-  </button>
 
-  <button class="btn btn-small btn-danger btn-excluir" onclick="excluirAtividade(${t.id})">
-    🗑 Excluir
-  </button>
-</div>
+      <div class="atividade-acoes">
+
+        ${index !== null ? `
+          <button class="btn btn-small btn-primary"
+            onclick="adicionarAtividadeIA(${index})">
+            ➕ Adicionar
+          </button>
+        ` : ""}
+
+        ${t.id ? `
+          <button class="btn btn-small btn-success"
+            onclick="concluirAtividade(${t.id})">
+            ✔ Concluir
+          </button>
+
+          <button class="btn btn-small btn-danger"
+            onclick="excluirAtividade(${t.id})">
+            🗑 Excluir
+          </button>
+        ` : ""}
+
+      </div>
 
     </div>
   `;
@@ -67,7 +88,8 @@ function renderAtividade(t) {
   lista.appendChild(li);
 }
 
-// ==================== ADICIONAR ATIVIDADE ====================
+
+// ==================== ADICIONAR ATIVIDADE MANUAL ====================
 btnAdd.addEventListener("click", async () => {
   const descricao = descInput.value.trim();
   const categoria = catInput.value.trim();
@@ -78,7 +100,6 @@ btnAdd.addEventListener("click", async () => {
         icon: "warning",
         title: "Campos obrigatórios",
         text: "Preencha a descrição e a categoria.",
-        confirmButtonColor: "#ffc107"
       });
     } else {
       alert("Preencha a descrição e a categoria.");
@@ -102,180 +123,138 @@ btnAdd.addEventListener("click", async () => {
 
   try {
     await post("/tarefas", tarefa);
-    // Modal de sucesso usando SweetAlert2 (mesmo padrão de configurações)
+
     if (window.Swal) {
-      Swal.fire({
-        icon: "success",
-        title: "Atividade adicionada com sucesso!",
-        confirmButtonColor: "#28a745"
-      });
-    } else {
-      alert("✅ Atividade adicionada com sucesso!");
+      Swal.fire({ icon: "success", title: "Atividade adicionada!" });
     }
+
     descInput.value = "";
-
-  
-
     carregarAtividades();
+
   } catch (erro) {
     console.error("❌ Erro ao criar atividade:", erro);
+
     if (window.Swal) {
       Swal.fire({
         icon: "error",
         title: "Erro ao criar atividade",
         text: "Verifique os dados e tente novamente.",
-        confirmButtonColor: "#dc3545"
       });
-    } else {
-      alert("Erro ao criar atividade. Verifique os dados.");
     }
   }
- 
 });
 
-// ==================== SUGERIR (BANCO) ====================
+
+// ==================== ADICIONAR ATIVIDADE GERADA PELA IA ====================
+async function adicionarAtividadeIA(index) {
+  const tarefa = atividadesIA[index];
+
+  try {
+    await post("/tarefas", tarefa);
+
+    if (window.Swal) {
+      Swal.fire({
+        icon: "success",
+        title: "Atividade adicionada ao sistema!",
+        confirmButtonColor: "#007bff"
+      });
+    }
+
+    carregarAtividades();
+
+  } catch (erro) {
+    console.error("❌ Erro ao salvar atividade IA:", erro);
+    alert("Erro ao salvar atividade IA.");
+  }
+}
+window.adicionarAtividadeIA = adicionarAtividadeIA;
+
+
+// ==================== GERAR SUGESTÕES DO BANCO ====================
 btnSuggest.addEventListener("click", async () => {
-  btnSuggest.textContent = "Gerando sugestões...";
+  btnSuggest.textContent = "Gerando...";
   btnSuggest.disabled = true;
 
   const idade = 5;
-  const area = catInput.value.trim();
+  const area = catInput.value.trim().toUpperCase().replace(" ", "_");
 
   try {
     const sugestoes = await get(`/tarefas/sugerir?idade=${idade}&area=${encodeURIComponent(area)}`);
 
-    if (!sugestoes || sugestoes.length === 0) {
-      alert("Nenhuma sugestão encontrada no banco.");
-    } else {
-      lista.innerHTML = "";
-      sugestoes.forEach((t) => renderAtividade(t));
-    }
+    lista.innerHTML = "";
+    sugestoes.forEach((t) => renderAtividade(t));
+
   } catch (erro) {
     console.error("❌ Erro ao gerar sugestões:", erro);
     alert("Erro ao gerar sugestões.");
-  } finally {
-    btnSuggest.textContent = "Sugerir";
-    btnSuggest.disabled = false;
   }
+
+  btnSuggest.textContent = "Sugerir";
+  btnSuggest.disabled = false;
 });
 
-// ==================== GERAR COM IA ====================
+
+// ==================== GERAR SUGESTÕES COM IA ====================
 btnAI.addEventListener("click", async () => {
-  btnAI.textContent = "✨ Gerando com IA...";
+  btnAI.textContent = "✨ Gerando...";
   btnAI.disabled = true;
 
-  const crianca = {
-    idade: 5,
-    genero: "feminino", // futuramente vem do usuário logado
-  };
+  const crianca = { idade: 5, genero: "feminino" };
 
   try {
     const resposta = await post("/tarefas/sugerir-ia", crianca);
+    atividadesIA = resposta.sugestoes;
 
-    if (resposta.sugestoes && resposta.sugestoes.length > 0) {
-      lista.innerHTML = "";
-      resposta.sugestoes.forEach((s) => {
-        const li = document.createElement("li");
-        li.textContent = s;
-        lista.appendChild(li);
-      });
-    } else {
-      alert("A IA não retornou sugestões no momento.");
-    }
+    lista.innerHTML = "";
+    atividadesIA.forEach((t, index) => renderAtividade(t, index));
+
   } catch (erro) {
-    console.error("❌ Erro ao gerar sugestões IA:", erro);
-    if (window.Swal) {
-      Swal.fire({
-        icon: "error",
-        title: "Erro ao gerar sugestões",
-        text: "Erro ao gerar sugestões via IA.",
-        confirmButtonColor: "#dc3545"
-      });
-    } else {
-      alert("Erro ao gerar sugestões via IA.");
-    }
-  } finally {
-    btnAI.textContent = "Gerar com IA 🤖";
-    btnAI.disabled = false;
+    console.error("❌ Erro IA:", erro);
+    alert("Erro ao gerar sugestões da IA.");
   }
+
+  btnAI.textContent = "Gerar com IA 🤖";
+  btnAI.disabled = false;
 });
+
 
 // ==================== CONCLUIR ATIVIDADE ====================
 async function concluirAtividade(id) {
-  if (window.Swal) {
-    Swal.fire({
-      title: 'Tem certeza?',
-      text: 'Marcar esta atividade como concluída?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Sim, concluir',
-      cancelButtonText: 'Cancelar'
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
-          Swal.fire({
-            icon: 'success',
-            title: 'Atividade concluída!',
-            confirmButtonColor: '#28a745'
-          });
-          carregarAtividades();
-        } catch (erro) {
-          console.error("❌ Erro ao concluir atividade:", erro);
-          Swal.fire({
-            icon: 'error',
-            title: 'Erro ao concluir a atividade',
-            confirmButtonColor: '#dc3545'
-          });
-        }
-      }
-    });
-  } else {
-    if (!confirm("Marcar esta atividade como concluída?")) return;
-    try {
-      await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
-      alert("✅ Atividade concluída!");
-      carregarAtividades();
-    } catch (erro) {
-      console.error("❌ Erro ao concluir atividade:", erro);
-      alert("Erro ao concluir a atividade.");
-    }
+  try {
+    await fetch(`/api/tarefas/${id}/desativar`, { method: "PATCH" });
+    alert("Atividade concluída!");
+    carregarAtividades();
+
+  } catch (erro) {
+    console.error("❌ Erro ao concluir:", erro);
+    alert("Erro ao concluir atividade.");
   }
 }
 window.concluirAtividade = concluirAtividade;
 
 
+// ==================== EXCLUIR ATIVIDADE ====================
 async function excluirAtividade(id) {
-  if (!confirm("Deseja realmente excluir esta tarefa?")) return;
+  if (!confirm("Excluir esta atividade?")) return;
 
   try {
-    const resp = await fetch(`/api/tarefas/${id}`, { method: "DELETE" });
-
-    if (!resp.ok) {
-      alert("Erro ao excluir tarefa.");
-      return;
-    }
-
-    alert("🗑 Tarefa excluída com sucesso!");
+    await fetch(`/api/tarefas/${id}`, { method: "DELETE" });
+    alert("Atividade excluída!");
     carregarAtividades();
 
   } catch (erro) {
-    console.error("❌ Erro ao excluir tarefa:", erro);
-    alert("Erro ao excluir tarefa.");
+    console.error("❌ Erro ao excluir:", erro);
+    alert("Erro ao excluir atividade.");
   }
 }
-
 window.excluirAtividade = excluirAtividade;
 
-// ==================== LIMPAR TODAS ====================
+
+// ==================== LIMPAR LISTA (somente front-end) ====================
 btnClear.addEventListener("click", () => {
-  if (confirm("Tem certeza que deseja limpar todas as atividades?")) {
-    lista.innerHTML = "<li>Nenhuma atividade cadastrada.</li>";
-  }
+  lista.innerHTML = "";
 });
+
 
 // ==================== INICIALIZA ====================
 carregarAtividades();
-

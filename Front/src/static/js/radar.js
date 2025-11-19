@@ -1,36 +1,65 @@
-// Gera o gráfico de radar e exibe blocos de progresso, melhor visualização em teia.
+// radar.js
+import { get } from "./conectaApi.js";
 
-function lerRadar() {
-  const dados = localStorage.getItem('pp_radar');
-  return dados ? JSON.parse(dados) : {
-    rotulos: ["Motor Grosso", "Motor Fino", "Linguagem", "Cognitivo", "Socioemocional"],
-    valores: [65, 80, 70, 75, 60] // valores padrão iniciais
-  };
+// ==== CHAMADA AO BACKEND DO RADAR (SEM IA) ====
+async function carregarRadarBackend(criancaId) {
+  try {
+    const dados = await get(`/radar/${criancaId}`);
+    return dados;
+  } catch (erro) {
+    console.error("❌ Erro ao carregar radar:", erro);
+    return null;
+  }
+}
+
+// ==== CHAMADA AO BACKEND PARA ANÁLISE DA IA ====
+async function carregarAnaliseIA(criancaId) {
+  try {
+    // endpoint só da análise com IA
+    const recomendacoes = await get(`/radar/${criancaId}/analise-ia`);
+    return recomendacoes;
+  } catch (erro) {
+    console.error("❌ Erro ao carregar análise IA:", erro);
+    return null;
+  }
 }
 
 let graficoRadar;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const dados = lerRadar();
+document.addEventListener("DOMContentLoaded", async () => {
+  const criancaId = 1; // TODO: trocar pelo ID real depois
 
-  // ======= Gráfico Radar =======
-  const ctx = document.getElementById('radarChart');
-  if (ctx && Chart) {
+  // ================== RADAR / PROGRESSO ==================
+  const dados = await carregarRadarBackend(criancaId);
+
+  if (!dados) {
+    alert("Erro ao carregar o radar. Tente novamente mais tarde.");
+    return;
+  }
+
+  const rotulos = dados.rotulos || [];
+  const valores = dados.valores || [];
+
+  // === Criar gráfico Radar ===
+  const ctx = document.getElementById("radarChart");
+  if (ctx && window.Chart) {
     graficoRadar = new Chart(ctx, {
-      type: 'radar',
+      type: "radar",
       data: {
-        labels: dados.rotulos,
-        datasets: [{
-          label: 'Progresso (%)',
-          data: dados.valores,
-          backgroundColor: 'rgba(204,147,40,0.25)',
-          borderColor: 'rgba(204,147,40,1)',
-          borderWidth: 2,
-          pointBackgroundColor: 'rgba(204,147,40,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(204,147,40,1)'
-        }]
+        labels: rotulos,
+        datasets: [
+          {
+            label: "Progresso (%)",
+            data: valores,
+            backgroundColor: "rgba(204,147,40,0.25)",
+            borderColor: "rgba(204,147,40,1)",
+            borderWidth: 2,
+            pointBackgroundColor: "rgba(204,147,40,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(204,147,40,1)",
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -41,40 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
             max: 100,
             ticks: {
               stepSize: 20,
-              callback: valor => valor + '%'
+              callback: (v) => v + "%",
             },
-            pointLabels: {
-              font: { size: 12, weight: '600' },
-              color: '#2b3352'
-            },
-            grid: {
-              color: 'rgba(0,0,0,0.1)'
-            },
-            angleLines: {
-              color: 'rgba(0,0,0,0.05)'
-            }
-          }
+          },
         },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: ctx => `${ctx.dataset.label}: ${ctx.parsed.r}%`
-            }
-          }
-        }
-      }
+        plugins: { legend: { display: false } },
+      },
     });
   }
 
-  // ======= Blocos de Progresso =======
-  const container = document.getElementById('blocksContainer');
+  // === Criar Blocos de progresso ===
+  const container = document.getElementById("blocksContainer");
   if (container) {
-    container.innerHTML = '';
-    dados.rotulos.forEach((rotulo, i) => {
-      const valor = dados.valores[i] || 0;
-      const bloco = document.createElement('div');
-      bloco.className = 'block-item';
+    container.innerHTML = "";
+    rotulos.forEach((rotulo, i) => {
+      const valor = valores[i] || 0;
+      const bloco = document.createElement("div");
+      bloco.className = "block-item";
       bloco.innerHTML = `
         <strong>${rotulo}</strong>
         <div class="block-progress">
@@ -86,16 +98,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ======= Lista de Desenvolvimento =======
-  const listaDesenvolvimento = document.getElementById('listaDesenvolvimento');
-  if (listaDesenvolvimento) {
-    listaDesenvolvimento.innerHTML = `
-      <li><i class="fa-solid fa-star"></i> A criança apresenta ótimo progresso motor e boa coordenação.</li>
-      <li><i class="fa-solid fa-comment"></i> A linguagem está evoluindo — incentive conversas e leitura.</li>
-      <li><i class="fa-solid fa-brain"></i> A área cognitiva mostra avanço em memória e raciocínio lógico.</li>
-      <li><i class="fa-solid fa-heart"></i> O aspecto socioemocional segue estável — continue reforçando empatia.</li>
+  // === Texto inicial da lista de desenvolvimento ===
+  const lista = document.getElementById("listaDesenvolvimento");
+  if (lista) {
+    lista.innerHTML = `
+      <li>
+        <i class="fa-solid fa-lightbulb"></i>
+        Clique no botão <b>"Gerar análise com IA"</b> para ver observações sobre o desenvolvimento da criança.
+      </li>
     `;
   }
 
-  console.log('Radar do desenvolvimento carregado com sucesso.');
+  // ================== BOTÃO PARA GERAR ANÁLISE IA ==================
+  const btnIA = document.getElementById("btnGerarIA");
+  if (btnIA && lista) {
+    btnIA.addEventListener("click", async () => {
+      const textoOriginal = btnIA.textContent;
+      btnIA.disabled = true;
+      btnIA.textContent = "Gerando análise com IA...";
+
+      try {
+        const recomendacoes = await carregarAnaliseIA(criancaId);
+
+        if (!recomendacoes || recomendacoes.length === 0) {
+          lista.innerHTML = `
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              Não foi possível gerar a análise agora. Tente novamente mais tarde.
+            </li>
+          `;
+          return;
+        }
+
+        // Preenche lista com as frases vindas da IA
+        lista.innerHTML = "";
+        recomendacoes.forEach((r) => {
+          if (!r || !r.trim()) return;
+          const li = document.createElement("li");
+          li.innerHTML = `<i class="fa-solid fa-child"></i> ${r.trim()}`;
+          lista.appendChild(li);
+        });
+      } catch (erro) {
+        console.error("❌ Erro ao gerar análise IA:", erro);
+        lista.innerHTML = `
+          <li>
+            <i class="fa-solid fa-circle-exclamation"></i>
+            Ocorreu um erro ao gerar a análise com IA.
+          </li>
+        `;
+      } finally {
+        btnIA.disabled = false;
+        btnIA.textContent = textoOriginal;
+      }
+    });
+  }
+
+  console.log("Radar carregado do backend com sucesso!");
 });
