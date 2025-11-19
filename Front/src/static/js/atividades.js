@@ -2,10 +2,10 @@ import { get, post } from "./conectaApi.js";
 
 const lista = document.getElementById("activitiesList");
 const btnAdd = document.getElementById("btnAdd");
-const btnSuggest = document.getElementById("btnSuggest");
 const btnClear = document.getElementById("btnClearActivities");
 const descInput = document.getElementById("activityDesc");
 const catInput = document.getElementById("activityCategory");
+
 
 // Lista global para armazenar sugestões da IA
 let atividadesIA = [];
@@ -14,7 +14,8 @@ let atividadesIA = [];
 const btnAI = document.createElement("button");
 btnAI.textContent = "Gerar com IA 🤖";
 btnAI.classList.add("btn", "ghost");
-btnSuggest.insertAdjacentElement("afterend", btnAI);
+btnAdd.insertAdjacentElement("afterend", btnAI);
+
 
 
 // ==================== CARREGAR ATIVIDADES DO BANCO ====================
@@ -170,28 +171,24 @@ async function adicionarAtividadeIA(index) {
 window.adicionarAtividadeIA = adicionarAtividadeIA;
 
 
-// ==================== GERAR SUGESTÕES DO BANCO ====================
-btnSuggest.addEventListener("click", async () => {
-  btnSuggest.textContent = "Gerando...";
-  btnSuggest.disabled = true;
-
+// ==================== CARREGAR SUGESTÕES DO BANCO AUTOMATICAMENTE ====================
+async function carregarSugestoesBanco() {
   const idade = 5;
   const area = catInput.value.trim().toUpperCase().replace(" ", "_");
 
   try {
     const sugestoes = await get(`/tarefas/sugerir?idade=${idade}&area=${encodeURIComponent(area)}`);
 
-    lista.innerHTML = "";
-    sugestoes.forEach((t) => renderAtividade(t));
+    if (sugestoes && sugestoes.length > 0) {
+      lista.innerHTML = "";
+      sugestoes.forEach((t) => renderAtividade(t));
+    }
 
   } catch (erro) {
-    console.error("❌ Erro ao gerar sugestões:", erro);
-    alert("Erro ao gerar sugestões.");
+    console.error("❌ Erro ao obter sugestões automáticas:", erro);
   }
+}
 
-  btnSuggest.textContent = "Sugerir";
-  btnSuggest.disabled = false;
-});
 
 
 // ==================== GERAR SUGESTÕES COM IA ====================
@@ -257,4 +254,9 @@ btnClear.addEventListener("click", () => {
 
 
 // ==================== INICIALIZA ====================
-carregarAtividades();
+async function init() {
+  await carregarAtividades();              // Carrega atividades do banco normalmente
+  await carregarSugestoesBanco();          // Depois puxa as sugestões automaticamente
+}
+
+init();
