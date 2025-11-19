@@ -3,8 +3,9 @@
 // =============================
 const API_BASE = '/api';
 
+
 // =============================
-// 📌 Funções padrões GET / POST
+// 📌 Funções padrões GET / POST / DELETE
 // =============================
 export async function get(endpoint) {
   const resp = await fetch(`${API_BASE}${endpoint}`);
@@ -27,7 +28,6 @@ export async function post(endpoint, body) {
     body: JSON.stringify(body),
   });
 
-  // Aceita 200 e 201 como sucesso
   if (!resp.ok && resp.status !== 201) {
     const errorBody = await resp.json().catch(() => ({}));
     throw new Error(errorBody.erro || `Erro ${resp.status}`);
@@ -36,16 +36,30 @@ export async function post(endpoint, body) {
   try {
     return await resp.json();
   } catch {
-    return {}; // evita erro caso o backend não retorne JSON
+    return {}; 
   }
 }
-//============================
+
+// =============================
 // 📌 Função DELETE padrão
 // =============================
 export async function del(endpoint) {
   const resp = await fetch(`${API_BASE}${endpoint}`, {
     method: 'DELETE'
   });
+
+  if (!resp.ok) {
+    throw new Error(`Erro ${resp.status}`);
+  }
+
+  try {
+    return await resp.json();
+  } catch {
+    return {};
+  }
+}
+
+
 
 // =============================
 // 📌 conectaApi PRINCIPAL
@@ -54,7 +68,6 @@ export const conectaApi = {
 
   // ---------- USUÁRIOS ----------
   async cadastrarUsuario(usuario) {
-    // Agora usa o mesmo método post padronizado
     return await post('/usuarios', usuario);
   },
 
@@ -68,9 +81,7 @@ export const conectaApi = {
   },
 
   async excluirTarefa(id) {
-    const resp = await fetch(`${API_BASE}/tarefas/${id}`, { method: 'DELETE' });
-    if (!resp.ok) throw new Error(`Erro ${resp.status}`);
-    return true;
+    return await del(`/tarefas/${id}`);
   },
 
   async sugerirTarefas(descricao) {
@@ -78,12 +89,16 @@ export const conectaApi = {
   }
 };
 
+
+
 // =============================
 // 📌 Profissionais API
 // =============================
 export const profissionaisApi = {
+
   listar: () => get('/profissionais/indicacoes'),
+
   criar: (dados) => post('/profissionais/indicacao', dados),
-  excluir: (id) =>
-    fetch(`${API_BASE}/profissionais/${id}`, { method: 'DELETE' }),
+
+  excluir: (id) => del(`/profissionais/${id}`)
 };
