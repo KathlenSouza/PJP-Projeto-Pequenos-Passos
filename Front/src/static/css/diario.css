@@ -36,9 +36,10 @@ body.pagina-diario {
   object-fit: contain;     /* impede distorção */
   border-radius: 35%;      /* mantém o formato circular */
   padding: 10px;            /* ajusta espaçamento interno */
-  background: #fff;        /* ajuda na uniformidade */
+  background: #ffffff; /* será substituído pela cor da emoção */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;      /* ajuda na uniformidade */
   box-shadow: 0 0 4px rgba(0,0,0,0.1); 
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 
@@ -71,3 +72,108 @@ body.pagina-diario {
   border-radius: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
+/* ===== MODAL DO REGISTRO COMPLETO ===== */
+.modal-registro {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.78);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+  animation: surgir .25s ease;
+}
+
+@keyframes surgir {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.fechar-modal {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-fotos img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+/* ===== CORES DO MODAL POR EMOÇÃO ===== */
+.modal-content.feliz { border-top: 10px solid #ffe066; }
+.modal-content.calmo { border-top: 10px solid #2a49cf; }
+.modal-content.triste { border-top: 10px solid #a5b4fc; }
+.modal-content.animado { border-top: 10px solid #ff922b; }
+.modal-content.bravo { border-top: 10px solid #ff6b6b; }
+.modal-content.ansioso { border-top: 10px solid #f783ac; }
+
+/* Botão excluir */
+#btnExcluirRegistro {
+  margin-top: 20px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+#btnExcluirRegistro:hover {
+  background: #d93636;
+}
+/* ===== COR NAS IMAGENS DAS EMOÇÕES ===== */
+
+#feliz:checked + label img {
+  background: #ffe066 !important;
+  box-shadow: 0 0 12px #ffe066aa !important;
+}
+
+#calmo:checked + label img {
+  background: #2a49cf !important;
+  box-shadow: 0 0 12px #2a49cfaa !important;
+}
+
+#triste:checked + label img {
+  background: #a5b4fc !important;
+  box-shadow: 0 0 12px #a5b4fcaa !important;
+}
+
+#animado:checked + label img {
+  background: #ff922b !important;
+  box-shadow: 0 0 12px #ff922baa !important;
+}
+
+#bravo:checked + label img {
+  background: #ff6b6b !important;
+  box-shadow: 0 0 12px #ff6b6baa !important;
+}
+
+#ansioso:checked + label img {
+  background: #f783ac !important;
+  box-shadow: 0 0 12px #f783acaa !important;
+}
+

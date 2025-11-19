@@ -39,6 +39,13 @@ export async function post(endpoint, body) {
     return {}; // evita erro caso o backend não retorne JSON
   }
 }
+//============================
+// 📌 Função DELETE padrão
+// =============================
+export async function del(endpoint) {
+  const resp = await fetch(`${API_BASE}${endpoint}`, {
+    method: 'DELETE'
+  });
 
 // =============================
 // 📌 conectaApi PRINCIPAL
