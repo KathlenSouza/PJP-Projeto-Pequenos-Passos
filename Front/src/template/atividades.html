@@ -4,108 +4,207 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pequenos Passos | Atividades</title>
+  <title>Atividades de Desenvolvimento Infantil | Pequenos Passos</title>
+  <meta name="description"
+    content="Adicione e gerencie atividades para o desenvolvimento motor, cognitivo e socioemocional de crianças no Pequenos Passos.">
+  <meta name="keywords" content="atividades infantis, desenvolvimento motor, Pequenos Passos, educação infantil">
+  <meta name="author" content="Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)">
+
+  <!-- Preload recursos críticos -->
+  <link rel="preload" href="/SRC/STATIC/CSS/base.css" as="style">
+  <link rel="preload" href="/SRC/STATIC/JS/atividades.js" as="script">
 
   <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/layout.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/atividades.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/loader.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 </head>
 
 <body class="pagina-atividades">
+  <!-- Skip link para acessibilidade -->
+  <a href="#main-content" class="skip-link sr-only">Pular para o conteúdo principal</a>
 
   <!-- Tela de carregamento -->
-  <div id="carregando">
+  <div id="carregando" role="status" aria-live="polite" aria-label="Carregando página">
     <div class="pes">
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
-      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé" />
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé animado" loading="lazy" />
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé animado" loading="lazy" />
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé animado" loading="lazy" />
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé animado" loading="lazy" />
+      <img src="/SRC/STATIC/IMG/pes-de-bebe.png" alt="Ícone de pé animado" loading="lazy" />
     </div>
   </div>
 
-  <!-- Navegação -->
-  <nav class="navbar">
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Menu principal">
     <div class="nav-container">
       <div class="nav-logo">
-        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo" class="nav-logo-img" />
+        <img src="/SRC/STATIC/IMG/logo.png" alt="Logotipo Pequenos Passos" class="nav-logo-img" />
         <span>Pequenos Passos</span>
       </div>
-
-      <button class="nav-toggle" id="alternarMenu">☰</button>
-
+      <button class="nav-toggle" id="alternarMenu" aria-expanded="false" aria-label="Alternar menu de navegação">
+        <i class="fa-solid fa-bars"></i>
+      </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="/SRC/TEMPLATE/dashboarder.html"><i class="fa-solid fa-house"></i> Início</a></li>
         <li><a href="/SRC/TEMPLATE/radar.html"><i class="fa-solid fa-chart-bar"></i> Radar</a></li>
-        <li><a href="/SRC/TEMPLATE/atividades.html" class="active"><i class="fa-solid fa-bullseye"></i> Atividades</a></li>
+        <li><a href="/SRC/TEMPLATE/atividades.html" class="active"><i class="fa-solid fa-bullseye"></i> Atividades</a>
+        </li>
         <li><a href="/SRC/TEMPLATE/diario.html"><i class="fa-solid fa-book"></i> Diário</a></li>
         <li><a href="/SRC/TEMPLATE/indicacao.html"><i class="fa-solid fa-bookmark"></i> Indicações</a></li>
         <li><a href="/SRC/TEMPLATE/configuracao.html"><i class="fa-solid fa-gear"></i> Configurações</a></li>
-        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-relatorio"><i class="fa-solid fa-file-lines"></i> Relatório</a></li>
+        <li><a href="/SRC/TEMPLATE/relatorio.html" class="btn-relatorio"><i class="fa-solid fa-file-lines"></i>
+            Relatório</a></li>
       </ul>
     </div>
   </nav>
 
-  <main class="container">
+  <main id="main-content" class="container" role="main">
+    <!-- Aside para dicas rápidas -->
+    <aside class="tips-sidebar" aria-label="Dicas rápidas">
+      <h4><i class="fa-solid fa-lightbulb"></i> Dicas para Atividades</h4>
+      <p>Personalize todos os campos para atividades únicas!</p>
+      <p>Use a IA para inspiração rápida.</p>
+    </aside>
 
-    <!-- Formulário de atividades -->
-    <section class="card">
-      <div class="grid cols-2">
+    <!-- Formulário de atividades expandido -->
+    <section class="card form-section" itemscope itemtype="https://schema.org/CreativeWork">
+      <meta itemprop="name" content="Formulário de Atividades Pequenos Passos">
+      <h2><i class="fa-solid fa-plus-circle"></i> Adicionar Nova Atividade</h2>
+      <div class="grid cols-3">
         <div>
-          <label class="label">Descrição</label>
-          <input id="activityDesc" class="input" placeholder="Ex.: Pular corda 10x" />
+          <label for="activityDesc" class="label">Descrição</label>
+          <input id="activityDesc" class="input" placeholder="Ex.: Pular corda 10x" aria-describedby="desc-help"
+            required maxlength="200" data-input="desc" />
+          <span id="desc-help" class="sr-only">Descreva a atividade em detalhes.</span>
         </div>
-
-        <div>
-          <label class="label">Categoria</label>
-          <select id="activityCategory" class="input">
+        <fieldset>
+          <legend class="label">Categoria</legend>
+          <select id="activityCategory" class="input" data-input="category" required aria-describedby="cat-help">
+            <option value="">Selecione</option>
             <option>Motor Grosso</option>
             <option>Motor Fino</option>
             <option>Linguagem</option>
             <option>Cognitivo</option>
             <option>Socioemocional</option>
           </select>
+          <span id="cat-help" class="sr-only">Escolha a categoria principal.</span>
+        </fieldset>
+        <fieldset>
+          <legend class="label">Área de Desenvolvimento</legend>
+          <select id="activityArea" class="input" data-input="area" required>
+            <option value="">Selecione</option>
+            <option>MOTOR_GROSSO</option>
+            <option>MOTOR_FINO</option>
+            <option>LINGUAGEM</option>
+            <option>COGNITIVO</option>
+            <option>SOCIOEMOCIONAL</option>
+          </select>
+        </fieldset>
+        <div>
+          <label for="activityAgeMin" class="label">Idade Mínima (anos)</label>
+          <input id="activityAgeMin" type="number" class="input" min="1" max="18" placeholder="4" data-input="ageMin"
+            required />
+        </div>
+        <div>
+          <label for="activityAgeMax" class="label">Idade Máxima (anos)</label>
+          <input id="activityAgeMax" type="number" class="input" min="1" max="18" placeholder="6" data-input="ageMax"
+            required />
+        </div>
+        <fieldset>
+          <legend class="label">Nível de Dificuldade</legend>
+          <select id="activityLevel" class="input" data-input="level" required>
+            <option value="">Selecione</option>
+            <option>Fácil</option>
+            <option>Médio</option>
+            <option>Difícil</option>
+          </select>
+        </fieldset>
+        <div>
+          <label for="activityDuration" class="label">Duração Estimada (min)</label>
+          <input id="activityDuration" type="number" class="input" min="1" placeholder="10" data-input="duration"
+            required />
+        </div>
+        <div>
+          <label for="activityMaterials" class="label">Materiais Necessários</label>
+          <textarea id="activityMaterials" class="input textarea" placeholder="Ex.: Corda, espaço aberto"
+            data-input="materials" maxlength="300"></textarea>
+        </div>
+        <div>
+          <label for="activityBenefits" class="label">Benefícios</label>
+          <textarea id="activityBenefits" class="input textarea" placeholder="Ex.: Melhora coordenação"
+            data-input="benefits" maxlength="300"></textarea>
         </div>
       </div>
-
-      <div class="hero-actions" style="margin-top:12px;">
-        <button id="btnAdd" class="btn">Adicionar</button>
-    
-        <button id="btnClearActivities" class="btn danger">Limpar todas</button>
+      <div class="hero-actions">
+        <button id="btnAdd" class="btn btn-primary" aria-label="Adicionar nova atividade" data-action="add">
+          <i class="fa-solid fa-plus"></i> Adicionar
+        </button>
+        <button id="btnPreview" class="btn btn-ghost" aria-label="Pré-visualizar atividade" data-action="preview">
+          <i class="fa-solid fa-eye"></i> Pré-visualizar
+        </button>
+        <!-- Botão IA será inserido aqui dinamicamente pelo JS -->
+        <button id="btnClearActivities" class="btn btn-danger" aria-label="Limpar todas as atividades"
+          data-action="clear">
+          <i class="fa-solid fa-trash"></i> Limpar Todas
+        </button>
+      </div>
+      <!-- Live region para feedback -->
+      <div id="feedback-region" aria-live="assertive" class="sr-only"></div>
+      <!-- Pré-visualização (oculta por padrão) -->
+      <div id="preview-section" class="preview-card" style="display:none;" aria-label="Pré-visualização da atividade">
+        <h4>Pré-visualização</h4>
+        <div id="preview-content"></div>
       </div>
     </section>
 
     <div class="hero-actions" style="justify-content:flex-end;">
-      <a href="/SRC/TEMPLATE/historico.html" class="btn ghost">Ver atividades concluídas</a>
+      <a href="/SRC/TEMPLATE/historico.html" class="btn btn-ghost" aria-label="Ver histórico">
+        <i class="fa-solid fa-history"></i> Ver Concluídas
+      </a>
     </div>
-
-    <!-- Lista de atividades -->
-    <section class="card">
-      <h3 style="margin-top:0">Lista de Atividades</h3>
-      <ul id="activitiesList" class="list"></ul>
-    </section>
-
   </main>
 
-  <footer>
+  <!-- Modal para confirmações -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none;">
+    <div class="modal-content">
+      <h4 id="modal-title">Confirmação</h4>
+      <p id="modal-message"></p>
+      <div class="modal-actions">
+        <button id="modal-confirm" class="btn btn-primary">Confirmar</button>
+        <button id="modal-cancel" class="btn btn-ghost">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="card">
+    <h3>Lista de Atividades</h3>
+    <ul id="activitiesList" class="list"></ul>
+  </section>
+
+
+  <footer role="contentinfo">
     <p class="copyright-small">© <span id="year"></span> Pequenos Passos. Todos os direitos reservados.</p>
     Desenvolvido por Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)
+    <div class="footer-links">
+    </div>
   </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script> 
+
+  <!-- Botão Voltar ao Topo -->
+  <button id="backToTop" class="btn-floating" aria-label="Voltar ao topo" style="display:none;">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
-  <script type="module" src="/src/static/js/conectaApi.js"></script>
-  <script type="module" src="/src/static/js/atividades.js"></script>
- 
+  <script type="module" src="/SRC/STATIC/JS/conectaApi.js"></script>
+  <script type="module" src="/SRC/STATIC/JS/atividades.js"></script>
+
 </body>
+
 </html>
 
 
