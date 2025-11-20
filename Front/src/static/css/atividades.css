@@ -10,11 +10,6 @@
   --ghost-hover: linear-gradient(135deg, #dee2e6, #ced4da);
   --success: linear-gradient(135deg, #28a745, #20c997);
 
-  --bg-light: linear-gradient(180deg, #eef6ff 0%, #ffffff 70%);
-  --bg-dark: linear-gradient(180deg, #1a1a1a 0%, #000 70%);
-
-  --text-light: #333;
-  --text-dark: #f0f0f0;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
