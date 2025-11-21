@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atividades de Desenvolvimento Infantil | Pequenos Passos</title>
-  <meta name="description"
-    content="Adicione e gerencie atividades para o desenvolvimento motor, cognitivo e socioemocional de crianças no Pequenos Passos.">
-  <meta name="keywords" content="atividades infantis, desenvolvimento motor, Pequenos Passos, educação infantil">
-  <meta name="author" content="Alunos PJP SENAC (Gabriel, Kathlen, Maria e Rafaela)">
-
-  <!-- Preload recursos críticos -->
-  <link rel="preload" href="/SRC/STATIC/CSS/base.css" as="style">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pequenos Passos | Atividades</title>
   <link rel="preload" href="/SRC/STATIC/JS/atividades.js" as="script">
+  <link rel="icon" type="image/png" href="/SRC/STATIC/IMG/pes-de-bebe.png" />
 
   <link rel="stylesheet" href="/SRC/STATIC/CSS/base.css">
   <link rel="stylesheet" href="/SRC/STATIC/CSS/navbar.css">
@@ -24,8 +18,6 @@
 </head>
 
 <body class="pagina-atividades">
-  <!-- Skip link para acessibilidade -->
-  <a href="#main-content" class="skip-link sr-only">Pular para o conteúdo principal</a>
 
   <!-- Tela de carregamento -->
   <div id="carregando" role="status" aria-live="polite" aria-label="Carregando página">
@@ -71,7 +63,7 @@
     </aside>
 
     <!-- Formulário de atividades expandido -->
-    <section class="card form-section" itemscope itemtype="https://schema.org/CreativeWork">
+    <section class="card form-section">
       <meta itemprop="name" content="Formulário de Atividades Pequenos Passos">
       <h2><i class="fa-solid fa-plus-circle"></i> Adicionar Nova Atividade</h2>
       <div class="grid cols-3">
@@ -149,13 +141,6 @@
           <i class="fa-solid fa-trash"></i> Limpar Todas
         </button>
       </div>
-      <!-- Live region para feedback -->
-      <div id="feedback-region" aria-live="assertive" class="sr-only"></div>
-      <!-- Pré-visualização (oculta por padrão) -->
-      <div id="preview-section" class="preview-card" style="display:none;" aria-label="Pré-visualização da atividade">
-        <h4>Pré-visualização</h4>
-        <div id="preview-content"></div>
-      </div>
     </section>
 
     <div class="hero-actions" style="justify-content:flex-end;">
@@ -177,10 +162,15 @@
     </div>
   </div>
 
-  <section class="card">
-    <h3>Lista de Atividades</h3>
-    <ul id="activitiesList" class="list"></ul>
+  <div>
+   <section class="card form-section">
+    <h2><i class=></i> Lista de Atividades</h2>
+    <section class="card">
+      <ul class="list grid cols-3" id="activitiesList">
+      </ul>
+    </section>
   </section>
+</div>
 
 
   <footer role="contentinfo">
@@ -189,11 +179,6 @@
     <div class="footer-links">
     </div>
   </footer>
-
-  <!-- Botão Voltar ao Topo -->
-  <button id="backToTop" class="btn-floating" aria-label="Voltar ao topo" style="display:none;">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
 
   <script src="/SRC/STATIC/JS/nav.js"></script>
   <script src="/SRC/STATIC/JS/loader-pezinhos.js"></script>
