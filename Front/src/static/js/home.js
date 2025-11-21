@@ -1,17 +1,22 @@
-// Página inicial do Pequenos Passos
-// Exibe informações da criança, vacinas, livros, vídeos, dicas e painel de progresso.
+import {
+  agendaApi,
+  diarioApi,
+  radarApi,
+  recursosApi,
+  profissionaisApi
+} from "./conectaApi.js";
 
-
-//  INFORMAÇÕES DA CRIANÇA
-
-
+// -----------------------------------------
+// 🔹 Funções auxiliares (criança)
+// -----------------------------------------
 function obterCrianca() {
   const dados = localStorage.getItem('pp_crianca');
-  return dados ? JSON.parse(dados) : { nome: "", nascimento: "" };
+  return dados ? JSON.parse(dados) : { id: null, nome: null, nascimento: null };
 }
 
 function calcularIdade(dataNascimento) {
   if (!dataNascimento) return { anos: 0, meses: 0, total: 0 };
+
   const nascimento = new Date(dataNascimento);
   const hoje = new Date();
 
@@ -34,20 +39,22 @@ function exibirCabecalho() {
   if (!nomeElemento || !subtituloElemento) return;
 
   const idade = calcularIdade(crianca.nascimento);
+
   nomeElemento.textContent = crianca.nome
     ? `${crianca.nome} — ${idade.anos} ano(s)`
-    : 'Pequenos Passos';
+    : "Pequenos Passos";
 
   subtituloElemento.textContent = crianca.nascimento
     ? `Idade: ${idade.anos} ano(s) e ${idade.meses} mês(es)`
-    : 'Defina o nome e a data de nascimento em Configurações.';
+    : "Defina o nome e a data de nascimento em Configurações.";
 }
 
 
-//  VACINAS
-
-
+// -----------------------------------------
+// 🔹 Vacinas
+// -----------------------------------------
 const CHAVE_VACINAS = 'pp_vacinas_4_6';
+
 const LISTA_VACINAS = [
   { id: 'dtp-reforco', titulo: 'DTP (Reforço)', faixa: '4–6 anos' },
   { id: 'polio-reforco', titulo: 'Poliomielite (Ref.)', faixa: '4–6 anos' },
@@ -57,11 +64,8 @@ const LISTA_VACINAS = [
 ];
 
 function lerVacinas() {
-  try {
-    return JSON.parse(localStorage.getItem(CHAVE_VACINAS) || '{}');
-  } catch {
-    return {};
-  }
+  try { return JSON.parse(localStorage.getItem(CHAVE_VACINAS) || '{}'); }
+  catch { return {}; }
 }
 
 function salvarVacinas(status) {
@@ -70,7 +74,7 @@ function salvarVacinas(status) {
 
 function alternarVacina(id) {
   const status = lerVacinas();
-  status[id] = status[id] === 'aplicada' ? 'pendente' : 'aplicada';
+  status[id] = status[id] === "aplicada" ? "pendente" : "aplicada";
   salvarVacinas(status);
   exibirVacinas();
 }
@@ -84,191 +88,271 @@ function exibirVacinas() {
   const lista = document.getElementById('vaxList');
   if (!lista) return;
 
+  lista.innerHTML = "";
   const status = lerVacinas();
-  lista.innerHTML = '';
 
   LISTA_VACINAS.forEach(vacina => {
     const situacao = status[vacina.id] || 'pendente';
-    const item = document.createElement('li');
-    item.className = 'vacina-item';
+
+    const item = document.createElement("li");
     item.innerHTML = `
       <div class="vacina-titulo">
         <span>🩹</span>
         <div>
-          <div><strong>${vacina.titulo}</strong></div>
+          <strong>${vacina.titulo}</strong>
           <div class="vacina-etiqueta">${vacina.faixa}</div>
         </div>
       </div>
-      <button class="vacina-status ${situacao === 'aplicada' ? 'vacina-aplicada' : 'vacina-pendente'}">
-        ${situacao === 'aplicada' ? 'Aplicada' : 'Pendente'}
+      <button class="vacina-status ${situacao === "aplicada" ? "vacina-aplicada" : "vacina-pendente"}">
+        ${situacao === "aplicada" ? "Aplicada" : "Pendente"}
       </button>
     `;
-    item.querySelector('button').addEventListener('click', () => alternarVacina(vacina.id));
+
+    item.querySelector("button").onclick = () => alternarVacina(vacina.id);
     lista.appendChild(item);
   });
 
-  const botaoResetar = document.getElementById('resetVax');
-  if (botaoResetar) botaoResetar.onclick = limparVacinas;
+  document.getElementById("resetVax").onclick = limparVacinas;
 }
 
 
-//  CONTEÚDO EDUCATIVO
-
-
-const LIVROS = [
-  { titulo: 'A Lagarta Comilona', autor: 'Eric Carle', link: 'https://www.google.com/search?q=A+Lagarta+Comilona' },
-  { titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', link: 'https://www.google.com/search?q=O+Pequeno+Príncipe+livro' },
-  { titulo: 'A Árvore Generosa', autor: 'Shel Silverstein', link: 'https://www.google.com/search?q=A+Árvore+Generosa' }
-];
-
-const VIDEOS = [
-  { titulo: 'Como ajudar a criança a ler (dicas práticas)', link: 'https://www.youtube.com/results?search_query=como+ajudar+criança+a+ler' },
-  { titulo: 'Desenvolvimento infantil 4–6 anos', link: 'https://www.youtube.com/results?search_query=desenvolvimento+infantil+4+6+anos' }
-];
-
-const DICAS = [
-  'Leitura compartilhada diária (10–15 min).',
-  'Brincar com rimas para consciência fonológica.',
-  'Atividades motoras finas (recortar, modelar, rasgar).',
-  'Converse sobre as emoções do dia.'
-];
-
+// -----------------------------------------
+// 🔹 Criar itens (livros, vídeos, dicas)
+// -----------------------------------------
 function criarItemLink(titulo, subtitulo, url) {
-  const item = document.createElement('li');
-  item.className = 'item';
+  const item = document.createElement("li");
+  item.className = "item";
   item.innerHTML = `
     <div>
       <strong>${titulo}</strong>
-      ${subtitulo ? `<div class="subtitulo">${subtitulo}</div>` : ''}
+      ${subtitulo ? `<div class="subtitulo">${subtitulo}</div>` : ""}
     </div>
-    <a class="btn ghost" href="${url}" target="_blank" rel="noopener">Abrir</a>
+    <a class="btn ghost" href="${url}" target="_blank">Abrir</a>
   `;
   return item;
 }
 
 function criarItemTexto(texto) {
-  const item = document.createElement('li');
-  item.className = 'item';
+  const item = document.createElement("li");
+  item.className = "item";
   item.innerHTML = `<div>${texto}</div>`;
   return item;
 }
 
 
-//  PAINEL PRINCIPAL 
+// -----------------------------------------
+// 🔥 INICIALIZAÇÃO GERAL
+// -----------------------------------------
+document.addEventListener("DOMContentLoaded", async () => {
 
-
-function formatarDataAtual() {
-  const opcoes = { weekday: 'long', day: '2-digit', month: 'long' };
-  return new Date().toLocaleDateString('pt-BR', opcoes);
-}
-
-const dadosAgenda = [
-  { hora: '08:00', descricao: 'Tomar café da manhã', concluido: true },
-  { hora: '10:00', descricao: 'Atividade: montar blocos', concluido: false },
-  { hora: '14:00', descricao: 'Sessão de leitura', concluido: false }
-];
-
-const dadosProgresso = [
-  { area: 'Motor Fino', percentual: 80 },
-  { area: 'Linguagem', percentual: 60 },
-  { area: 'Cognitivo', percentual: 70 },
-  { area: 'Socioemocional', percentual: 65 }
-];
-
-const dadosAvisos = [
-  { tipo: 'alerta', texto: 'Revisar rotina da tarde — duas atividades pendentes.' },
-  { tipo: 'notificacao', texto: 'Nova sugestão disponível: Desenhar formas geométricas.' }
-];
-
-const dadosSugestoes = ['Pintar figuras com as mãos', 'Brincar de rimas com palavras simples', 'Fazer um quebra-cabeça de 10 peças'];
-
-const dadosDiario = { emoji: '😊', humor: 'Feliz' };
-
-const dadosProfissionais = [
-  { nome: 'Dra. Helena Silva', area: 'Psicóloga Infantil', avaliacao: 5 },
-  { nome: 'Prof. Marcos Lima', area: 'Terapeuta Ocupacional', avaliacao: 4 },
-  { nome: 'Dra. Juliana Costa', area: 'Fonoaudióloga', avaliacao: 4 }
-];
-
-
-//  RENDERIZAÇÃO GERAL
-
-
-document.addEventListener('DOMContentLoaded', () => {
   exibirCabecalho();
   exibirVacinas();
 
-  const listaLivros = document.getElementById('booksList');
-  const listaVideos = document.getElementById('videosList');
-  const listaDicas = document.getElementById('tipsList');
+  const crianca = obterCrianca();
+  const criancaId = crianca?.id ?? null;
 
-  if (listaLivros) LIVROS.forEach(l => listaLivros.appendChild(criarItemLink(l.titulo, l.autor, l.link)));
-  if (listaVideos) VIDEOS.forEach(v => listaVideos.appendChild(criarItemLink(v.titulo, 'YouTube', v.link)));
-  if (listaDicas) DICAS.forEach(d => listaDicas.appendChild(criarItemTexto(`• ${d}`)));
+  // 🔥 Radar só deve ser carregado se houver criança cadastrada
+  const radarPromise = criancaId ? radarApi.progresso(criancaId) : Promise.resolve(null);
 
-  // Agenda
-  const listaAgenda = document.getElementById('listaAgenda');
+  // 🔄 Carregar tudo paralelamente
+  const [agenda, diario, radar, recursos, profissionais] = await Promise.all([
+    agendaApi.listar().catch(() => []),
+    diarioApi.semana().catch(() => null),     // diário não precisa de ID
+    radarPromise.catch(() => null),
+    recursosApi.listar().catch(() => []),
+    profissionaisApi.listar().catch(() => []),
+  ]);
+
+  // -------------------------------------
+  // 📌 AGENDA
+  // -------------------------------------
+  const listaAgenda = document.getElementById("listaAgenda");
   if (listaAgenda) {
-    dadosAgenda.forEach(a => {
-      const li = document.createElement('li');
-      li.innerHTML = `<input type="checkbox" ${a.concluido ? 'checked' : ''}> <b>${a.hora}</b> — ${a.descricao}`;
+    listaAgenda.innerHTML = "";
+    agenda.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <input type="checkbox" ${item.concluido ? "checked" : ""}>
+        <b>${item.hora}</b> — ${item.descricao}
+      `;
       listaAgenda.appendChild(li);
     });
   }
 
-  // Barras de progresso
-  const containerBarras = document.getElementById('barrasProgresso');
-  if (containerBarras) {
-    dadosProgresso.forEach(p => {
-      const barra = document.createElement('div');
-      barra.className = 'progress-item';
-      barra.innerHTML = `
-        <label>${p.area}</label>
+  // -------------------------------------
+// 📌 DIÁRIO (humor semanal)
+// -------------------------------------
+const resumoEmocional = document.getElementById("resumoEmocional");
+
+if (resumoEmocional && diario && diario.length > 0) {
+    // pega o último registro cadastrado
+    const ultimo = diario[diario.length - 1];
+
+    resumoEmocional.innerHTML = `
+        ${ultimo.emoji ?? "🙂"} Humor da semana: 
+        <b>${ultimo.humor ?? "Não informado"}</b>
+    `;
+} else if (resumoEmocional) {
+    resumoEmocional.innerHTML = "Sem registros emocionais ainda 😕";
+}
+
+  // -------------------------------------
+  // 📌 RADAR / PROGRESSO
+  // -------------------------------------
+  const barras = document.getElementById("barrasProgresso");
+
+  if (barras && radar && radar.progresso) {
+    barras.innerHTML = "";
+
+    radar.progresso.forEach(area => {
+      const el = document.createElement("div");
+      el.className = "progress-item";
+
+      el.innerHTML = `
+        <label>${area.area}</label>
         <div class="progress-bar">
-          <div class="progress-fill" style="width:${p.percentual}%;"></div>
+          <div class="progress-fill" style="width:${area.percentual}%"></div>
         </div>
       `;
-      containerBarras.appendChild(barra);
+
+      barras.appendChild(el);
     });
   }
 
-  // Avisos
-  const listaAvisos = document.getElementById('listaAvisos');
-  if (listaAvisos) {
-    dadosAvisos.forEach(a => {
-      const li = document.createElement('li');
-      li.innerHTML = `<i class="fa-solid ${a.tipo === 'alerta' ? 'fa-triangle-exclamation' : 'fa-bell'}"></i> ${a.texto}`;
-      listaAvisos.appendChild(li);
+  // -------------------------------------
+  // 📌 RECURSOS (livros, vídeos, dicas)
+  // -------------------------------------
+  const listaLivros = document.getElementById("booksList");
+  const listaVideos = document.getElementById("videosList");
+  const listaDicas = document.getElementById("tipsList");
+
+  if (recursos.length > 0) {
+    listaLivros.innerHTML = "";
+    listaVideos.innerHTML = "";
+    listaDicas.innerHTML = "";
+
+    recursos.forEach(r => {
+      if (r.tipo === "livro") listaLivros.appendChild(criarItemLink(r.titulo, r.autor, r.link));
+      if (r.tipo === "video") listaVideos.appendChild(criarItemLink(r.titulo, "Vídeo", r.link));
+      if (r.tipo === "dica") listaDicas.appendChild(criarItemTexto("• " + r.titulo));
     });
   }
 
-  // Sugestões
-  const listaSugestoes = document.getElementById('listaSugestoes');
-  if (listaSugestoes) {
-    dadosSugestoes.forEach(s => {
-      const li = document.createElement('li');
-      li.textContent = s;
-      listaSugestoes.appendChild(li);
+  // -------------------------------------
+  // 📌 PROFISSIONAIS
+  // -------------------------------------
+  const boxProf = document.getElementById("listaProfissionais");
+
+  if (boxProf) {
+    boxProf.innerHTML = "";
+
+    profissionais.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <h3>${p.nome}</h3>
+        <p>${p.area}</p>
+        <p>${"⭐".repeat(p.avaliacao)}</p>
+      `;
+
+      boxProf.appendChild(card);
     });
   }
 
-  // Diário (usa o id que existe no HTML)
-  const resumoEmocional = document.getElementById('resumoEmocional');
-  if (resumoEmocional) {
-    resumoEmocional.innerHTML = `${dadosDiario.emoji} Humor médio da semana: <b>${dadosDiario.humor}</b>`;
-  }
-
-  // Profissionais
-  const listaProfissionais = document.getElementById('listaProfissionais');
-  if (listaProfissionais) {
-    dadosProfissionais.forEach(p => {
-      const cartao = document.createElement('div');
-      cartao.className = 'card';
-      const estrelas = '⭐'.repeat(p.avaliacao);
-      cartao.innerHTML = `<h3>${p.nome}</h3><p>${p.area}</p><p>${estrelas}</p>`;
-      listaProfissionais.appendChild(cartao);
-    });
-  }
-
-  console.log('Página inicial carregada com dados simulados (corrigida).');
+  console.log("🏁 Dashboard carregado com dados reais!");
 });
+
+// =============================
+// 📅 CALENDÁRIO LOCAL (EVENTOS DO USUÁRIO)
+// =============================
+
+// Elementos do calendário
+const calendario = document.getElementById("calendar");
+const janelaEvento = document.getElementById("eventModal");
+const tituloJanela = document.getElementById("modalTitle");
+const entradaTituloEvento = document.getElementById("eventTitle");
+const tipoEvento = document.getElementById("eventType");
+const botaoSalvar = document.getElementById("botaoSalvarEvento");
+const botaoExcluir = document.getElementById("botaoExcluirEvento");
+const botaoAdicionar = document.getElementById("addEventBtn");
+
+let dataSelecionada = null;
+let eventos = JSON.parse(localStorage.getItem("pp_eventos")) || {};
+
+function exibirCalendario() {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = hoje.getMonth();
+
+  const primeiroDia = new Date(ano, mes, 1);
+  const ultimoDia = new Date(ano, mes + 1, 0);
+
+  calendario.innerHTML = "";
+
+  for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
+    const elementoDia = document.createElement("div");
+    elementoDia.classList.add("dia-calendario");
+
+    const chaveDia = `${ano}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+    elementoDia.textContent = dia;
+
+    if (eventos[chaveDia]) {
+      elementoDia.classList.add("evento-existe");
+      elementoDia.title = eventos[chaveDia].titulo;
+    }
+
+    elementoDia.onclick = () => abrirJanela(chaveDia);
+    calendario.appendChild(elementoDia);
+  }
+}
+
+function abrirJanela(data) {
+  dataSelecionada = data;
+  const eventoExistente = eventos[data];
+
+  tituloJanela.textContent = eventoExistente ? "Editar Evento" : "Novo Evento";
+  entradaTituloEvento.value = eventoExistente ? eventoExistente.titulo : "";
+  tipoEvento.value = eventoExistente ? eventoExistente.tipo : "atividade";
+
+  janelaEvento.classList.add("mostrar");
+}
+
+function fecharJanela() {
+  janelaEvento.classList.remove("mostrar");
+  entradaTituloEvento.value = "";
+}
+
+botaoSalvar.onclick = () => {
+  if (!dataSelecionada) return;
+
+  eventos[dataSelecionada] = {
+    titulo: entradaTituloEvento.value,
+    tipo: tipoEvento.value,
+  };
+
+  localStorage.setItem("pp_eventos", JSON.stringify(eventos));
+  fecharJanela();
+  exibirCalendario();
+};
+
+botaoExcluir.onclick = () => {
+  if (dataSelecionada && eventos[dataSelecionada]) {
+    delete eventos[dataSelecionada];
+    localStorage.setItem("pp_eventos", JSON.stringify(eventos));
+    fecharJanela();
+    exibirCalendario();
+  }
+};
+
+botaoAdicionar.onclick = () => {
+  const hoje = new Date().toISOString().split("T")[0];
+  abrirJanela(hoje);
+};
+
+janelaEvento.onclick = (e) => {
+  if (e.target === janelaEvento) fecharJanela();
+};
+
+// Inicia calendário
+exibirCalendario();

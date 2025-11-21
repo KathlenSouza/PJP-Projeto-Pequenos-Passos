@@ -36,13 +36,10 @@ export async function post(endpoint, body) {
   try {
     return await resp.json();
   } catch {
-    return {}; 
+    return {};
   }
 }
 
-// =============================
-// 📌 Função DELETE padrão
-// =============================
 export async function del(endpoint) {
   const resp = await fetch(`${API_BASE}${endpoint}`, {
     method: 'DELETE'
@@ -62,43 +59,91 @@ export async function del(endpoint) {
 
 
 // =============================
-// 📌 conectaApi PRINCIPAL
+// 📌 USUÁRIOS
 // =============================
 export const conectaApi = {
-
-  // ---------- USUÁRIOS ----------
-  async cadastrarUsuario(usuario) {
-    return await post('/usuarios', usuario);
+  cadastrarUsuario(usuario) {
+    return post('/usuarios', usuario);
   },
 
-  // ---------- TAREFAS ----------
-  async listarTarefas() {
-    return await get('/tarefas');
+  listarTarefas() {
+    return get('/tarefas');
   },
 
-  async criarTarefa(tarefa) {
-    return await post('/tarefas', tarefa);
+  criarTarefa(tarefa) {
+    return post('/tarefas', tarefa);
   },
 
-  async excluirTarefa(id) {
-    return await del(`/tarefas/${id}`);
+  excluirTarefa(id) {
+    return del(`/tarefas/${id}`);
   },
 
-  async sugerirTarefas(descricao) {
-    return await post('/tarefas/sugerir', { descricao });
+  sugerirTarefas(descricao) {
+    return post('/tarefas/sugerir', { descricao });
   }
 };
 
 
 
 // =============================
-// 📌 Profissionais API
+// 📌 PROFISSIONAIS API
 // =============================
 export const profissionaisApi = {
-
   listar: () => get('/profissionais/indicacoes'),
-
   criar: (dados) => post('/profissionais/indicacao', dados),
-
   excluir: (id) => del(`/profissionais/${id}`)
+};
+
+
+
+// =============================
+// 📌 AGENDA API
+// =============================
+export const agendaApi = {
+  listar: () => get('/agenda'),
+  criar: (dados) => post('/agenda', dados),
+  excluir: (id) => del(`/agenda/${id}`)
+};
+
+
+
+// =============================
+// 📌 DIÁRIO API
+// =============================
+//  🔥 Importante: SEM ID, porque backend não usa ID no path
+export const diarioApi = {
+  hoje: () => get('/diario/hoje'),
+  semana: () => get('/diario/semana'),
+  criar: (dados) => post('/diario', dados)
+};
+
+
+
+// =============================
+// 📌 RADAR API
+// =============================
+export const radarApi = {
+  progresso: (criancaId) => get(`/radar/${criancaId}`),
+  analiseIA: (criancaId) => get(`/radar/${criancaId}/analise-ia`)
+};
+
+
+
+// =============================
+// 📌 RECURSOS PEDAGÓGICOS API
+// =============================
+export const recursosApi = {
+  listar: () => get('/recursos'),
+  porIdade: (idade) => get(`/recursos/idade/${idade}`)
+};
+
+
+
+// =============================
+// 📌 NOTIFICAÇÕES API
+// =============================
+export const notificacaoApi = {
+  listar: () => get('/notificacoes'),
+  criar: (dados) => post('/notificacoes', dados),
+  excluir: (id) => del(`/notificacoes/${id}`)
 };
