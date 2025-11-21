@@ -104,5 +104,19 @@ public class DiarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resposta);
         }
     }
+    @GetMapping("/hoje")
+    public ResponseEntity<?> buscarHoje() {
+        LocalDate hoje = LocalDate.now();
+        return ResponseEntity.ok(diarioService.buscarPorData(hoje));
+    }
+    @GetMapping("/semana")
+    public ResponseEntity<?> buscarSemana() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate inicio = hoje.minusDays(6);
+
+        List<Diario> lista = diarioService.buscarEntreDatas(inicio, hoje);
+        return ResponseEntity.ok(lista);
+    }
+
 }
 

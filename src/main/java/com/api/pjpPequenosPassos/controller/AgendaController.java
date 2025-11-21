@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/agenda")
+@RequestMapping("/agenda")
 @CrossOrigin(origins = "*")
 public class AgendaController {
 

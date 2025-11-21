@@ -17,6 +17,7 @@ public class DiarioService {
     public DiarioService(DiarioRepository diarioRepository) {
         this.diarioRepository = diarioRepository;
     }
+   
 
     // ==================== CRIAR REGISTRO ====================
     @Transactional
@@ -47,9 +48,15 @@ public class DiarioService {
     }
 
     // ==================== BUSCAR POR DATA ====================
+  
     @Transactional(readOnly = true)
     public List<Diario> buscarPorData(LocalDate data) {
         return diarioRepository.findByDataRegistro(data);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Diario> buscarEntreDatas(LocalDate inicio, LocalDate fim) {
+        return diarioRepository.findByDataRegistroBetween(inicio, fim);
     }
 
     // ==================== ATUALIZAR REGISTRO ====================
