@@ -25,6 +25,7 @@ form.addEventListener("submit", async (event) => {
 
     // 🔹 Armazena o usuário logado no localStorage
     localStorage.setItem("usuario", JSON.stringify(resposta.usuario));
+    localStorage.setItem("usuarioId", resposta.usuario.id);
 
     // 🔹 Redireciona para o dashboard
     window.location.href = "/SRC/TEMPLATE/dashboarder.html";
