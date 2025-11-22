@@ -202,4 +202,20 @@ public class TarefaController {
             return ResponseEntity.status(500).body(Map.of("erro", "Erro ao buscar histórico."));
         }
     }
+    
+    @GetMapping("/crianca/{criancaId}/pendentes")
+    public ResponseEntity<?> listarPendentes(@PathVariable Long criancaId) {
+        try {
+            var lista = tarefaService.listarPendentesPorCrianca(criancaId);
+            return ResponseEntity.ok(TarefaMapper.toDTOList(lista));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("erro", e.getMessage()));
+        }
+    }
+   
+    @GetMapping("/pendentes/crianca/{criancaId}")
+    public ResponseEntity<List<TarefaDTO>> listarPendentesPorCrianca(@PathVariable Long criancaId) {
+        List<Tarefa> pendentes = tarefaService.listarPendentesPorCrianca(criancaId);
+        return ResponseEntity.ok(TarefaMapper.toDTOList(pendentes));
+    }
 }

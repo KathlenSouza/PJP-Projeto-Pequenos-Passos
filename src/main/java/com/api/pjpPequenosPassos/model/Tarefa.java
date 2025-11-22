@@ -48,6 +48,7 @@ public class Tarefa {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "crianca_id")
     private Crianca crianca;
+
     
     // ==================== CONSTRUTORES ====================
     public Tarefa() {}

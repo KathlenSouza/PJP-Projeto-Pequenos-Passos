@@ -11,6 +11,7 @@ import java.util.List;
 public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
+    
 
     public TarefaService(TarefaRepository tarefaRepository) {
         this.tarefaRepository = tarefaRepository;
@@ -198,6 +199,11 @@ public class TarefaService {
                 .ativo(true)
                 .build());
     }
+    
+    public List<Tarefa> listarPendentesPorCrianca(Long criancaId) {
+        return tarefaRepository.findByCriancaIdAndAtivoTrue(criancaId);
+    }
+ 
 }
 
 

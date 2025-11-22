@@ -23,4 +23,8 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
         @Param("area") Tarefa.AreaDesenvolvimento area,
         @Param("idade") int idade
     );
+    
+    // 🟢 Lista tarefas pendentes por criança
+    List<Tarefa> findByCriancaIdAndAtivoTrue(Long criancaId);
+    
 }
