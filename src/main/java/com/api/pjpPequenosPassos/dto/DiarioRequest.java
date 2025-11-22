@@ -5,6 +5,7 @@ public class DiarioRequest {
     private String descricao;
     private String emocao;
 
+    
     public Long getCriancaId() { return criancaId; }
     public void setCriancaId(Long criancaId) { this.criancaId = criancaId; }
 

@@ -169,4 +169,35 @@ public class TarefaController {
         tarefaService.popularTarefasBase();
         return ResponseEntity.ok(Map.of("mensagem", "Base de tarefas populada (se estava vazia)."));
     }
+ // ==================== LISTAR HISTÓRICO POR CRIANÇA ====================
+    @GetMapping("/historico")
+    public ResponseEntity<?> listarHistorico(@RequestParam Long criancaId) {
+        try {
+            List<HistoricoAtividade> lista = historicoRepo.findByCriancaId(criancaId);
+
+            return ResponseEntity.ok(
+                    lista.stream().map(hist -> {
+                        Map<String, Object> dto = new HashMap<>();
+                        dto.put("id", hist.getId());
+                        dto.put("criancaId", hist.getCriancaId());
+                        dto.put("dataConclusao", hist.getDataConclusao());
+                        
+                        if (hist.getTarefa() != null) {
+                            dto.put("tarefa", hist.getTarefa().getTitulo());
+                            dto.put("descricao", hist.getTarefa().getDescricao());
+                            dto.put("areaDesenvolvimento", hist.getTarefa().getAreaDesenvolvimento());
+                            dto.put("categoria", hist.getTarefa().getCategoria());
+                        }
+
+
+                        dto.put("status", "Concluída");
+
+                        return dto;
+                    }).toList()
+            );
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("erro", "Erro ao buscar histórico."));
+        }
+    }
 }

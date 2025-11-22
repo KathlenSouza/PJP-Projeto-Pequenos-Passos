@@ -18,4 +18,6 @@ public interface HistoricoAtividadeRepository extends JpaRepository<HistoricoAti
     List<HistoricoAtividade> findByDataConclusaoBetween(LocalDateTime inicio, LocalDateTime fim);
     List<HistoricoAtividade> findAllByOrderByDataConclusaoDesc();
     List<HistoricoAtividade> findByCriancaIdOrderByDataConclusaoDesc(Long criancaId);
+    List<HistoricoAtividade> findByCriancaId(Long criancaId);
+
 }

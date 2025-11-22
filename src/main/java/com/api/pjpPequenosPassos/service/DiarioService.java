@@ -40,6 +40,7 @@ public class DiarioService {
         diario.setDataRegistro(LocalDate.now());
         diario.setAtivo(true);
 
+        
         return diarioRepository.save(diario);
     }
 

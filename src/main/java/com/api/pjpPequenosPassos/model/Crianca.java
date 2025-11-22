@@ -29,6 +29,7 @@ public class Crianca {
     @JsonIgnore
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+    
 
     // 🔵 LIGAÇÃO COM DIARIO
     @OneToMany(mappedBy = "crianca", cascade = CascadeType.ALL)

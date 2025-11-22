@@ -13,6 +13,7 @@ import java.util.List;
 public interface CriancaRepository extends JpaRepository<Crianca, Long> {
     List<Crianca> findByUsuarioId(Long usuarioId);
    // List<Crianca> findByUsuarioIdAndAtivoTrue(Long usuarioId);
+    
 
     @Query("SELECT c FROM Crianca c WHERE c.usuario.id = :usuarioId " +
     	       "AND c.dataNascimento BETWEEN :dataMin AND :dataMax")

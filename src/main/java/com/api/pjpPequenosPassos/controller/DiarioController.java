@@ -112,6 +112,7 @@ public class DiarioController {
     public ResponseEntity<?> buscarSemana() {
         LocalDate hoje = LocalDate.now();
         LocalDate inicio = hoje.minusDays(6);
+        
 
         List<Diario> lista = diarioService.buscarEntreDatas(inicio, hoje);
         return ResponseEntity.ok(lista);

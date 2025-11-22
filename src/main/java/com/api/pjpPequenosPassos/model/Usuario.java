@@ -31,6 +31,7 @@ public class Usuario {
     // ---- crianças do usuário ----
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Crianca> criancas = new ArrayList<>();
+    
 
   
     public Usuario() {

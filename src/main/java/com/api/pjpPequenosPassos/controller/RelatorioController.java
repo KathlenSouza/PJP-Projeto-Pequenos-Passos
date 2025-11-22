@@ -29,6 +29,7 @@ public class RelatorioController {
         // ⚠️ Como ainda não temos login, simulamos um usuário fixo
         Usuario usuario = new Usuario();
         usuario.setId(1L);
+        
 
         Relatorio relatorio = relatorioService.gerarRelatorio(tipo, conteudo, usuario);
         return ResponseEntity.ok(relatorio);

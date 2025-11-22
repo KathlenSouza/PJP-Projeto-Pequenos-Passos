@@ -37,6 +37,7 @@ public class Diario {
     @JsonIgnore
     @JoinColumn(name = "crianca_id", nullable = false)
     private Crianca crianca;
+    
 
 	public Long getId() {
 		return id;
