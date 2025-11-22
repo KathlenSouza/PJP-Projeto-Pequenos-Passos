@@ -1,5 +1,6 @@
 package com.api.pjpPequenosPassos.controller;
 
+import com.api.pjpPequenosPassos.dto.DiarioRequest;
 import com.api.pjpPequenosPassos.model.Diario;
 import com.api.pjpPequenosPassos.service.DiarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +35,18 @@ public class DiarioController {
     }
 
 
-    // 🔹 CRIAR NOVO REGISTRO
     @PostMapping
-    public ResponseEntity<?> criar(@RequestBody Diario diario) {
+    public ResponseEntity<?> criar(@RequestBody DiarioRequest dto) {
         try {
-            Diario novo = diarioService.criarRegistro(diario);
-            Map<String, Object> resposta = new HashMap<>();
-            resposta.put("mensagem", "Registro criado com sucesso!");
-            resposta.put("registro", novo);
-            return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
+            Diario novo = diarioService.criarRegistro(dto);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(Map.of("mensagem", "Registro criado com sucesso!", "registro", novo));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("erro", e.getMessage()));
         }
     }
+
 
 
     // 🔹 BUSCAR POR DATA

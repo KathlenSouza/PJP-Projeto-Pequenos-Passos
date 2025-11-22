@@ -1,7 +1,12 @@
 package com.api.pjpPequenosPassos.service;
 
+import com.api.pjpPequenosPassos.dto.DiarioRequest;
+import com.api.pjpPequenosPassos.model.Crianca;
 import com.api.pjpPequenosPassos.model.Diario;
+import com.api.pjpPequenosPassos.repository.CriancaRepository;
 import com.api.pjpPequenosPassos.repository.DiarioRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +15,8 @@ import java.util.List;
 
 @Service
 public class DiarioService {
+	@Autowired
+	private CriancaRepository criancaRepository;
 
     private final DiarioRepository diarioRepository;
 
@@ -20,19 +27,22 @@ public class DiarioService {
    
 
     // ==================== CRIAR REGISTRO ====================
-    @Transactional
-    public Diario criarRegistro(Diario diario) {
-        // Validações simples
-        if (diario.getEmocao() == null || diario.getEmocao().isEmpty()) {
-            throw new RuntimeException("A emoção é obrigatória.");
-        }
-        if (diario.getDataRegistro() == null) {
-            diario.setDataRegistro(LocalDate.now());
-        }
+ // ==================== CRIAR REGISTRO ====================
+    public Diario criarRegistro(DiarioRequest dto) {
 
+        Crianca crianca = criancaRepository.findById(dto.getCriancaId())
+                .orElseThrow(() -> new RuntimeException("Criança não encontrada"));
+
+        Diario diario = new Diario();
+        diario.setCrianca(crianca);
+        diario.setDescricao(dto.getDescricao());
+        diario.setEmocao(dto.getEmocao());
+        diario.setDataRegistro(LocalDate.now());
         diario.setAtivo(true);
+
         return diarioRepository.save(diario);
     }
+
 
     // ==================== LISTAR TODOS ====================
     @Transactional(readOnly = true)
