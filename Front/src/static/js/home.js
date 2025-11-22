@@ -6,227 +6,242 @@ import {
   profissionaisApi
 } from "./conectaApi.js";
 
-// -----------------------------------------
-// 🔹 Funções auxiliares (criança)
-// -----------------------------------------
-function obterCrianca() {
-  const dados = localStorage.getItem('pp_crianca');
-  return dados ? JSON.parse(dados) : { id: null, nome: null, nascimento: null };
+/* ============================================================
+   🔹 Funções auxiliares — CRIANÇA
+============================================================ */
+function obterCriancaLocal() {
+  const dados = localStorage.getItem("pp_crianca");
+  try {
+    return dados ? JSON.parse(dados) : null;
+  } catch {
+    return null;
+  }
 }
 
 function calcularIdade(dataNascimento) {
-  if (!dataNascimento) return { anos: 0, meses: 0, total: 0 };
+  if (!dataNascimento) return { anos: 0, meses: 0 };
 
-  const nascimento = new Date(dataNascimento);
+  const nasc = new Date(dataNascimento);
   const hoje = new Date();
 
-  let anos = hoje.getFullYear() - nascimento.getFullYear();
-  let meses = hoje.getMonth() - nascimento.getMonth();
+  let anos = hoje.getFullYear() - nasc.getFullYear();
+  let meses = hoje.getMonth() - nasc.getMonth();
 
   if (meses < 0) {
     anos--;
     meses += 12;
   }
 
-  return { anos, meses, total: anos * 12 + meses };
+  return { anos, meses };
 }
 
 function exibirCabecalho() {
-  const crianca = obterCrianca();
-  const nomeElemento = document.getElementById('childName');
-  const subtituloElemento = document.getElementById('childSubtitle');
+  const crianca = obterCriancaLocal();
+  const nomeElemento = document.getElementById("childName");
+  const subtituloElemento = document.getElementById("childSubtitle");
 
   if (!nomeElemento || !subtituloElemento) return;
 
-  const idade = calcularIdade(crianca.nascimento);
+  if (!crianca) {
+    nomeElemento.textContent = "Pequenos Passos";
+    subtituloElemento.textContent = "Configure a criança no menu.";
+    return;
+  }
 
-  nomeElemento.textContent = crianca.nome
-    ? `${crianca.nome} — ${idade.anos} ano(s)`
-    : "Pequenos Passos";
+  const idade = calcularIdade(crianca.dataNascimento);
 
-  subtituloElemento.textContent = crianca.nascimento
-    ? `Idade: ${idade.anos} ano(s) e ${idade.meses} mês(es)`
-    : "Defina o nome e a data de nascimento em Configurações.";
+  nomeElemento.textContent = `${crianca.nome} — ${idade.anos} ano(s)`;
+  subtituloElemento.textContent = `Idade: ${idade.anos} ano(s) e ${idade.meses} mês(es)`;
 }
 
-
-// -----------------------------------------
-// 🔹 Vacinas
-// -----------------------------------------
-const CHAVE_VACINAS = 'pp_vacinas_4_6';
-
-const LISTA_VACINAS = [
-  { id: 'dtp-reforco', titulo: 'DTP (Reforço)', faixa: '4–6 anos' },
-  { id: 'polio-reforco', titulo: 'Poliomielite (Ref.)', faixa: '4–6 anos' },
-  { id: 'mmr', titulo: 'Sarampo (MMR)', faixa: '4–6 anos' },
-  { id: 'influenza', titulo: 'Influenza (Anual)', faixa: 'Anual' },
-  { id: 'hepb-reforco', titulo: 'Hepatite B (Ref.)', faixa: '4–6 anos' },
-];
-
-function lerVacinas() {
-  try { return JSON.parse(localStorage.getItem(CHAVE_VACINAS) || '{}'); }
-  catch { return {}; }
-}
-
-function salvarVacinas(status) {
-  localStorage.setItem(CHAVE_VACINAS, JSON.stringify(status));
-}
-
-function alternarVacina(id) {
-  const status = lerVacinas();
-  status[id] = status[id] === "aplicada" ? "pendente" : "aplicada";
-  salvarVacinas(status);
-  exibirVacinas();
-}
-
-function limparVacinas() {
-  localStorage.removeItem(CHAVE_VACINAS);
-  exibirVacinas();
-}
-
-function exibirVacinas() {
-  const lista = document.getElementById('vaxList');
-  if (!lista) return;
-
-  lista.innerHTML = "";
-  const status = lerVacinas();
-
-  LISTA_VACINAS.forEach(vacina => {
-    const situacao = status[vacina.id] || 'pendente';
-
-    const item = document.createElement("li");
-    item.innerHTML = `
-      <div class="vacina-titulo">
-        <span>🩹</span>
-        <div>
-          <strong>${vacina.titulo}</strong>
-          <div class="vacina-etiqueta">${vacina.faixa}</div>
-        </div>
-      </div>
-      <button class="vacina-status ${situacao === "aplicada" ? "vacina-aplicada" : "vacina-pendente"}">
-        ${situacao === "aplicada" ? "Aplicada" : "Pendente"}
-      </button>
-    `;
-
-    item.querySelector("button").onclick = () => alternarVacina(vacina.id);
-    lista.appendChild(item);
-  });
-
-  document.getElementById("resetVax").onclick = limparVacinas;
-}
-
-
-// -----------------------------------------
-// 🔹 Criar itens (livros, vídeos, dicas)
-// -----------------------------------------
-function criarItemLink(titulo, subtitulo, url) {
-  const item = document.createElement("li");
-  item.className = "item";
-  item.innerHTML = `
-    <div>
-      <strong>${titulo}</strong>
-      ${subtitulo ? `<div class="subtitulo">${subtitulo}</div>` : ""}
-    </div>
-    <a class="btn ghost" href="${url}" target="_blank">Abrir</a>
-  `;
-  return item;
-}
-
-function criarItemTexto(texto) {
-  const item = document.createElement("li");
-  item.className = "item";
-  item.innerHTML = `<div>${texto}</div>`;
-  return item;
-}
-
-
-// -----------------------------------------
-// 🔥 INICIALIZAÇÃO GERAL
-// -----------------------------------------
+/* ============================================================
+   🔥 INICIALIZAÇÃO
+============================================================ */
 document.addEventListener("DOMContentLoaded", async () => {
+  let crianca = obterCriancaLocal();
+  const criancaIdSelecionada = localStorage.getItem("criancaSelecionadaId");
+
+  /* ------------------------------------------------------------
+     1) BUSCAR CRIANÇA DO BACKEND
+  ------------------------------------------------------------- */
+  if (criancaIdSelecionada) {
+    try {
+      const resp = await fetch(`http://localhost:8080/api/criancas/${criancaIdSelecionada}`);
+
+      if (resp.ok) {
+        crianca = await resp.json();
+        localStorage.setItem("pp_crianca", JSON.stringify(crianca));
+      } else {
+        console.warn("⚠️ Criança não encontrada no backend.");
+      }
+    } catch (e) {
+      console.error("❌ Erro ao buscar criança:", e);
+    }
+  }
 
   exibirCabecalho();
+
+  /* ------------------------------------------------------------
+     2) VACINAS
+  ------------------------------------------------------------- */
+  const CHAVE_VACINAS = "pp_vacinas_4_6";
+  const LISTA_VACINAS = [
+    { id: "dtp-reforco", titulo: "DTP (Reforço)", faixa: "4–6 anos" },
+    { id: "polio-reforco", titulo: "Poliomielite (Ref.)", faixa: "4–6 anos" },
+    { id: "mmr", titulo: "Sarampo (MMR)", faixa: "4–6 anos" },
+    { id: "influenza", titulo: "Influenza (Anual)", faixa: "Anual" },
+    { id: "hepb-reforco", titulo: "Hepatite B (Ref.)", faixa: "4–6 anos" }
+  ];
+
+  function lerVacinas() {
+    return JSON.parse(localStorage.getItem(CHAVE_VACINAS) || "{}");
+  }
+
+  function salvarVacinas(status) {
+    localStorage.setItem(CHAVE_VACINAS, JSON.stringify(status));
+  }
+
+  function exibirVacinas() {
+    const lista = document.getElementById("vaxList");
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    const status = lerVacinas();
+
+    LISTA_VACINAS.forEach(v => {
+      const situacao = status[v.id] || "pendente";
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+        <div class="vacina-titulo">
+          <span>🩹</span>
+          <div>
+            <strong>${v.titulo}</strong>
+            <div class="vacina-etiqueta">${v.faixa}</div>
+          </div>
+        </div>
+        <button class="vacina-status ${situacao === "aplicada" ? "vacina-aplicada" : "vacina-pendente"}">
+          ${situacao === "aplicada" ? "Aplicada" : "Pendente"}
+        </button>
+      `;
+
+      li.querySelector("button").onclick = () => {
+        status[v.id] = status[v.id] === "aplicada" ? "pendente" : "aplicada";
+        salvarVacinas(status);
+        exibirVacinas();
+      };
+
+      lista.appendChild(li);
+    });
+
+    document.getElementById("resetVax").onclick = () => {
+      localStorage.removeItem(CHAVE_VACINAS);
+      exibirVacinas();
+    };
+  }
+
   exibirVacinas();
 
-  const crianca = obterCrianca();
-  const criancaId = crianca?.id ?? null;
+  /* ------------------------------------------------------------
+     3) CARREGAR RESTO DO BACKEND
+  ------------------------------------------------------------- */
+  const radarPromise = crianca?.id ? radarApi.progresso(crianca.id) : Promise.resolve(null);
 
-  // 🔥 Radar só deve ser carregado se houver criança cadastrada
-  const radarPromise = criancaId ? radarApi.progresso(criancaId) : Promise.resolve(null);
-
-  // 🔄 Carregar tudo paralelamente
   const [agenda, diario, radar, recursos, profissionais] = await Promise.all([
     agendaApi.listar().catch(() => []),
-    diarioApi.semana().catch(() => null),     // diário não precisa de ID
+    diarioApi.semana().catch(() => []),
     radarPromise.catch(() => null),
     recursosApi.listar().catch(() => []),
-    profissionaisApi.listar().catch(() => []),
+    profissionaisApi.listar().catch(() => [])
   ]);
 
-  // -------------------------------------
-  // 📌 AGENDA
-  // -------------------------------------
+  /* ------------------------------------------------------------
+     4) AGENDA
+  ------------------------------------------------------------- */
   const listaAgenda = document.getElementById("listaAgenda");
   if (listaAgenda) {
     listaAgenda.innerHTML = "";
     agenda.forEach(item => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <input type="checkbox" ${item.concluido ? "checked" : ""}>
-        <b>${item.hora}</b> — ${item.descricao}
+      listaAgenda.innerHTML += `
+        <li><input type="checkbox" ${item.concluido ? "checked" : ""}>
+        <b>${item.hora}</b> — ${item.descricao}</li>
       `;
-      listaAgenda.appendChild(li);
     });
   }
 
-  // -------------------------------------
-// 📌 DIÁRIO (humor semanal)
-// -------------------------------------
-const resumoEmocional = document.getElementById("resumoEmocional");
+  /* ------------------------------------------------------------
+     5) DIÁRIO
+  ------------------------------------------------------------- */
+  const resumoEmocional = document.getElementById("resumoEmocional");
 
-if (resumoEmocional && diario && diario.length > 0) {
-    // pega o último registro cadastrado
-    const ultimo = diario[diario.length - 1];
+  if (resumoEmocional) {
+    if (diario.length > 0) {
+      const ultimo = diario[diario.length - 1];
+      resumoEmocional.innerHTML = `
+        ${ultimo.emoji ?? "🙂"} Humor da semana:
+        <b>${ultimo.emocao ?? "Não informado"}</b>
+      `;
+    } else {
+      resumoEmocional.textContent = "Sem registros emocionais ainda 😕";
+    }
+  }
 
-    resumoEmocional.innerHTML = `
-        ${ultimo.emoji ?? "🙂"} Humor da semana: 
-        <b>${ultimo.humor ?? "Não informado"}</b>
-    `;
-} else if (resumoEmocional) {
-    resumoEmocional.innerHTML = "Sem registros emocionais ainda 😕";
-}
-
-  // -------------------------------------
-  // 📌 RADAR / PROGRESSO
-  // -------------------------------------
+  /* ------------------------------------------------------------
+     6) RADAR (AJUSTADO PARA SEU BACKEND)
+  ------------------------------------------------------------- */
   const barras = document.getElementById("barrasProgresso");
 
-  if (barras && radar && radar.progresso) {
+  // converter backend → formato usado pelo front
+  let progressoFormatado = [];
+
+  if (radar && radar.rotulos && radar.valores) {
+    progressoFormatado = radar.rotulos.map((area, index) => ({
+      area: area,
+      percentual: radar.valores[index]
+    }));
+  }
+
+  if (barras && progressoFormatado.length > 0) {
     barras.innerHTML = "";
 
-    radar.progresso.forEach(area => {
-      const el = document.createElement("div");
-      el.className = "progress-item";
-
-      el.innerHTML = `
-        <label>${area.area}</label>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${area.percentual}%"></div>
+    progressoFormatado.forEach(item => {
+      barras.innerHTML += `
+        <div class="progress-item">
+          <label>${item.area}</label>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${item.percentual}%"></div>
+          </div>
         </div>
       `;
-
-      barras.appendChild(el);
     });
   }
 
-  // -------------------------------------
-  // 📌 RECURSOS (livros, vídeos, dicas)
-  // -------------------------------------
-  const listaLivros = document.getElementById("booksList");
-  const listaVideos = document.getElementById("videosList");
-  const listaDicas = document.getElementById("tipsList");
+  /* ------------------------------------------------------------
+     7) RECURSOS
+  ------------------------------------------------------------- */
+  function criarItemLink(t, s, u) {
+    const li = document.createElement("li");
+    li.className = "item";
+    li.innerHTML = `
+      <div><strong>${t}</strong>${s ? `<div class="subtitulo">${s}</div>` : ""}</div>
+      <a class="btn ghost" href="${u}" target="_blank">Abrir</a>
+    `;
+    return li;
+  }
+
+  function criarItemTexto(txt) {
+    const li = document.createElement("li");
+    li.className = "item";
+    li.innerHTML = `<div>${txt}</div>`;
+    return li;
+  }
 
   if (recursos.length > 0) {
+    const listaLivros = document.getElementById("booksList");
+    const listaVideos = document.getElementById("videosList");
+    const listaDicas = document.getElementById("tipsList");
+
     listaLivros.innerHTML = "";
     listaVideos.innerHTML = "";
     listaDicas.innerHTML = "";
@@ -238,39 +253,31 @@ if (resumoEmocional && diario && diario.length > 0) {
     });
   }
 
-  // -------------------------------------
-  // 📌 PROFISSIONAIS
-  // -------------------------------------
+  /* ------------------------------------------------------------
+     8) PROFISSIONAIS
+  ------------------------------------------------------------- */
   const boxProf = document.getElementById("listaProfissionais");
 
   if (boxProf) {
     boxProf.innerHTML = "";
-
     profissionais.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <h3>${p.nome}</h3>
-        <p>${p.area}</p>
-        <p>${"⭐".repeat(p.avaliacao)}</p>
-      `;
-
-      boxProf.appendChild(card);
+      boxProf.innerHTML += `
+        <div class="card">
+          <h3>${p.nome}</h3>
+          <p>${p.area}</p>
+          <p>${"⭐".repeat(p.avaliacao)}</p>
+        </div>`;
     });
   }
 
-  console.log("🏁 Dashboard carregado com dados reais!");
+  console.log("🏁 Dashboard carregado com sucesso!");
 });
 
-// =============================
-// 📅 CALENDÁRIO LOCAL (EVENTOS DO USUÁRIO)
-// =============================
-
-// Elementos do calendário
+/* ============================================================
+   📅 CALENDÁRIO
+============================================================ */
 const calendario = document.getElementById("calendar");
 const janelaEvento = document.getElementById("eventModal");
-const tituloJanela = document.getElementById("modalTitle");
 const entradaTituloEvento = document.getElementById("eventTitle");
 const tipoEvento = document.getElementById("eventType");
 const botaoSalvar = document.getElementById("botaoSalvarEvento");
@@ -284,36 +291,35 @@ function exibirCalendario() {
   const hoje = new Date();
   const ano = hoje.getFullYear();
   const mes = hoje.getMonth();
-
-  const primeiroDia = new Date(ano, mes, 1);
-  const ultimoDia = new Date(ano, mes + 1, 0);
+  const ultimoDia = new Date(ano, mes + 1, 0).getDate();
 
   calendario.innerHTML = "";
 
-  for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
-    const elementoDia = document.createElement("div");
-    elementoDia.classList.add("dia-calendario");
+  for (let dia = 1; dia <= ultimoDia; dia++) {
+    const chave = `${ano}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+    const diaEl = document.createElement("div");
+    diaEl.className = "dia-calendario";
+    diaEl.textContent = dia;
 
-    const chaveDia = `${ano}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
-    elementoDia.textContent = dia;
-
-    if (eventos[chaveDia]) {
-      elementoDia.classList.add("evento-existe");
-      elementoDia.title = eventos[chaveDia].titulo;
+    if (eventos[chave]) {
+      diaEl.classList.add("evento-existe");
+      diaEl.title = eventos[chave].titulo;
     }
 
-    elementoDia.onclick = () => abrirJanela(chaveDia);
-    calendario.appendChild(elementoDia);
+    diaEl.onclick = () => abrirJanela(chave);
+    calendario.appendChild(diaEl);
   }
 }
 
 function abrirJanela(data) {
   dataSelecionada = data;
-  const eventoExistente = eventos[data];
+  const evento = eventos[data] ?? null;
 
-  tituloJanela.textContent = eventoExistente ? "Editar Evento" : "Novo Evento";
-  entradaTituloEvento.value = eventoExistente ? eventoExistente.titulo : "";
-  tipoEvento.value = eventoExistente ? eventoExistente.tipo : "atividade";
+  document.getElementById("modalTitle").textContent =
+    evento ? "Editar Evento" : "Novo Evento";
+
+  entradaTituloEvento.value = evento?.titulo ?? "";
+  tipoEvento.value = evento?.tipo ?? "atividade";
 
   janelaEvento.classList.add("mostrar");
 }
@@ -328,7 +334,7 @@ botaoSalvar.onclick = () => {
 
   eventos[dataSelecionada] = {
     titulo: entradaTituloEvento.value,
-    tipo: tipoEvento.value,
+    tipo: tipoEvento.value
   };
 
   localStorage.setItem("pp_eventos", JSON.stringify(eventos));
@@ -350,9 +356,9 @@ botaoAdicionar.onclick = () => {
   abrirJanela(hoje);
 };
 
-janelaEvento.onclick = (e) => {
+janelaEvento.onclick = e => {
   if (e.target === janelaEvento) fecharJanela();
 };
 
-// Inicia calendário
 exibirCalendario();
+
