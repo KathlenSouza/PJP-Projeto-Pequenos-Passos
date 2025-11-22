@@ -1,94 +1,160 @@
-//  gera ou imprime o relatório de progresso do Pequenos Passos (precisa puxar os id)
+import { get } from "./conectaApi.js";
 
-function lerArmazenamento(chave, padrao = []) {
+// ========================
+// 🔹 Buscar Histórico (Concluídas)
+// ========================
+async function buscarHistorico() {
+  const criancaId = localStorage.getItem("criancaId");
+  if (!criancaId) throw new Error("Nenhuma criança encontrada.");
+
+  return await get(`/historico/crianca/${criancaId}`);
+}
+
+// ========================
+// 🔹 Buscar Pendentes
+// ========================
+async function buscarPendentes() {
+  const criancaId = localStorage.getItem("criancaId");
+  if (!criancaId) throw new Error("Nenhuma criança encontrada.");
+
+  return await get(`/tarefas/pendentes/crianca/${criancaId}`);
+}
+
+// ========================
+// 🔹 Buscar Diário
+// ========================
+async function buscarDiario() {
+  const criancaId = localStorage.getItem("criancaId");
+  if (!criancaId) throw new Error("Nenhuma criança encontrada.");
+
+  return await get(`/diario/crianca/${criancaId}`);
+}
+
+// ========================
+// 🔹 Buscar Vacinas
+// (placeholder até endpoint real existir)
+// ========================
+async function buscarVacinas() {
+  return [];
+}
+
+// ========================
+// 🔹 Montador de HTML
+// ========================
+function montarSecao(titulo, conteudoHTML) {
+  return `
+    <h2 style="margin-top:24px; color:#2b3352;">${titulo}</h2>
+    <div>${conteudoHTML || "<em>Sem registros.</em>"}</div>
+  `;
+}
+
+function montarLista(lista, itemFn) {
+  if (!lista || lista.length === 0) return "<em>Sem dados.</em>";
+  return `<ul style="padding-left:20px;">${lista.map(itemFn).join("")}</ul>`;
+}
+
+// ========================
+// 🔹 Gerar Relatório
+// ========================
+async function gerarRelatorio() {
+  const incluirConcluidas = document.getElementById("rDone").checked;
+  const incluirPendentes = document.getElementById("rTodo").checked;
+  const incluirDiario = document.getElementById("rDiary").checked;
+  const incluirVacinas = document.getElementById("rVax").checked;
+
   try {
-    return JSON.parse(localStorage.getItem(chave) || JSON.stringify(padrao));
-  } catch {
-    return padrao;
+
+    const resultados = await Promise.all([
+      incluirConcluidas ? buscarHistorico() : [],
+      incluirPendentes ? buscarPendentes() : [],
+      incluirDiario ? buscarDiario() : [],
+      incluirVacinas ? buscarVacinas() : []
+    ]);
+
+    const [concluidas, pendentes, diario, vacinas] = resultados;
+
+    const html = `
+      <div style="font-family:'Poppins',sans-serif; padding:32px; max-width:800px;">
+        <h1>📄 Relatório — Pequenos Passos</h1>
+        <p><small>Gerado em ${new Date().toLocaleString("pt-BR")}</small></p>
+        <hr>
+
+        ${incluirConcluidas ? montarSecao(
+          "Atividades Concluídas",
+          montarLista(concluidas, a => `
+            <li>
+              <strong>${a.tarefaTitulo}</strong><br>
+              <small>${new Date(a.dataConclusao).toLocaleString("pt-BR")}</small><br>
+              Categoria: ${a.categoria || "-"}<br>
+              Área: ${a.areaDesenvolvimento || "-"}
+            </li>
+          `)
+        ) : ""}
+
+        ${incluirPendentes ? montarSecao(
+          "Atividades Pendentes",
+          montarLista(pendentes, a => `
+            <li>
+              <strong>${a.titulo}</strong> — ${a.categoria}
+            </li>
+          `)
+        ) : ""}
+
+        ${incluirDiario ? montarSecao(
+          "Diário Emocional",
+          montarLista(diario, d => `
+            <li>
+              <strong>${new Date(d.dataRegistro).toLocaleDateString("pt-BR")}</strong><br>
+              Emoção: ${d.emocao}<br>
+              Descrição: ${d.descricao}
+            </li>
+          `)
+        ) : ""}
+
+        ${incluirVacinas ? montarSecao(
+          "Vacinas (Em breve)",
+          "<em>Recurso ainda não disponível.</em>"
+        ) : ""}
+
+        <hr>
+        <small>Fonte: API Pequenos Passos</small>
+      </div>
+    `;
+
+    exportarPDF(html);
+
+  } catch (err) {
+    console.error("Erro ao gerar relatório:", err);
+    alert("Erro ao gerar relatório: " + err.message);
   }
 }
 
-function montarHTMLRelatorio({ incluirConcluidas, incluirPendentes, incluirDiario, incluirVacinas }) {
-  const historico = lerArmazenamento('pp_historico', []);
-  const diario = lerArmazenamento('pp_diario', []);
-  const vacinas = lerArmazenamento('pp_vacinas', []);
-
-  const concluidas = historico.filter(a => a.status?.toLowerCase() === 'concluída');
-  const pendentes = historico.filter(a => a.status?.toLowerCase() !== 'concluída');
-
-  const secao = (titulo, conteudo) => `
-    <h2 style="margin-top:18px; color:#2b3352;">${titulo}</h2>
-    <div>${conteudo || '<em>Sem registros.</em>'}</div>
-  `;
-
-  const lista = (itens, formato) =>
-    !itens?.length ? '<em>Sem dados.</em>' : `<ul style="padding-left:20px;">${itens.map(formato).join('')}</ul>`;
-
-  const html = `
-    <div style="font-family:'Poppins',sans-serif; padding:24px; max-width:800px; color:#333;">
-      <h1>Relatório — Pequenos Passos</h1>
-      <p><small>Gerado em ${new Date().toLocaleString('pt-BR')}</small></p>
-      <hr>
-
-      ${incluirConcluidas ? secao('✅ Atividades concluídas',
-        lista(concluidas, a => `<li>${a.tarefa || a.descricao || 'Atividade'} — <small>${a.data || '-'}</small></li>`)) : ''}
-
-      ${incluirPendentes ? secao('🕓 Atividades pendentes',
-        lista(pendentes, a => `<li>${a.tarefa || a.descricao || 'Atividade pendente'}</li>`)) : ''}
-
-      ${incluirDiario ? secao('📔 Diário emocional',
-        lista(diario, d => `<li><strong>${d.data}</strong> — ${d.emocao || '-'}<br>${d.texto || ''}</li>`)) : ''}
-
-      ${incluirVacinas ? secao('💉 Vacinas registradas',
-        lista(vacinas, v => `<li>${v.nome} — <small>${v.data}</small></li>`)) : ''}
-
-      <hr>
-      <small>Fonte: armazenamento local do navegador (localStorage).</small>
-    </div>
-  `;
-  return html;
-}
-
+// ========================
+// 🔹 Exportar PDF
+// ========================
 function exportarPDF(html) {
   const jsPDF = window.jspdf?.jsPDF || window.jsPDF;
-  const botao = document.getElementById('btnReport');
 
-  botao.disabled = true;
-  botao.textContent = 'Gerando...';
-
-  if (jsPDF) {
-    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-    doc.html(html, {
-      x: 24,
-      y: 24,
-      width: 550,
-      callback: () => {
-        doc.save('relatorio-pequenos-passos.pdf');
-        botao.disabled = false;
-        botao.textContent = 'Gerar Relatório';
-      }
-    });
-  } else {
-    const janela = window.open('', '_blank');
-    janela.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Relatório</title></head><body>${html}</body></html>`);
-    janela.document.close();
-    janela.focus();
-    botao.disabled = false;
-    botao.textContent = 'Gerar Relatório';
+  if (!jsPDF) {
+    const win = window.open("", "_blank");
+    win.document.write(html);
+    win.document.close();
+    return;
   }
+
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+
+  doc.html(html, {
+    x: 24,
+    y: 24,
+    width: 550,
+    callback: () => doc.save("relatorio-pequenos-passos.pdf")
+  });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const botao = document.getElementById('btnReport');
-  botao.addEventListener('click', () => {
-    const opcoes = {
-      incluirConcluidas: document.getElementById('rDone').checked,
-      incluirPendentes: document.getElementById('rTodo').checked,
-      incluirDiario: document.getElementById('rDiary').checked,
-      incluirVacinas: document.getElementById('rVax').checked
-    };
-
-    const html = montarHTMLRelatorio(opcoes);
-    exportarPDF(html);
-  });
+// ========================
+// 🔹 Inicializar
+// ========================
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("btnReport").addEventListener("click", gerarRelatorio);
 });
