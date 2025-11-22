@@ -117,6 +117,20 @@ public class DiarioController {
         List<Diario> lista = diarioService.buscarEntreDatas(inicio, hoje);
         return ResponseEntity.ok(lista);
     }
+ // ===============================
+ // LISTAR DIÁRIOS POR CRIANÇA
+ // ===============================
+ @GetMapping("/crianca/{criancaId}")
+ public ResponseEntity<?> listarPorCrianca(@PathVariable Long criancaId) {
+     try {
+         List<Diario> lista = diarioService.buscarPorCrianca(criancaId);
+         return ResponseEntity.ok(lista);
+     } catch (Exception e) {
+         return ResponseEntity.status(500)
+                 .body(Map.of("erro", "Erro ao buscar diário da criança: " + e.getMessage()));
+     }
+ }
+
 
 }
 

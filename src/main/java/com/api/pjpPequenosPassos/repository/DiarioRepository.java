@@ -16,5 +16,7 @@ public interface DiarioRepository extends JpaRepository<Diario, Long> {
 
     // Buscar por intervalo de dias
     List<Diario> findByDataRegistroBetween(LocalDate inicio, LocalDate fim);
+    
+    List<Diario> findByCriancaId(Long criancaId);
 
 }

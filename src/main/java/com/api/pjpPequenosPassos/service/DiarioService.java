@@ -24,6 +24,10 @@ public class DiarioService {
     public DiarioService(DiarioRepository diarioRepository) {
         this.diarioRepository = diarioRepository;
     }
+    public List<Diario> buscarPorCrianca(Long criancaId) {
+        return diarioRepository.findByCriancaId(criancaId);
+    }
+
    
 
     // ==================== CRIAR REGISTRO ====================
