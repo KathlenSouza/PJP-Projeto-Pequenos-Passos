@@ -60,15 +60,22 @@ async function exibirRegistros() {
   }
 }
 
-// ===============================
-// Função para salvar um novo registro
-// ===============================
+
+
+
 async function salvarRegistro(e) {
   e.preventDefault();
 
   const emocaoSelecionada = document.querySelector('input[name="emocao"]:checked');
   if (!emocaoSelecionada) {
     alert("Escolha uma emoção antes de salvar!");
+    return;
+  }
+
+  const criancaId = localStorage.getItem("criancaId");
+
+  if (!criancaId) {
+    alert("Nenhuma criança selecionada! Volte à tela inicial.");
     return;
   }
 
@@ -79,32 +86,27 @@ async function salvarRegistro(e) {
   const fotos = await Promise.all(
     Array.from(arquivos).map(async (file) => {
       const base64 = await toBase64(file);
-      return base64.split(",")[1];
+      return base64.split(",")[1]; 
     })
   );
 
-  const novoRegistro = { emocao, descricao, fotos };
+  const novoRegistro = { 
+    criancaId: Number(criancaId),
+    emocao, 
+    descricao, 
+    fotos 
+  };
 
   try {
     await post("/diario", novoRegistro);
-
-    if (window.Swal) {
-      Swal.fire({ icon: "success", title: "Registro salvo!" });
-    } else {
-      alert("Registro salvo!");
-    }
-
+    Swal.fire({ icon: "success", title: "Registro salvo!" });
     form.reset();
     exibirRegistros();
   } catch (err) {
-    console.error("Erro ao salvar registro:", err);
-    if (window.Swal) {
-      Swal.fire({ icon: "error", title: "Erro ao salvar", text: err.message });
-    } else {
-      alert(`Erro ao salvar: ${err.message}`);
-    }
+    Swal.fire({ icon: "error", title: "Erro ao salvar", text: err.message });
   }
 }
+
 
 // ===============================
 // Função auxiliar: converter imagem em base64

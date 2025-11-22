@@ -84,6 +84,8 @@ async function carregarConfiguracoes() {
       document.getElementById('nascimentoCrianca').value = c.dataNascimento || '';
       document.getElementById('sexoCrianca').value = c.sexo || '';
       document.getElementById('idadeCrianca').value = c.idade || '';
+
+      localStorage.setItem("criancaId", c.id);
     }
 
   } catch (e) {
@@ -141,3 +143,4 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('botaoSalvarCfg').addEventListener('click', salvarConfiguracoes);
   document.getElementById('botaoLimparCfg').addEventListener('click', limparConfiguracoes);
 });
+
