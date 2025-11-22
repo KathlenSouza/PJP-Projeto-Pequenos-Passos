@@ -85,7 +85,7 @@ async function carregarConfiguracoes() {
       document.getElementById('sexoCrianca').value = c.sexo || '';
       document.getElementById('idadeCrianca').value = c.idade || '';
 
-      localStorage.setItem("criancaId", c.id);
+       localStorage.setItem("criancaSelecionadaId", c.id);
     }
 
   } catch (e) {
