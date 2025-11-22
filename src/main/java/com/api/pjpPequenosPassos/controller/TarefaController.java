@@ -37,6 +37,8 @@ public class TarefaController {
         this.tarefaRepo = tarefaRepo;
         this.historicoRepo = historicoRepo;
     }
+    
+    
 
     // ==================== LISTAR TODAS ====================
     @GetMapping
