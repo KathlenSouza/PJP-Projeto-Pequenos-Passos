@@ -19,7 +19,7 @@ public class Diario {
     private String emocao;
 
     @Column(length = 1000)
-    private String descricao; // era "texto" no front
+    private String descricao;
 
     @Column(name = "data_registro")
     private LocalDate dataRegistro = LocalDate.now();
@@ -31,21 +31,65 @@ public class Diario {
     @Column(name = "fotos", columnDefinition = "LONGTEXT")
     private List<String> fotos = new ArrayList<>();
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // 🔵 ADICIONAR ISSO
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "crianca_id", nullable = false)
+    private Crianca crianca;
 
-    public String getEmocao() { return emocao; }
-    public void setEmocao(String emocao) { this.emocao = emocao; }
+	public Long getId() {
+		return id;
+	}
 
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public LocalDate getDataRegistro() { return dataRegistro; }
-    public void setDataRegistro(LocalDate dataRegistro) { this.dataRegistro = dataRegistro; }
+	public String getEmocao() {
+		return emocao;
+	}
 
-    public Boolean getAtivo() { return ativo; }
-    public void setAtivo(Boolean ativo) { this.ativo = ativo; }
+	public void setEmocao(String emocao) {
+		this.emocao = emocao;
+	}
 
-    public List<String> getFotos() { return fotos; }
-    public void setFotos(List<String> fotos) { this.fotos = fotos; }
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public LocalDate getDataRegistro() {
+		return dataRegistro;
+	}
+
+	public void setDataRegistro(LocalDate dataRegistro) {
+		this.dataRegistro = dataRegistro;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public List<String> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<String> fotos) {
+		this.fotos = fotos;
+	}
+
+	public Crianca getCrianca() {
+		return crianca;
+	}
+
+	public void setCrianca(Crianca crianca) {
+		this.crianca = crianca;
+	}
+
 }

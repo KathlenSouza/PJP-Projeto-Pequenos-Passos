@@ -44,6 +44,10 @@ public class Tarefa {
     @Column(nullable = false)
     private boolean ativo = true;
 
+    // 🔵 ADICIONAR RELACIONAMENTO
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "crianca_id")
+    private Crianca crianca;
     // ==================== CONSTRUTORES ====================
     public Tarefa() {}
 
